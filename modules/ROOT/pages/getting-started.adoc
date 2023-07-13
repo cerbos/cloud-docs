@@ -1,0 +1,104 @@
+= Getting started
+
+== Prerequisites
+
+- Currently GitHub is the only supported git provider. You must have access to a GitHub repository that contains your policies and (optional) tests. This repository can be a private one. An example repository is available at https://github.com/cerbos/example-cerbos-policy-repository that you can use as a template if you are starting from scratch.
+- Cerbos version 0.28.0 or higher
+- Outbound internet connection for your Cerbos instances so that they can connect to Cerbos Cloud to fetch bundle updates.
+
+
+== Create a label mapping file
+
+In order to work with Cerbos Cloud you need to first define a label mapping. A label is a symbolic name for a git reference, which can be a branch, a tag or a commit hash. You need to define at least one label to get started with Cerbos Cloud. Labels are defined in a special file named `.cerbos-cloud.yaml` that must be stored at the root of a branch picked by you to be the config branch for Cerbos Cloud. It can be any normal branch containing other files. Typically it would be the `main` or `master` branch.
+
+.Structure of .cerbos-cloud.yaml
+[source,yaml,linenums]
+----
+---
+apiVersion: api.cerbos.cloud/v1
+labels:
+  latest: <1>
+    branch: main <2>
+  v2:
+    tag: v2 <3>
+  hotfix:
+    commitHash: 28b70bbcc0ce7301b16e4482c835b485ee471647 <4>
+----
+<1> Name of the label
+<2> Branch reference: resolves to the `HEAD` of the branch
+<3> Tag reference
+<4> Reference to a specific commit hash
+
+
+Create a `.cerbos-cloud.yaml` file at the root of the file tree of the branch, commit and push it to the remote repo before moving on to the next step.
+
+== Sign up to Cerbos Cloud and create your workspace
+
+Go to https://cerbos.cloud to sign up for Cerbos Cloud. You can sign up using your Google or GitHub accounts or an email address. The onboarding wizard will guide you through creating an Organization and a workspace. Make sure to save the workspace secret in a secure place. You will need it to configure the PDPs.
+
+== Generate client credentials pair
+
+Navigate to the Settings tab of your workspace and click on "Generate client credentials" to generate a client ID and a client secret. The client secret is not stored on Cerbos Cloud and cannot be recovered. Make sure to save it in a secure place as well.
+
+== Connect a Cerbos PDP to Cloud
+
+Connecting to Cerbos Cloud is a matter of configuring the `bundle` storage driver, which can be configured using the configuration file, environment variables or command line arguments.
+
+The simplest method to get a connected PDP up and running is to run the container with configuration passed via environment variables:
+
+[source,shell]
+----
+docker run --rm --name cerbos \
+ -p 3592:3592 -p 3593:3593 \
+ -e CERBOS_CLOUD_BUNDLE="latest" \
+ -e CERBOS_CLOUD_SECRET_KEY="..." \
+ -e CERBOS_CLOUD_CLIENT_ID="..." \
+ -e CERBOS_CLOUD_CLIENT_SECRET="..." \
+ ghcr.io/cerbos/cerbos:latest server
+----
+
+The environment variables to set are:
+
+`CERBOS_CLOUD_BUNDLE`:: The label to load policies from
+`CERBOS_CLOUD_SECRET_KEY`:: Secret key to decrypt the bundles -- generated during workspace creation
+`CERBOS_CLOUD_CLIENT_ID`:: Client ID
+`CERBOS_CLOUD_CLIENT_SECRET`:: Client secret
+`CERBOS_PDP_ID`:: Optional. The name shown for the PDP in the Cerbos Cloud monitoring page. If not provided, a random value is used.
+
+
+Alternatively, you can define these values in the Cerbos configuration file as follows:
+
+[source,yaml]
+----
+server:
+ httpListenAddr: ":3592" # The port the HTTP server will listen on
+ grpcListenAddr: ":3593" # The port the gRPC server will listen on
+
+storage:
+ driver: bundle
+ bundle:
+   remote:
+     bundleLabel: latest # The label to load policies for
+   credentials:
+     instanceID: "..." # Optional. Identifier for this Cerbos instance.
+     clientID: "..." # ClientID
+     clientSecret: "..." # ClientSecret
+     secretKey: "..." # SecretKey to decrypt the bundles -- generated during workspace creation
+----
+
+Assuming you saved the configuration file as `conf.yaml` in the current directory, you can start Cerbos as follows:
+
+
+[source,shell]
+----
+docker run --rm --name cerbos \
+ -v $(pwd):/conf \
+ -p 3592:3592 -p 3593:3593 \
+ ghcr.io/cerbos/cerbos:latest server --config=/conf/conf.yaml
+----
+
+
+See xref:cerbos:configuration:index.adoc[] for all configuration values you can define for the `bundle` driver.
+
+
+
