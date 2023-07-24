@@ -28,7 +28,7 @@ Cerbos Cloud is a cloud-hosted management control plane. Cerbos instances and th
 
 Cerbos Cloud handles the validation, testing, compilation and deployment of policy updates to all connected Cerbos instances.
 
-image:how_cerbos_cloud_works.jpg[alt="How Cerbos Cloud works",role="center-img",width=85%,height=85%]
+image:how_cerbos_cloud_works.jpg[alt="How Cerbos Cloud works",role="center-img"]
 
 . Make a change to policies and push to GitHub
 . Cerbos Cloud detects the new commit and downloads the new policy definitions
