@@ -32,9 +32,7 @@ labels:
 
 Create a `.cerbos-cloud.yaml` file at the root of the file tree of the branch, commit and push it to the remote repo before moving on to the next step.
 
-****
-GitHub has a https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#push[known limitation] that if someone pushes multiple tags at once, connected applications won't be notified - including Cerbos Cloud - so no builds will be generated.
-****
+WARNING: GitHub has a https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#push[known limitation] where if multiple tags are pushed at once, connected applications - including Cerbos Cloud - won't be notified and so no builds will be generated.
 
 == Sign up to Cerbos Cloud and create your workspace
 
