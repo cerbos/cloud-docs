@@ -32,6 +32,10 @@ labels:
 
 Create a `.cerbos-cloud.yaml` file at the root of the file tree of the branch, commit and push it to the remote repo before moving on to the next step.
 
+****
+GitHub has a https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#push[known limitation] that if someone pushes multiple tags at once, connected applications won't be notified - including Cerbos Cloud - so no builds will be generated.
+****
+
 == Sign up to Cerbos Cloud and create your workspace
 
 Go to https://cerbos.cloud to sign up for Cerbos Cloud. You can sign up using your Google or GitHub accounts or an email address. The onboarding wizard will guide you through creating an Organization and a workspace. Make sure to save the workspace secret in a secure place. You will need it to configure the PDPs.
