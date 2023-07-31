@@ -2,4 +2,4 @@
 ** xref:concepts.adoc[Concepts]
 ** xref:getting-started.adoc[Getting started]
 ** xref:reliability.adoc[Reliability]
-** xref:troubleshooting.adoc[Troubleshooting]
+* xref:troubleshooting.adoc[Troubleshooting]
