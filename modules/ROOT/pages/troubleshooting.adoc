@@ -1,0 +1,5 @@
+= Troubleshooting
+
+== Builds aren't triggered when publishing multiple tags to the repository
+
+GitHub has a link:https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#push[known limitation]  where connected apps like Cerbos Cloud won't receive notifications for repository changes if more than three tags are pushed simultaneously. To avoid encountering this issue, we suggest setting the maximum number of references to be published in the repository to three. You can find information on how to do this in the link:https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/managing-repository-settings/managing-the-push-policy-for-your-repository#limiting-how-many-branches-and-tags-can-be-updated-in-a-single-push[GitHub documentation]
