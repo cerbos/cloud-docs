@@ -28,7 +28,7 @@ Cerbos Hub is a cloud-hosted management control plane. Cerbos instances and the 
 
 Cerbos Hub handles the validation, testing, compilation and deployment of policy updates to all connected Cerbos instances.
 
-image:how_cerbos_cloud_works.jpg[alt="How Cerbos Hub works",role="center-img"]
+image:how_cerbos_cloud_works.png[alt="How Cerbos Hub works",role="center-img"]
 
 . Make a change to policies and push to GitHub
 . Cerbos Hub detects the new commit and downloads the new policy definitions
