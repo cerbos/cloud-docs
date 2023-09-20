@@ -63,7 +63,7 @@ The environment variables to set are:
 `CERBOS_CLOUD_SECRET_KEY`:: Secret key to decrypt the bundles -- generated during workspace creation
 `CERBOS_CLOUD_CLIENT_ID`:: Client ID
 `CERBOS_CLOUD_CLIENT_SECRET`:: Client secret
-`CERBOS_ADP_ID`:: Optional. The name shown for the ADP in the Cerbos Hub monitoring page. If not provided, a random value is used.
+`CERBOS_PDP_ID`:: Optional. The name shown for the ADP in the Cerbos Hub monitoring page. If not provided, a random value is used.
 
 
 Alternatively, you can define these values in the Cerbos configuration file as follows:
