@@ -1,3 +1,3 @@
-## Cerbos Cloud Documentation
+## Cerbos Hub Documentation
 
 Copyright Zenauth Ltd.

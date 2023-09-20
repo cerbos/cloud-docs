@@ -1,6 +1,6 @@
-= Cerbos Cloud (Beta)
+= Cerbos Hub (Beta)
 
-Cerbos Cloud simplifies the process of authoring authorization policies, testing changes and rolling out updates to production. It's a scalable solution for developers who want to save time, streamline their workflows and confidently roll out authorization updates -- freeing you to focus on delivering great products to your customers.
+Cerbos Hub simplifies the process of authoring authorization policies, testing changes and rolling out updates to production. It's a scalable solution for developers who want to save time, streamline their workflows and confidently roll out authorization updates -- freeing you to focus on delivering great products to your customers.
 
 
 .Disclaimer
@@ -14,27 +14,27 @@ This is a BETA release of new functionality for Cerbos. While it has been tested
 == Features
 
 [unordered.stack]
-Managed CI/CD pipeline for Cerbos policies:: Cerbos Cloud serves as a managed CI/CD pipeline specifically designed for validating, testing, and distributing policies in a more efficient manner compared to the open-source version. With Cerbos Cloud, you can automate and streamline the entire policy management process.
-Coordinated rollout of policy changes:: Cerbos Cloud simplifies policy updates by centrally managing the rollout process to all PDP instances. Instead of each instance handling its own update cycle, Cerbos Cloud takes the proactive approach of pushing policy changes to all instances. This ensures a smoother rollout experience and reduces the time it
-takes for all PDPs to get in sync with each other.
-Leverage your Git workflow:: GitOps is a first-class citizen in the Cerbos ecosystem. Cerbos Cloud is no exception with support for branches, tags and commit hashes as policy sources.
-You can build multiple versions of policy bundles based on Git references and distribute them to Cerbos PDP instances running in your environment(s).
-PDP monitoring:: Cerbos Cloud provides visibility into your deployed PDP instances, including which policies are currently being served, the current version and when it was last seen.
+Managed CI/CD pipeline for Cerbos policies:: Cerbos Hub serves as a managed CI/CD pipeline specifically designed for validating, testing, and distributing policies in a more efficient manner compared to the open-source version. With Cerbos Hub, you can automate and streamline the entire policy management process.
+Coordinated rollout of policy changes:: Cerbos Hub simplifies policy updates by centrally managing the rollout process to all ADP instances. Instead of each instance handling its own update cycle, Cerbos Hub takes the proactive approach of pushing policy changes to all instances. This ensures a smoother rollout experience and reduces the time it
+takes for all ADPs to get in sync with each other.
+Leverage your Git workflow:: GitOps is a first-class citizen in the Cerbos ecosystem. Cerbos Hub is no exception with support for branches, tags and commit hashes as policy sources.
+You can build multiple versions of policy bundles based on Git references and distribute them to Cerbos ADP instances running in your environment(s).
+ADP monitoring:: Cerbos Hub provides visibility into your deployed ADP instances, including which policies are currently being served, the current version and when it was last seen.
 
 
 == How it works
 
-Cerbos Cloud is a cloud-hosted management control plane. Cerbos instances and the data they process remain strictly inside your network perimeter. Switching to Cerbos Cloud is as simple as pushing a minor configuration change to your existing Cerbos deployment. Everything remains the same except that Cerbos instances now receive optimized policy bundles from Cerbos Cloud instead of having to poll a policy repository and compile new policies locally.
+Cerbos Hub is a cloud-hosted management control plane. Cerbos instances and the data they process remain strictly inside your network perimeter. Switching to Cerbos Hub is as simple as pushing a minor configuration change to your existing Cerbos deployment. Everything remains the same except that Cerbos instances now receive optimized policy bundles from Cerbos Hub instead of having to poll a policy repository and compile new policies locally.
 
-Cerbos Cloud handles the validation, testing, compilation and deployment of policy updates to all connected Cerbos instances.
+Cerbos Hub handles the validation, testing, compilation and deployment of policy updates to all connected Cerbos instances.
 
-image:how_cerbos_cloud_works.jpg[alt="How Cerbos Cloud works",role="center-img"]
+image:how_cerbos_cloud_works.jpg[alt="How Cerbos Hub works",role="center-img"]
 
 . Make a change to policies and push to GitHub
-. Cerbos Cloud detects the new commit and downloads the new policy definitions
+. Cerbos Hub detects the new commit and downloads the new policy definitions
 . Validate the new policy definitions
 . Run any policy tests available in the repo
 . Generate a compact binary representation of the policies and build an encrypted policy bundle
 . Update the status of labels (symbolic references to git branches, tags or commits defined by you)
-. Send a message to any connected PDPs watching the updated labels that a new bundle is available
-. PDP instances download the new bundle and start serving it
+. Send a message to any connected ADPs watching the updated labels that a new bundle is available
+. ADP instances download the new bundle and start serving it
