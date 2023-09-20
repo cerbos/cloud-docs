@@ -34,17 +34,17 @@ Create a `.cerbos-cloud.yaml` file at the root of the file tree of the branch, c
 
 == Sign up to Cerbos Hub and create your workspace
 
-Go to https://cerbos.cloud to sign up for Cerbos Hub. You can sign up using your Google or GitHub accounts or an email address. The onboarding wizard will guide you through creating an Organization and a workspace. Make sure to save the workspace secret in a secure place. You will need it to configure the ADPs.
+Go to https://cerbos.cloud to sign up for Cerbos Hub. You can sign up using your Google or GitHub accounts or an email address. The onboarding wizard will guide you through creating an Organization and a workspace. Make sure to save the workspace secret in a secure place. You will need it to configure the PDPs.
 
 == Generate client credentials pair
 
 Navigate to the Settings tab of your workspace and click on "Generate client credentials" to generate a client ID and a client secret. The client secret is not stored on Cerbos Hub and cannot be recovered. Make sure to save it in a secure place as well.
 
-== Connect a Cerbos ADP to Hub
+== Connect a Cerbos PDP to Hub
 
 Connecting to Cerbos Hub is a matter of configuring the `bundle` storage driver, which can be configured using the configuration file, environment variables or command line arguments.
 
-The simplest method to get a connected ADP up and running is to run the container with configuration passed via environment variables:
+The simplest method to get a connected PDP up and running is to run the container with configuration passed via environment variables:
 
 [source,shell]
 ----
@@ -63,7 +63,7 @@ The environment variables to set are:
 `CERBOS_CLOUD_SECRET_KEY`:: Secret key to decrypt the bundles -- generated during workspace creation
 `CERBOS_CLOUD_CLIENT_ID`:: Client ID
 `CERBOS_CLOUD_CLIENT_SECRET`:: Client secret
-`CERBOS_PDP_ID`:: Optional. The name shown for the ADP in the Cerbos Hub monitoring page. If not provided, a random value is used.
+`CERBOS_PDP_ID`:: Optional. The name shown for the PDP in the Cerbos Hub monitoring page. If not provided, a random value is used.
 
 
 Alternatively, you can define these values in the Cerbos configuration file as follows:
