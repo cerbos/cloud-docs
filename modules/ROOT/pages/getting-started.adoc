@@ -9,9 +9,9 @@
 
 == Create a label mapping file
 
-In order to work with Cerbos Cloud you need to first define a label mapping. A label is a symbolic name for a git reference, which can be a branch, a tag or a commit hash. You need to define at least one label to get started with Cerbos Cloud. Labels are defined in a special file named `.cerbos-cloud.yaml` that must be stored at the root of a branch picked by you to be the config branch for Cerbos Cloud. It can be any normal branch containing other files. Typically it would be the `main` or `master` branch.
+In order to work with Cerbos Cloud you need to first define a label mapping. A label is a symbolic name for a git reference, which can be a branch, a tag or a commit hash. You need to define at least one label to get started with Cerbos Cloud. Labels are defined in a special file named `.cerbos-hub.yaml` that must be stored at the root of a branch picked by you to be the config branch for Cerbos Cloud. It can be any normal branch containing other files. Typically it would be the `main` or `master` branch.
 
-.Structure of .cerbos-cloud.yaml
+.Structure of .cerbos-hub.yaml
 [source,yaml,linenums]
 ----
 ---
@@ -30,7 +30,7 @@ labels:
 <4> Reference to a specific commit hash
 
 
-Create a `.cerbos-cloud.yaml` file at the root of the file tree of the branch, commit and push it to the remote repo before moving on to the next step.
+Create a `.cerbos-hub.yaml` file at the root of the file tree of the branch, commit and push it to the remote repo before moving on to the next step.
 
 == Sign up to Cerbos Cloud and create your workspace
 
@@ -50,19 +50,19 @@ The simplest method to get a connected PDP up and running is to run the containe
 ----
 docker run --rm --name cerbos \
  -p 3592:3592 -p 3593:3593 \
- -e CERBOS_CLOUD_BUNDLE="latest" \
- -e CERBOS_CLOUD_SECRET_KEY="..." \
- -e CERBOS_CLOUD_CLIENT_ID="..." \
- -e CERBOS_CLOUD_CLIENT_SECRET="..." \
+ -e CERBOS_HUB_BUNDLE="latest" \
+ -e CERBOS_HUB_SECRET_KEY="..." \
+ -e CERBOS_HUB_CLIENT_ID="..." \
+ -e CERBOS_HUB_CLIENT_SECRET="..." \
  ghcr.io/cerbos/cerbos:latest server
 ----
 
 The environment variables to set are:
 
-`CERBOS_CLOUD_BUNDLE`:: The label to load policies from
-`CERBOS_CLOUD_SECRET_KEY`:: Secret key to decrypt the bundles -- generated during workspace creation
-`CERBOS_CLOUD_CLIENT_ID`:: Client ID
-`CERBOS_CLOUD_CLIENT_SECRET`:: Client secret
+`CERBOS_HUB_BUNDLE`:: The label to load policies from
+`CERBOS_HUB_SECRET_KEY`:: Secret key to decrypt the bundles -- generated during workspace creation
+`CERBOS_HUB_CLIENT_ID`:: Client ID
+`CERBOS_HUB_CLIENT_SECRET`:: Client secret
 `CERBOS_PDP_ID`:: Optional. The name shown for the PDP in the Cerbos Cloud monitoring page. If not provided, a random value is used.
 
 
