@@ -1,6 +1,6 @@
 ---
-name: cerbos-cloud
-title: Cerbos Cloud
+name: cerbos-hub
+title: Cerbos Hub
 version: ~
 nav:
   - modules/ROOT/nav.adoc
