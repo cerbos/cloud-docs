@@ -1,10 +1,10 @@
 = Reliability
 
-When a PDP is connected to Cerbos Cloud it establishes a two-way communication channel. This is used to request the initial policy bundle from Cerbos Cloud and then subsequently receive push notifications about new bundle versions. Because there is no polling involved, all PDPs in your environment will converge on a single version of policies much more quickly.
+When a PDP is connected to Cerbos Hub it establishes a two-way communication channel. This is used to request the initial policy bundle from Cerbos Hub and then subsequently receive push notifications about new bundle versions. Because there is no polling involved, all PDPs in your environment will converge on a single version of policies much more quickly.
 
-We take the reliability and availability of Cerbos Cloud very seriously. However, if for whatever reason Cerbos Cloud API becomes unavailable, the PDPs will continue to work with the last downloaded bundle while trying to re-establish the connection in the background. New PDPs will also be able to start with the last successfully built bundle even if the Cerbos Cloud API is unavailable because we serve those through a separate service.
+We take the reliability and availability of Cerbos Hub very seriously. However, if for whatever reason Cerbos Hub API becomes unavailable, the PDPs will continue to work with the last downloaded bundle while trying to re-establish the connection in the background. New PDPs will also be able to start with the last successfully built bundle even if the Cerbos Hub API is unavailable because we serve those through a separate service.
 
-We recommend mounting a persistent storage disk to the Cerbos pod and pointing to it using the `storage.bundle.remote.cacheDir` configuration setting. This allows you to launch Cerbos with the `CERBOS_CLOUD_OFFLINE` environment variable set and the PDP will use the last cached bundle from the cache directory. In the worst-case scenario, you can switch your PDP to use the git storage driver and configure it to read the policies directly from the git repository that's connected to Cerbos Cloud.
+We recommend mounting a persistent storage disk to the Cerbos pod and pointing to it using the `storage.bundle.remote.cacheDir` configuration setting. This allows you to launch Cerbos with the `CERBOS_CLOUD_OFFLINE` environment variable set and the PDP will use the last cached bundle from the cache directory. In the worst-case scenario, you can switch your PDP to use the git storage driver and configure it to read the policies directly from the git repository that's connected to Cerbos Hub.
 
-You can monitor whether a PDP is connected to Cerbos Cloud using the `cerbos_dev_cloud_connected` gauge in Prometheus metrics.
+You can monitor whether a PDP is connected to Cerbos Hub using the `cerbos_dev_cloud_connected` gauge in Prometheus metrics.
 
