@@ -10,7 +10,7 @@
 == Create a label mapping file
 
 
-In order to work with Cerbos Hub you need to first define a label mapping. A label is a symbolic name for a git reference, which can be a branch, a tag or a commit hash. You need to define at least one label to get started with Cerbos Hub. Labels are defined in a special file named `.cerbos-cloud.yaml` that must be stored at the root of a branch picked by you to be the config branch for Cerbos Hub. It can be any normal branch containing other files. Typically it would be the `main` or `master` branch.
+In order to work with Cerbos Hub you need to first define a label mapping. A label is a symbolic name for a git reference, which can be a branch, a tag or a commit hash. You need to define at least one label to get started with Cerbos Hub. Labels are defined in a special file named `.cerbos-hub.yaml` that must be stored at the root of a branch picked by you to be the config branch for Cerbos Hub. It can be any normal branch containing other files. Typically it would be the `main` or `master` branch.
 
 .Structure of .cerbos-hub.yaml
 [source,yaml,linenums]
@@ -64,7 +64,7 @@ The environment variables to set are:
 `CERBOS_HUB_SECRET_KEY`:: Secret key to decrypt the bundles -- generated during workspace creation
 `CERBOS_HUB_CLIENT_ID`:: Client ID
 `CERBOS_HUB_CLIENT_SECRET`:: Client secret
-`CERBOS_PDP_ID`:: Optional. The name shown for the PDP in the Cerbos Cloud monitoring page. If not provided, a random value is used.
+`CERBOS_PDP_ID`:: Optional. The name shown for the PDP in the Cerbos Hub monitoring page. If not provided, a random value is used.
 
 Alternatively, you can define these values in the Cerbos configuration file as follows:
 
