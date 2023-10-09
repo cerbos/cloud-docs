@@ -3,7 +3,7 @@
 == Prerequisites
 
 - Currently GitHub is the only supported git provider. You must have access to a GitHub repository that contains your policies and (optional) tests. This repository can be a private one. An example repository is available at https://github.com/cerbos/example-cerbos-policy-repository that you can use as a template if you are starting from scratch.
-- Cerbos version 0.28.0 or higher
+- Cerbos version 0.31.0 or higher
 - Outbound internet connection for your Cerbos instances so that they can connect to Cerbos Hub to fetch bundle updates.
 
 
