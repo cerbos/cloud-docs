@@ -4,5 +4,64 @@ The open source Cerbos server instances that you run in your own infrastructure 
 
 == Deploy a policy decision point
 
+Connecting to Cerbos Hub is a matter of configuring the `bundle` storage driver, which can be configured using the configuration file, environment variables or command line arguments.
+
+The simplest method to get a connected PDP up and running is to run the container with configuration passed via environment variables:
+
+[source,shell]
+----
+docker run --rm --name cerbos \
+ -p 3592:3592 -p 3593:3593 \
+ -e CERBOS_HUB_BUNDLE="latest" \
+ -e CERBOS_HUB_WORKSPACE_SECRET="..." \
+ -e CERBOS_HUB_CLIENT_ID="..." \
+ -e CERBOS_HUB_CLIENT_SECRET="..." \
+ ghcr.io/cerbos/cerbos:latest server
+----
+
+The environment variables to set are:
+
+`CERBOS_HUB_BUNDLE`:: The label to load policies from
+`CERBOS_HUB_WORKSPACE_SECRET`:: Secret key to decrypt the bundles -- generated during workspace creation
+`CERBOS_HUB_CLIENT_ID`:: Client ID
+`CERBOS_HUB_CLIENT_SECRET`:: Client secret
+`CERBOS_HUB_PDP_ID`:: Optional. The name shown for the PDP in the Cerbos Hub monitoring page. If not provided, a random value is used.
+
+Alternatively, you can define these values in the Cerbos configuration file as follows:
+
+[source,yaml]
+----
+server:
+ httpListenAddr: ":3592" # The port the HTTP server will listen on
+ grpcListenAddr: ":3593" # The port the gRPC server will listen on
+
+storage:
+ driver: bundle
+ bundle:
+   remote:
+     bundleLabel: latest # The label to load policies for
+   credentials:
+     pdpID: "..." # Optional. Identifier for this Cerbos instance.
+     clientID: "..." # ClientID
+     clientSecret: "..." # ClientSecret
+     workspaceSecret: "..." # WorkspaceSecret to decrypt the bundles -- generated during workspace creation
+----
+
+Assuming you saved the configuration file as `conf.yaml` in the current directory, you can start Cerbos as follows:
+
+
+[source,shell]
+----
+docker run --rm --name cerbos \
+ -v $(pwd):/conf \
+ -p 3592:3592 -p 3593:3593 \
+ ghcr.io/cerbos/cerbos:latest server --config=/conf/conf.yaml
+----
+
+See xref:cerbos:configuration:index.adoc[] for all configuration values you can define for the `bundle` driver.
+
 == Monitoring
 
+The Decsion points page in Cerbos Hub provides a view of all the recently connected policy decision point instances to the workspace, including when it was last seen, which version it is running and which deployment label is is monitoring for updates.
+
+image:connected_pdps.png[alt="Connected instances",role="center-img"]
