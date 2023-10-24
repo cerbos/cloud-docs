@@ -1,0 +1,41 @@
+= Decision points
+
+Cerbos Hub supports two types of decision points which enable authorization to be evaluated in different layers of the application stack.
+
+.Decision point feature matrix
+[cols="1a,1,1"]
+|===
+| |Service|Embedded
+
+|
+Check permissions
+
+Evaluate whether a given principal, can perform a given action on resource.
+
+|Yes
+|Yes
+
+|
+Query plan
+
+Perform a partial evaluation of policy to return a the conditions to apply to a query to return just the instances of a resource a principal has access to.
+
+|Yes
+|No
+
+|
+Audit logs
+
+Audit logs capture access records and decisions made by the engine along with the associated context data.
+|Yes
+|No
+|===
+
+
+== Policy Decision Point Service
+
+The open source Cerbos server instances that you run in your own infrastructure are called PDPs. Cerbos Hub is the management control plane for PDP instances that are running inside your environment. Rather than each PDP being responsible for detecting policy changes, parsing, compiling and loading them, they get pre-compiled policy bundles pushed to them from Cerbos Hub. This model ensures that all your data remains within your network perimeter and that authorization checks happen locally with low latency while reducing the overhead of policy updates and the time it takes for the whole fleet to get in sync. A PDP must be configured with the name of a label, workspace secret and API key in order to connect to Cerbos Hub.
+
+== Embedded Policy Decision Point
+
+Cerbos Hub also generates an embeddable version of policies - powered by WebAssembly - enabling authorization decision to be made on device, at edge or other environments where it is not possible to run a service. These bundles are generated through the CI/CD pipeline and are kept in sync with your policies on every change. These modules can be loaded into client applications via the Cerbos SDKs and handle authorization cehcks without the need to roundtrip to the backend service. Use cases such as showing and hiding UI elements on a webpage can be done all locally using the data avaliable in the page but still using the policies being served by the service instances.
