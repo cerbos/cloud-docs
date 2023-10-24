@@ -15,10 +15,9 @@ This is a BETA release of new functionality for Cerbos. While it has been tested
 
 [unordered.stack]
 Managed CI/CD pipeline for Cerbos policies:: Cerbos Hub serves as a managed CI/CD pipeline specifically designed for validating, testing, and distributing policies in a more efficient manner compared to the open-source version. With Cerbos Hub, you can automate and streamline the entire policy management process.
-Coordinated rollout of policy changes:: Cerbos Hub simplifies policy updates by centrally managing the rollout process to all PDP instances. Instead of each instance handling its own update cycle, Cerbos Hub takes the proactive approach of pushing policy changes to all instances. This ensures a smoother rollout experience and reduces the time it
-takes for all PDPs to get in sync with each other.
-Leverage your Git workflow:: GitOps is a first-class citizen in the Cerbos ecosystem. Cerbos Hub is no exception with support for branches, tags and commit hashes as policy sources.
-You can build multiple versions of policy bundles based on Git references and distribute them to Cerbos PDP instances running in your environment(s).
+Embedded Policy Decision Point:: Cerbos Hub generates an embeddable version of policies - powered by WebAssembly - enabling authorization decision to be made on device, at edge or other environments where it is not possible to run a service. These bundles are generated through the CI/CD pipeline and are kept in sync with your policies on every change.
+Coordinated rollout of policy changes:: Cerbos Hub simplifies policy updates by centrally managing the rollout process to all PDP service instances. Instead of each instance handling its own update cycle, Cerbos Hub takes the proactive approach of pushing policy changes to all instances. This ensures a smoother rollout experience and reduces the time it takes for all PDPs to get in sync with each other.
+Leverage your Git workflow:: GitOps is a first-class citizen in the Cerbos ecosystem. Cerbos Hub is no exception with support for branches, tags and commit hashes as policy sources. You can build multiple versions of policy bundles based on Git references and distribute them to Cerbos PDP instances running in your environment(s).
 PDP monitoring:: Cerbos Hub provides visibility into your deployed PDP instances, including which policies are currently being served, the current version and when it was last seen.
 
 
@@ -34,7 +33,8 @@ image:how_cerbos_hub_works.png[alt="How Cerbos Hub works",role="center-img"]
 . Cerbos Hub detects the new commit and downloads the new policy definitions
 . Validate the new policy definitions
 . Run any policy tests available in the repo
-. Generate a compact binary representation of the policies and build an encrypted policy bundle
+. Generate a compact binary representation of the policies and build both an encrypted policy bundle and an embedded WebAssembly module and store on CDN
 . Update the status of labels (symbolic references to git branches, tags or commits defined by you)
 . Send a message to any connected PDPs watching the updated labels that a new bundle is available
 . PDP instances download the new bundle and start serving it
+. Client applications download latest version of embedded policy module to evaluate on device

@@ -3,15 +3,16 @@
 == Prerequisites
 
 - Currently GitHub is the only supported git provider. You must have access to a GitHub repository that contains your policies and (optional) tests. This repository can be a private one. An example repository is available at https://github.com/cerbos/example-cerbos-policy-repository that you can use as a template if you are starting from scratch.
-- Cerbos version 0.28.0 or higher
+- Cerbos version 0.31.0 or higher
 - Outbound internet connection for your Cerbos instances so that they can connect to Cerbos Hub to fetch bundle updates.
 
 
 == Create a label mapping file
 
-In order to work with Cerbos Hub you need to first define a label mapping. A label is a symbolic name for a git reference, which can be a branch, a tag or a commit hash. You need to define at least one label to get started with Cerbos Hub. Labels are defined in a special file named `.cerbos-cloud.yaml` that must be stored at the root of a branch picked by you to be the config branch for Cerbos Hub. It can be any normal branch containing other files. Typically it would be the `main` or `master` branch.
 
-.Structure of .cerbos-cloud.yaml
+In order to work with Cerbos Hub you need to first define a label mapping. A label is a symbolic name for a git reference, which can be a branch, a tag or a commit hash. You need to define at least one label to get started with Cerbos Hub. Labels are defined in a special file named `.cerbos-hub.yaml` that must be stored at the root of a branch picked by you to be the config branch for Cerbos Hub. It can be any normal branch containing other files. Typically it would be the `main` or `master` branch.
+
+.Structure of .cerbos-hub.yaml
 [source,yaml,linenums]
 ----
 ---
@@ -30,7 +31,7 @@ labels:
 <4> Reference to a specific commit hash
 
 
-Create a `.cerbos-cloud.yaml` file at the root of the file tree of the branch, commit and push it to the remote repo before moving on to the next step.
+Create a `.cerbos-hub.yaml` file at the root of the file tree of the branch, commit and push it to the remote repo before moving on to the next step.
 
 == Sign up to Cerbos Hub and create your workspace
 
@@ -50,21 +51,20 @@ The simplest method to get a connected PDP up and running is to run the containe
 ----
 docker run --rm --name cerbos \
  -p 3592:3592 -p 3593:3593 \
- -e CERBOS_CLOUD_BUNDLE="latest" \
- -e CERBOS_CLOUD_SECRET_KEY="..." \
- -e CERBOS_CLOUD_CLIENT_ID="..." \
- -e CERBOS_CLOUD_CLIENT_SECRET="..." \
+ -e CERBOS_HUB_BUNDLE="latest" \
+ -e CERBOS_HUB_WORKSPACE_SECRET="..." \
+ -e CERBOS_HUB_CLIENT_ID="..." \
+ -e CERBOS_HUB_CLIENT_SECRET="..." \
  ghcr.io/cerbos/cerbos:latest server
 ----
 
 The environment variables to set are:
 
-`CERBOS_CLOUD_BUNDLE`:: The label to load policies from
-`CERBOS_CLOUD_SECRET_KEY`:: Secret key to decrypt the bundles -- generated during workspace creation
-`CERBOS_CLOUD_CLIENT_ID`:: Client ID
-`CERBOS_CLOUD_CLIENT_SECRET`:: Client secret
-`CERBOS_PDP_ID`:: Optional. The name shown for the PDP in the Cerbos Hub monitoring page. If not provided, a random value is used.
-
+`CERBOS_HUB_BUNDLE`:: The label to load policies from
+`CERBOS_HUB_WORKSPACE_SECRET`:: Secret key to decrypt the bundles -- generated during workspace creation
+`CERBOS_HUB_CLIENT_ID`:: Client ID
+`CERBOS_HUB_CLIENT_SECRET`:: Client secret
+`CERBOS_HUB_PDP_ID`:: Optional. The name shown for the PDP in the Cerbos Hub monitoring page. If not provided, a random value is used.
 
 Alternatively, you can define these values in the Cerbos configuration file as follows:
 
@@ -80,10 +80,10 @@ storage:
    remote:
      bundleLabel: latest # The label to load policies for
    credentials:
-     instanceID: "..." # Optional. Identifier for this Cerbos instance.
+     pdpID: "..." # Optional. Identifier for this Cerbos instance.
      clientID: "..." # ClientID
      clientSecret: "..." # ClientSecret
-     secretKey: "..." # SecretKey to decrypt the bundles -- generated during workspace creation
+     workspaceSecret: "..." # WorkspaceSecret to decrypt the bundles -- generated during workspace creation
 ----
 
 Assuming you saved the configuration file as `conf.yaml` in the current directory, you can start Cerbos as follows:
