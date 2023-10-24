@@ -1,3 +1,8 @@
 = CI/CD pipeline
 
+Cerbos Hub serves as a managed CI/CD pipeline specifically designed for validating, testing, and distributing policies in a more efficient manner compared to the open-source version. With Cerbos Hub, you can automate and streamline the entire policy management process.
 
+== Compilation
+
+
+== Test runner

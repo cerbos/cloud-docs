@@ -6,6 +6,5 @@
 * xref:decision-points.adoc[Decision points]
 ** xref:decision-point-service.adoc[Service]
 ** xref:decision-point-embedded.adoc[Embedded]
-* xref:playground.adoc[Policy playground]
 * xref:reliability.adoc[Reliability]
 * xref:troubleshooting.adoc[Troubleshooting]
