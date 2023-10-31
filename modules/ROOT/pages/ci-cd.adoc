@@ -23,7 +23,7 @@ image:failed_tests.png[alt="Tests failed",role="center-img"]
 
 == Distribution
 
-Once the policies are compiled and all the tests pass, the status of the bundle will be changed to `Generated`. The policy bundle will be automatically distributed to the Cerbos PDPs that are associated with the current label. For creation and assigment of labels see xref:cerbos-cloud:deployment-labels.adoc[].
+Once the policies are compiled and all the tests pass, the status of the bundle will be changed to `Generated`. The policy bundle will be automatically distributed to the Cerbos PDPs that are associated with the current label. For creation and assigment of labels see xref:deployment-labels.adoc[].
 
 image:deployments.png[alt="Distribution Labels",role="center-img"]
 
