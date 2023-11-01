@@ -14,7 +14,6 @@ image:compilation_failed.png[alt="Failed compilation",role="center-img"]
 
 Once the compilation is complete, Cerbos Hub will automatically run the tests in the policy repository. 
 
-
 == Test runner
 
 After a build compiles, Cerbos Hub will run the tests in the policy repository. If the tests fail, you will see an error message for the given commit hash. The build page shows the build status of each commit.
@@ -23,10 +22,10 @@ image:failed_tests.png[alt="Tests failed",role="center-img"]
 
 == Distribution
 
-Once the policies are compiled and all the tests pass, the status of the bundle will be changed to `Generated`. The policy bundle will be automatically distributed to the Cerbos PDPs that are associated with the current label. For creation and assigment of labels see xref:deployment-labels.adoc[Deployment Labels].
+Once the policies are compiled and all the tests pass, the status of the bundle will be changed to `Generated`. The policy bundle will be automatically distributed to the xref:decision-points-service.adoc[Cerbos PDPs] that are associated with the current label. For creation and assigment of labels see xref:deployment-labels.adoc[Deployment Labels].
 
 image:deployments.png[alt="Distribution Labels",role="center-img"]
 
-Similary the Embedded policy bundle will be generated and their statuses will be updatd in the `Embedded builds` tab.
+Similary the xref:decision-points-embedded.adoc[Embedded policy bundle] will be generated and their statuses will be updated in the `Embedded builds` tab.
 
 
