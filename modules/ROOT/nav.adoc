@@ -1,6 +1,7 @@
 * xref:index.adoc[Introduction]
 * xref:concepts.adoc[Concepts]
 * xref:getting-started.adoc[Getting started]
+* xref:playground.adoc[Policy playground]
 * xref:ci-cd.adoc[CI/CD pipeline]
 * xref:deployment-labels.adoc[Deployment labels]
 * xref:decision-points.adoc[Decision points]
