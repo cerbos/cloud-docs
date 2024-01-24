@@ -14,6 +14,7 @@ This is a BETA release of new functionality for Cerbos. While it has been tested
 == Features
 
 [unordered.stack]
+Collaborative policy editing:: Cerbos Hub playgrounds provide private, collaborative, IDE-like development environments to help author and test polices with ease.
 Managed CI/CD pipeline for Cerbos policies:: Cerbos Hub serves as a managed CI/CD pipeline specifically designed for validating, testing, and distributing policies in a more efficient manner compared to the open-source version. With Cerbos Hub, you can automate and streamline the entire policy management process.
 Coordinated rollout of policy changes:: Cerbos Hub simplifies policy updates by centrally managing the rollout process to all PDP service instances. Instead of each instance handling its own update cycle, Cerbos Hub takes the proactive approach of pushing policy changes to all instances. This ensures a smoother rollout experience and reduces the time it takes for all PDPs to get in sync with each other.
 Leverage your Git workflow:: GitOps is a first-class citizen in the Cerbos ecosystem. Cerbos Hub is no exception with support for branches, tags and commit hashes as policy sources. You can build multiple versions of policy bundles based on Git references and distribute them to Cerbos PDP instances running in your environment(s).

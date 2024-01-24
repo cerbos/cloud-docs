@@ -1,5 +1,6 @@
 * xref:index.adoc[Introduction]
 * xref:concepts.adoc[Concepts]
+* xref:playground.adoc[Playgrounds]
 * xref:getting-started.adoc[Getting started]
 * xref:ci-cd.adoc[CI/CD pipeline]
 * xref:deployment-labels.adoc[Deployment labels]

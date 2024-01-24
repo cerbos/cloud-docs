@@ -1,3 +1,12 @@
-= Policy playground
+= Collaborative policy playgrounds
 
-Coming soon.
+Cerbos Hub playgrounds are fully-interactive, private development environments that provide an IDE-like experience for authoring policies. Quickly create or edit policies and test fixtures with instant feedback on syntax issues and test failures. Take advantage of the powerful collaborative editing features to pair with colleagues to develop new authorization rules or use it as a sandbox to train new team members on Cerbos policies.
+
+Login to Cerbos Hub and select one of the organizations you're a member of. Click on the "Playgrounds" tab to view existing playgrounds or to create a new one.
+
+When creating a new playground, you have the option of creating an empty playground or a playground pre-populated with example policies. If you have xref:getting-started.adoc[created a Cerbos Hub workspace] by connecting a GitHub repository, you have the option of creating a playground populated with files from one of the git branches as well.
+
+After creating a playground, click on the "Video tutorial" button on the top right corner of the screen to learn the basics.
+
+
+
