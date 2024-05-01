@@ -36,8 +36,8 @@ server:
  grpcListenAddr: ":3593" # The port the gRPC server will listen on
 
 storage:
- driver: bundle
- bundle:
+ driver: hub
+ hub:
    remote:
      bundleLabel: latest # The label to load policies for
    credentials:
