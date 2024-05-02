@@ -4,7 +4,7 @@ The open source Cerbos server instances that you run in your own infrastructure 
 
 == Deploying a PDP
 
-Connecting to Cerbos Hub is a matter of configuring the `bundle` storage driver, which can be configured using the configuration file, environment variables or command line arguments.
+Connecting to Cerbos Hub is a matter of configuring the `hub` storage driver, which can be configured using the configuration file, environment variables or command line arguments.
 
 The simplest method to get a connected PDP up and running is to run the container with configuration passed via environment variables:
 
