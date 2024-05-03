@@ -1,0 +1,107 @@
+= Audit log collection
+
+With just a simple configuration change, you can configure the PDPs to securely send audit logs to Cerbos Hub. This vastly simplifies the work that would otherwise be required to configure and deploy a log aggregation solution to securely collect, store and query audit logs from across your fleet.
+
+To get started, you need to obtain a set of client credentials. Navigate to the Settings tab of your workspace and click on "Generate client credentials" to generate a client ID and a client secret. The client secret is not stored on Cerbos Hub and cannot be recovered. Make sure to save it in a secure place.
+
+The client credentials can be provided to the PDP using environment variables or the configuration file. The environment variables to set are:
+
+`CERBOS_HUB_CLIENT_ID`:: Client ID
+`CERBOS_HUB_CLIENT_SECRET`:: Client secret
+`CERBOS_HUB_PDP_ID`:: Optional. A unique name for the PDP. If not provided, a random value is used.
+
+Alternatively, you can define these values in the Cerbos configuration file as follows:
+
+[source,yaml]
+----
+hub:
+  credentials:
+    pdpID: "..." # Optional. Identifier for this Cerbos instance.
+    clientID: "..." # ClientID
+    clientSecret: "..." # ClientSecret
+----
+
+To enable audit log collection, configure the `hub` audit log backend with a local storage path. This local storage path is important for preserving the audit logs until they are safely saved to Cerbos Hub. If there are any network interruptions or if the PDP process crashes, the audit logs generated up to that point are saved on disk and will be sent to Cerbos Hub the next time the PDP starts. If you're using a container orchestrator or a cloud-based solution to deploy Cerbos, attach a persistent storage volume at this path to ensure that the data does not get lost.
+
+[source,yaml]
+----
+server:
+ httpListenAddr: ":3592" # The port the HTTP server will listen on
+ grpcListenAddr: ":3593" # The port the gRPC server will listen on
+
+hub:
+  credentials:
+    pdpID: "..." # Optional. Identifier for this Cerbos instance.
+    clientID: "..." # ClientID
+    clientSecret: "..." # ClientSecret
+
+audit:
+  backend: hub
+  hub:
+    storagePath: "..." # Local storage path for buffering the audit logs.
+----
+
+Refer to xref:cerbos:configuration:audit.adoc[Cerbos documentation] for details about common audit configurations that apply to all backends.
+
+== Masking sensitive fields
+
+You can define masks to filter out sensitive or personally identifiable information (PII) that might be included in the audit log entries. Masked fields are removed locally at the PDP and are never stored or transmitted to Cerbos Hub.
+
+Masks are defined using a subset of JSONPath syntax.
+
+TIP: Use the xref:cerbos:configuration:audit.adoc#local[`local` audit backend] along with xref:cerbos:cli:cerbosctl.adoc#audit[cerbosctl audit commands] to inspect your audit logs locally and determine the paths that need to be masked.
+
+[source,yaml]
+----
+hub:
+  credentials:
+    pdpID: "..." # Optional. Identifier for this Cerbos instance.
+    clientID: "..." # ClientID
+    clientSecret: "..." # ClientSecret
+
+audit:
+  backend: hub
+  hub:
+    storagePath: "..." # Local storage path for buffering the audit logs.
+    mask:
+      # Fields to mask from CheckResources requests
+      checkResources:
+        - inputs[*].principal.attr.foo
+        - inputs[*].auxData
+        - outputs
+      # Fields to mask from the metadata
+      metadata:
+        - authorization
+      # Fields to mask from the peer information
+      peer:
+        - address
+        - forwarded_for
+      # Fields to mask from the PlanResources requests.
+      planResources:
+        - input.principal.attr.nestedMap.foo
+----
+
+TIP: To avoid logging authentication tokens and other sensitive request parameters, use the top-level `includeMetadataKeys` and `excludeMetadataKeys` settings. Refer to xref:cerbos:configuration:audit.adoc[Cerbos audit configuration] for more details.
+
+== Advanced configuration
+
+Advanced users can tune the local log retention period and other buffering settings. We generally do not recommend changing the default values unless absolutely necessary.
+
+[source,yaml]
+----
+audit:
+  backend: hub
+  hub:
+    storagePath: "..." # Local storage path for buffering the audit logs.
+    retentionPeriod: 168h # How long to keep buffered records on disk.
+    advanced:
+      bufferSize: 16 # Size of the memory buffer. Increasing this will use more memory and the chances of losing data during a crash.
+      maxBatchSize: 16 # Write batch size. If your records are small, increasing this will reduce disk IO.
+      flushInterval: 30s # Time to keep records in memory before committing.
+      gcInterval: 15m # How often the garbage collector runs to remove old entries from the log.
+----
+
+
+
+
+

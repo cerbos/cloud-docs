@@ -7,5 +7,6 @@
 * xref:decision-points.adoc[Policy Decision Points (PDPs)]
 ** xref:decision-points-service.adoc[Service]
 ** xref:decision-points-embedded.adoc[Embedded]
+* audit-log-collection.adoc[Audit log collection]
 * xref:reliability.adoc[Reliability]
 * xref:troubleshooting.adoc[Troubleshooting]

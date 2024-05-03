@@ -35,16 +35,18 @@ server:
  httpListenAddr: ":3592" # The port the HTTP server will listen on
  grpcListenAddr: ":3593" # The port the gRPC server will listen on
 
+hub:
+  credentials:
+    pdpID: "..." # Optional. Identifier for this Cerbos instance.
+    clientID: "..." # ClientID
+    clientSecret: "..." # ClientSecret
+    workspaceSecret: "..." # WorkspaceSecret to decrypt the bundles -- generated during workspace creation
+
 storage:
  driver: hub
  hub:
    remote:
      bundleLabel: latest # The label to load policies for
-   credentials:
-     pdpID: "..." # Optional. Identifier for this Cerbos instance.
-     clientID: "..." # ClientID
-     clientSecret: "..." # ClientSecret
-     workspaceSecret: "..." # WorkspaceSecret to decrypt the bundles -- generated during workspace creation
 ----
 
 Assuming you saved the configuration file as `.cerbos.yaml` in the current directory, you can start Cerbos as follows:
