@@ -60,6 +60,7 @@ docker run --rm --name cerbos \
 
 The environment variables to set are:
 
+[horizontal]
 `CERBOS_HUB_BUNDLE`:: The label to load policies from
 `CERBOS_HUB_WORKSPACE_SECRET`:: Secret key to decrypt the bundles -- generated during workspace creation
 `CERBOS_HUB_CLIENT_ID`:: Client ID
