@@ -27,8 +27,8 @@ To enable audit log collection, configure the `hub` audit log backend with a loc
 [source,yaml]
 ----
 server:
- httpListenAddr: ":3592" # The port the HTTP server will listen on
- grpcListenAddr: ":3593" # The port the gRPC server will listen on
+  httpListenAddr: ":3592" # The port the HTTP server will listen on
+  grpcListenAddr: ":3593" # The port the gRPC server will listen on
 
 hub:
   credentials:
