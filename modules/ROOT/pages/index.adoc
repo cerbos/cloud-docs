@@ -20,7 +20,7 @@ Coordinated rollout of policy changes:: Cerbos Hub simplifies policy updates by 
 Leverage your Git workflow:: GitOps is a first-class citizen in the Cerbos ecosystem. Cerbos Hub is no exception with support for branches, tags and commit hashes as policy sources. You can build multiple versions of policy bundles based on Git references and distribute them to Cerbos PDP instances running in your environment(s).
 PDP monitoring:: Cerbos Hub provides visibility into your deployed PDP instances, including which policies are currently being served, the current version and when it was last seen.
 Embeddable policies:: Exclusive to Cerbos Hub is the ability to generate self-contained policy snapshots that can be embedded into any system that supports WebAssembly modules. This is a powerful solution for cases where authorization decisions have to be made locally on device or at the edge without access to a full-fledged Cerbos policy decision point.
-Private playgrounds:: Cerbos Hub playgrounds are feature-rich policy development environments for building quick prototypes, creating training material or just experimenting with your existing policies in a private sandbox.
+Collaborative playgrounds:: Cerbos Hub playgrounds are feature-rich policy development environments for building quick prototypes, creating training material or just experimenting with your existing policies in a private sandbox with your colleagues.
 Easy audit log aggregation:: With a simple line of configuration, you can start collecting audit logs from your PDPs without having to worry about configuring, deploying and tuning a separate log aggregation solution.
 
 
