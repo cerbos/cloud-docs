@@ -123,6 +123,6 @@ audit:
   backend: hub
   hub:
     storagePath: "..." # Path to a local storage location for buffering audit logs before being sent to Cerbos Hub
----
+----
 
 Refer to the xref:audit-log-collection.adoc[audit log collection documentation] for more information about filtering sensitive fields and other advanced configuration options.
