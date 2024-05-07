@@ -24,6 +24,8 @@ hub:
 
 To enable audit log collection, configure the `hub` audit log backend with a local storage path. This local storage path is important for preserving the audit logs until they are safely saved to Cerbos Hub. If there are any network interruptions or if the PDP process crashes, the audit logs generated up to that point are saved on disk and will be sent to Cerbos Hub the next time the PDP starts. If you're using a container orchestrator or a cloud-based solution to deploy Cerbos, attach a persistent storage volume at this path to ensure that the data does not get lost.
 
+
+
 [source,yaml]
 ----
 server:
@@ -43,6 +45,24 @@ audit:
 ----
 
 Refer to xref:cerbos:configuration:audit.adoc[Cerbos documentation] for details about common audit configurations that apply to all backends.
+
+[TIP]
+====
+
+To quickly try out the Cerbos Hub audit logs feature, you can use the following command.
+
+[source,shell]
+----
+mkdir -p /tmp/cerbos && docker run --rm --name cerbos \
+ -p 3592:3592 -p 3593:3593 \
+ -e CERBOS_HUB_WORKSPACE_SECRET="..." \
+ -e CERBOS_HUB_CLIENT_ID="..." \
+ -e CERBOS_HUB_CLIENT_SECRET="..." \
+ -v /tmp/cerbos:/audit_logs \
+ ghcr.io/cerbos/cerbos:latest server --set=audit.backend=hub --set=audit.hub.storagePath=/audit_logs
+----
+
+====
 
 == Masking sensitive fields
 
