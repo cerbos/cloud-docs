@@ -3,8 +3,8 @@
 == Prerequisites
 
 - Currently GitHub is the only supported git provider. You must have access to a GitHub repository that contains your policies and (optional) tests. This repository can be a private one. An example repository is available at https://github.com/cerbos/example-cerbos-policy-repository that you can use as a template if you are starting from scratch.
-- Cerbos version 0.31.0 or higher
-- Outbound internet connection for your Cerbos instances so that they can connect to Cerbos Hub to fetch bundle updates.
+- Cerbos version 0.31.0 or higher. Audit log collection requires Cerbos 0.36.0 or higher.
+- Outbound internet connection for your Cerbos instances so that they can connect to Cerbos Hub to fetch bundle updates and upload audit logs (optional).
 
 
 == Create a label mapping file
@@ -43,7 +43,7 @@ Navigate to the Settings tab of your workspace and click on "Generate client cre
 
 == Connect a Cerbos PDP to Hub
 
-Connecting to Cerbos Hub is a matter of configuring the `bundle` storage driver, which can be configured using the configuration file, environment variables or command line arguments.
+Connecting to Cerbos Hub is a matter of configuring the `hub` storage driver, which can be configured using the configuration file, environment variables or command line arguments.
 
 The simplest method to get a connected PDP up and running is to run the container with configuration passed via environment variables:
 
@@ -60,6 +60,7 @@ docker run --rm --name cerbos \
 
 The environment variables to set are:
 
+[horizontal]
 `CERBOS_HUB_BUNDLE`:: The label to load policies from
 `CERBOS_HUB_WORKSPACE_SECRET`:: Secret key to decrypt the bundles -- generated during workspace creation
 `CERBOS_HUB_CLIENT_ID`:: Client ID
@@ -71,23 +72,24 @@ Alternatively, you can define these values in the Cerbos configuration file as f
 [source,yaml]
 ----
 server:
- httpListenAddr: ":3592" # The port the HTTP server will listen on
- grpcListenAddr: ":3593" # The port the gRPC server will listen on
+  httpListenAddr: ":3592" # The port the HTTP server will listen on
+  grpcListenAddr: ":3593" # The port the gRPC server will listen on
+
+hub:
+  credentials:
+    pdpID: "..." # Optional. Identifier for this Cerbos instance.
+    clientID: "..." # ClientID
+    clientSecret: "..." # ClientSecret
+    workspaceSecret: "..." # WorkspaceSecret to decrypt the bundles -- generated during workspace creation
 
 storage:
- driver: bundle
- bundle:
-   remote:
-     bundleLabel: latest # The label to load policies for
-   credentials:
-     pdpID: "..." # Optional. Identifier for this Cerbos instance.
-     clientID: "..." # ClientID
-     clientSecret: "..." # ClientSecret
-     workspaceSecret: "..." # WorkspaceSecret to decrypt the bundles -- generated during workspace creation
+  driver: hub
+  hub:
+    remote:
+      bundleLabel: latest # The label to load policies for
 ----
 
 Assuming you saved the configuration file as `.cerbos.yaml` in the current directory, you can start Cerbos as follows:
-
 
 [source,shell]
 ----
@@ -98,7 +100,29 @@ docker run --rm --name cerbos \
 ----
 
 
-See xref:cerbos:configuration:index.adoc[] for more information about configuring Cerbos.
+TIP: See xref:cerbos:configuration:index.adoc[] for more information about configuring Cerbos.
 
+== Enable audit log collection (optional)
 
+You can configure the `hub` audit backend to enable centralized audit log collection.
 
+[source,yaml]
+----
+server:
+  httpListenAddr: ":3592" # The port the HTTP server will listen on
+  grpcListenAddr: ":3593" # The port the gRPC server will listen on
+
+hub:
+  credentials:
+    pdpID: "..." # Optional. Identifier for this Cerbos instance.
+    clientID: "..." # ClientID
+    clientSecret: "..." # ClientSecret
+    workspaceSecret: "..." # WorkspaceSecret to decrypt the bundles -- generated during workspace creation
+
+audit:
+  backend: hub
+  hub:
+    storagePath: "..." # Path to a local storage location for buffering audit logs before being sent to Cerbos Hub
+----
+
+Refer to the xref:audit-log-collection.adoc[audit log collection documentation] for more information about filtering sensitive fields and other advanced configuration options.
