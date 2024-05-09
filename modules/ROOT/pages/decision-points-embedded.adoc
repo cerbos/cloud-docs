@@ -22,7 +22,7 @@ The inclusion logic is as follows.
 - If none of the policies in the repo are annotated, they are all included
 - If at least one policy is annotated, only that policy and its dependencies are included. Note that dependencies include ancestors of scoped policies. For example, if you annotate a policy that has the scope `a.b`, its ancestors (scope `a` and no-scope) are included automatically regardless of whether they are annotated or not.
 
-You can use the `cerbosctl hub epdp list-candidates /path/to/policy/repo` command to list all the policies that will be included in the embedded PDP bundle. See xref:cerbos:cli:cerbosctl.adoc#inspect-policies[cerbosctl documentation] for more information.
+You can use the `cerbosctl hub epdp list-candidates /path/to/policy/repo` command to list all the policies that will be included in the embedded PDP bundle. See xref:cerbos:cli:cerbosctl.adoc#list-candidates[cerbosctl documentation] for more information.
 
 == Using an embedded policy decision point
 
