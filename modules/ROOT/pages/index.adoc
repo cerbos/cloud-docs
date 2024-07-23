@@ -2,9 +2,6 @@
 
 Cerbos Hub simplifies the process of authoring authorization policies, testing changes, rolling out updates to production, and aggregating audit logs about authorization decisions. It's a scalable solution for developers who want to save time, streamline their workflows and confidently roll out authorization updates -- freeing you to focus on delivering great products to your customers.
 
-
-.Disclaimer
-
 == Features
 
 [unordered.stack]
