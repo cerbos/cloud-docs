@@ -76,7 +76,7 @@ Once collection is enabled, the logs can accessed via the _Audit logs_ tab in Ce
 
 === Decision logs
 
-The decision logs are records of the authorization decisions made by the Cerbos PDP. These logs provide detailed information about each decision, including the input parameters, the policy evaluation process, and the final decision result (i.e., whether access was allowed or denied). Decision logs are particularly useful for auditing, troubleshooting, and understanding how Cerbos policies are being applied in real-world scenarios.
+The decision logs are records of the authorization decisions made by the Cerbos PDP. These logs provide detailed information about each decision, including the inputs, Cerbos policies evaluated, and the `ALLOW/DENY` decisions along with any outputs from rule evaluation. Besides providing a comprehensive audit trail, these records can be used for troubleshooting purposes and to understand how Cerbos policies are used within your organization.
 
 
 
@@ -90,13 +90,13 @@ In the decision view, clicking on a log entry will open the details pane which s
 
 image:audit_logs_decision_detail.png[alt="Decision logs detail",role="center-img"]
 
-You can filter the logs by a particular PDP, principal, resource kind, action, or policy decision, as well as by time range.
+In addition to viewing a particular time range, you can further filter the logs by a particular PDP ID, principal, resource kind, action, or policy decision as well.
 
 === Access logs
 
 image:audit_logs_access.png[alt="Access logs",role="center-img"]
 
-The access logs are records of all the authorization requests received by the Cerbos PDP. These logs provide a high-level overview of incoming requests. Access logs are primarily used for monitoring, observability, and security purposes, giving insights into how and when the authorization service is being used.
+The access logs are records of all the API requests received by the Cerbos PDP. The valid `CheckResources` and `PlanResources` API calls would have a corresponding decision log entry with the the same call ID. API requests that are invalid or unauthenticated are logged as well and can be used for identifying misconfigured clients or unauthorized access attempts.
 
 You can filter the logs by a particular PDP and a time range.
 
