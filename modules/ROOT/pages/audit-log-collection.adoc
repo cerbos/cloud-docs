@@ -2,6 +2,9 @@
 
 With just a simple configuration change, you can configure the PDPs to securely send audit logs to Cerbos Hub. This vastly simplifies the work that would otherwise be required to configure and deploy a log aggregation solution to securely collect, store and query audit logs from across your fleet.
 
+
+== Enabling collection
+
 To get started, you need to obtain a set of client credentials. Navigate to the Settings tab of your workspace and click on "Generate client credentials" to generate a client ID and a client secret. The client secret is not stored on Cerbos Hub and cannot be recovered. Make sure to save it in a secure place.
 
 The client credentials can be provided to the PDP using environment variables or the configuration file. The environment variables to set are:
@@ -23,7 +26,6 @@ hub:
 ----
 
 To enable audit log collection, configure the `hub` audit log backend with a local storage path. This local storage path is important for preserving the audit logs until they are safely saved to Cerbos Hub. If there are any network interruptions or if the PDP process crashes, the audit logs generated up to that point are saved on disk and will be sent to Cerbos Hub the next time the PDP starts. If you're using a container orchestrator or a cloud-based solution to deploy Cerbos, attach a persistent storage volume at this path to ensure that the data does not get lost.
-
 
 
 [source,yaml]
@@ -66,6 +68,37 @@ mkdir -p /tmp/cerbos && docker run --rm --name cerbos \
 ----
 
 ====
+
+
+== Accessing the logs
+
+Once collection is enabled, the logs can accessed via the _Audit logs_ tab in Cerbos Hub. From here you can select which logs to view:
+
+=== Decision logs
+
+The decision logs are records of the authorization decisions made by the Cerbos PDP. These logs provide detailed information about each decision, including the inputs, Cerbos policies evaluated, and the `ALLOW/DENY` decisions along with any outputs from rule evaluation. Besides providing a comprehensive audit trail, these records can be used for troubleshooting purposes and to understand how Cerbos policies are used within your organization.
+
+
+
+There are two views in this section. The JSON view provides access to the raw log entry while the decision view provides a compact view consisting of the most pertinent details extracted from the log entry.
+
+image:audit_logs_decision.png[alt="Decision logs",role="center-img"]
+
+image:audit_logs_decision_json.png[alt="Decision logs JSON",role="center-img"]
+
+In the decision view, clicking on a log entry will open the details pane which shows the full request and response data, including the principal, resource, action, policy decision, and other metadata. In the case of a `PlanResources` request, the detailed plan is also shown.
+
+image:audit_logs_decision_detail.png[alt="Decision logs detail",role="center-img"]
+
+In addition to viewing a particular time range, you can further filter the logs by a particular PDP ID, principal, resource kind, action, or policy decision as well.
+
+=== Access logs
+
+image:audit_logs_access.png[alt="Access logs",role="center-img"]
+
+The access logs are records of all the API requests received by the Cerbos PDP. The valid `CheckResources` and `PlanResources` API calls would have a corresponding decision log entry with the the same call ID. API requests that are invalid or unauthenticated are logged as well and can be used for identifying misconfigured clients or unauthorized access attempts.
+
+You can filter the logs by a particular PDP and a time range.
 
 == Masking sensitive fields
 
@@ -126,8 +159,3 @@ audit:
       flushInterval: 30s # Time to keep records in memory before committing.
       gcInterval: 15m # How often the garbage collector runs to remove old entries from the log.
 ----
-
-
-
-
-
