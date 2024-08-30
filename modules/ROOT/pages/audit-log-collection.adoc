@@ -80,7 +80,7 @@ The decision logs are records of the authorization decisions made by the Cerbos 
 
 
 
-There are two views in this section. The JSON view shows the raw decision logs, whilst the decision view shows the same data in a more human-readable format. 
+There are two views in this section. The JSON view provides access to the raw log entry while the decision view provides a compact view consisting of the most pertinent details extracted from the log entry.
 
 image:audit_logs_decision.png[alt="Decision logs",role="center-img"]
 
