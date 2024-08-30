@@ -82,19 +82,19 @@ The decision logs are records of the authorization decisions made by the Cerbos 
 
 There are two views in this section. The JSON view provides access to the raw log entry while the decision view provides a compact view consisting of the most pertinent details extracted from the log entry.
 
-image:audit_logs_decision.png[alt="Decision logs",role="center-img"]
+image:audit_log_decision.png[alt="Decision logs",role="center-img"]
 
-image:audit_logs_decision_json.png[alt="Decision logs JSON",role="center-img"]
+image:audit_log_decision_json.png[alt="Decision logs JSON",role="center-img"]
 
 In the decision view, clicking on a log entry will open the details pane which shows the full request and response data, including the principal, resource, action, policy decision, and other metadata. In the case of a `PlanResources` request, the detailed plan is also shown.
 
-image:audit_logs_decision_detail.png[alt="Decision logs detail",role="center-img"]
+image:audit_log_decision_detail.png[alt="Decision logs detail",role="center-img"]
 
 In addition to viewing a particular time range, you can further filter the logs by a particular PDP ID, principal, resource kind, action, or policy decision as well.
 
 === Access logs
 
-image:audit_logs_access.png[alt="Access logs",role="center-img"]
+image:audit_log_access.png[alt="Access logs",role="center-img"]
 
 The access logs are records of all the API requests received by the Cerbos PDP. The valid `CheckResources` and `PlanResources` API calls would have a corresponding decision log entry with the the same call ID. API requests that are invalid or unauthenticated are logged as well and can be used for identifying misconfigured clients or unauthorized access attempts.
 
