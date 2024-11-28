@@ -8,5 +8,6 @@
 ** xref:decision-points-service.adoc[Service]
 ** xref:decision-points-embedded.adoc[Embedded]
 * xref:audit-log-collection.adoc[Audit log collection]
+* xref:access-controls.adoc[Access controls]
 * xref:reliability.adoc[Reliability]
 * xref:troubleshooting.adoc[Troubleshooting]
