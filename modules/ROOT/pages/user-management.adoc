@@ -1,4 +1,4 @@
-= Access controls
+= User management
 
 A Cerbos Hub user can have a role at the organization level and an optional set of roles for each workspace. All of these roles are considered when determining the permissions for any particular user.
 
