@@ -1,0 +1,151 @@
+= User management
+
+A Cerbos Hub user can have a role at the organization level and an optional set of roles for each workspace. All of these roles are considered when determining the permissions for any particular user.
+
+== Organization roles
+
+Organization roles, except for the `Member` role, apply to all workspaces within the organization. Users with organizational role of `Member` must be explicitly granted workspace roles in order to access a workspace.
+
+[cols="1,1,1,1,1,1", options="header"]
+|===
+|Action |Owner |Developer |Analyst |Viewer |Member
+
+|View organization
+|✅
+|✅
+|✅
+|✅
+|✅
+
+|Modify organization
+|✅
+|❌
+|❌
+|❌
+|❌
+
+|Manage members
+|✅
+|❌
+|❌
+|❌
+|❌
+
+|Invite a member
+|✅
+|❌
+|❌
+|❌
+|❌
+
+|Create a workspace
+|✅
+|✅
+|✅
+|✅
+|✅
+
+|Create a playground
+|✅
+|✅
+|✅
+|✅
+|✅
+
+|Update a playground
+|✅
+|✅
+|✅
+|✅
+|✅
+
+|Delete a playground
+|✅
+|✅
+|✅
+|✅
+|✅
+
+|Export a playground
+|✅
+|✅
+|✅
+|✅
+|✅
+
+|Connect a PDP to a playground
+|✅
+|✅
+|✅
+|✅
+|✅
+|===
+
+== Workspace Roles
+
+Permissions assigned at the organization level are inherited by all workspaces. Additionally, a user can be assigned specific roles within a workspace, potentially granting more permissions for that particular workspace only.
+
+[cols="1,1,1,1,1", options="header"]
+|===
+|Action |Owner |Developer |Analyst |Viewer
+
+|View a workspace
+|✅
+|✅
+|✅
+|✅
+
+|View builds
+|✅
+|✅
+|✅
+|✅
+
+|View decision points
+|✅
+|✅
+|✅
+|✅
+
+|View issues
+|✅
+|✅
+|✅
+|✅
+
+|View audit logs
+|✅
+|❌
+|✅
+|❌
+
+|Manage API keys
+|✅
+|✅
+|❌
+|❌
+
+|Reset encryption key
+|✅
+|❌
+|❌
+|❌
+
+|Manage workspace members
+|✅
+|❌
+|❌
+|❌
+
+|Modify workspace
+|✅
+|❌
+|❌
+|❌
+
+|Delete a workspace
+|✅
+|❌
+|❌
+|❌
+|===
