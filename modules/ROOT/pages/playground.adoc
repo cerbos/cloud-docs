@@ -15,6 +15,18 @@ When creating a new playground, you have a number of options:
 
 After creating a playground, click on the "Video tutorial" button on the top right corner of the screen to learn the basics.
 
+== Playground engine settings
+
+The playground engine settings in the Settings tab allow you to configure the xref:cerbos:configuration:engine.adoc[Cerbos PDP engine] used when evaluating policy during development.
+
+- **Default policy version**: When a request does not explicitly specify the policy version, the Cerbos engine attempts to find a matching policy that has its version set to `default`. You can change this fallback value by setting the default policy version.
+
+- **Lenient scope search**: When lenient scope search is enabled, if a policy with scope `a.b.c` does not exist in the store, Cerbos will attempt to find scopes `a.b`, `a` and ```` in that order.
+
+- **Globals**: Global variables are a way to pass environment-specific information to policy conditions. Values defined here are exposed to policy conditions via the `globals` object.
+
+You can find full details of these settings in the xref:cerbos:configuration:engine.adoc[Cerbos configuration reference].
+
 == Try the API
 
 One of the key features of the playground is the ability to try out authorization checks against your policies without having to run a local Policy Decision Point (PDP). In the Implement tab of the sidebar, you can experiment with both the Check API and the Plan API. This section allows you to select from your test fixtures and view the request structure needed to call the PDP, as well as the expected response.
