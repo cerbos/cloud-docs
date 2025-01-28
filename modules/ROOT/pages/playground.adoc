@@ -19,7 +19,7 @@ After creating a playground, click on the "Video tutorial" button on the top rig
 
 The playground engine settings in the Settings tab allow you to configure the xref:cerbos:configuration:engine.adoc[Cerbos PDP engine] used when evaluating policy during development.
 
-- **Default policy version**: By default, when a request does not explicitly specify the policy version, the Cerbos engine attempts to find a matching policy that has its version set to `default`. You can change this fallback value by setting this value.
+- **Default policy version**: When a request does not explicitly specify the policy version, the Cerbos engine attempts to find a matching policy that has its version set to `default`. You can change this fallback value by setting the default policy version.
 
 - **Lenient scope search**: When lenient scope search is enabled, if a policy with scope `a.b.c` does not exist in the store, Cerbos will attempt to find scopes `a.b`, `a` and ```` in that order.
 
