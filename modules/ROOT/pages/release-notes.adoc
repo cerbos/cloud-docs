@@ -3,7 +3,7 @@
 == 2025-03-12
 
 === Playground
-The effective derived roles for a user are now displayed in the playground when evaluating policies. This feature helps you understand the roles that a user has based on the roles assigned directly or indirectly through other roles.
+The effective derived roles for a user are now displayed in the playground when evaluating policies. This feature helps you understand which derived roles were activated for that user during that request.
 
 
 === Embedded Policy Decision Point
