@@ -26,8 +26,8 @@ labels:
 
 Create a `.cerbos-hub.yaml` file at the root of the file tree of the branch, commit and push it to the remote repo before moving on to the next step.
 
-The currently active labels can be seen on the Builds page of Cerbos Hub, as well as the corresponding builds which each label points to.
+The currently active labels can be seen on the Policies page of Cerbos Hub, as well as the corresponding builds which each label points to.
 
-image:builds_page.png[alt="Builds page",role="center-img"]
+image:builds_page.png[alt="Policies page",role="center-img"]
 
 Your xref:decision-points.adoc[policy decision points] (service or embedded) are always configured with a label name. When new commits are pushed to the policy repository, Cerbos Hub builds new bundles and updates the relevant label references to point to the latest bundles.
