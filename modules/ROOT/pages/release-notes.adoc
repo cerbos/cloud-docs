@@ -1,0 +1,29 @@
+= Release notes
+
+== 2025-03-12
+
+=== Playground
+The effective derived roles for a user are now displayed in the playground when evaluating policies. This feature helps you understand the roles that a user has based on the roles assigned directly or indirectly through other roles.
+
+
+=== Embedded Policy Decision Point
+Time-based functions used in condition expressions such as `getHours` and `getMinutes` default to UTC unless the time zone is explicitly provided as an argument to the function. It's recommended to review your policies to make sure that time calculations use the correct time zone. Refer to xref:cerbos:policies:conditions.adoc#_timestamps[timestamps documentation] to identify the affected functions.
+
+
+== 2025-02-26
+
+=== Embedded Policy Decision Point
+
+We’ve introduced support for capturing audit decision logs from the Cerbos Hub Embedded Policy Decision Points (ePDP) using the latest version of the https://github.com/cerbos/cerbos-sdk-javascript[Cerbos Javascript SDK]. This feature enables organizations to track and analyze authorization decisions made locally in embedded environments, ensuring complete visibility and auditability, without relying on a centralized PDP or Cerbos Hub.
+
+
+== 2025-02-01
+
+The Builds section of Cerbos Hub has been renamed Policies. The Policies section now includes all the features previously available in Builds, such as policy versioning, policy history, and policy deployment. The Builds section has been removed from the Cerbos Hub navigation.
+
+== 2025-01-28
+
+=== Playground
+Added support for xref:cerbos:configuration:engine.adoc#_globals[globals] in playground engine settings. Global variables defined in the xref:playground.adoc[playground settings] are exposed to policy conditions via the `globals` object.
+
+

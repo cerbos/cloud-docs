@@ -12,3 +12,4 @@
 ** xref:user-management.adoc[User management]
 * xref:reliability.adoc[Reliability]
 * xref:troubleshooting.adoc[Troubleshooting]
+* xref:release-notes.adoc[Release notes]
