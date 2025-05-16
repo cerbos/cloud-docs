@@ -1,5 +1,10 @@
 = Release notes
 
+== 2025-04-28
+
+=== Organization deletion
+You can now delete an organization in Cerbos Hub. To delete an organization, navigate to the organization settings page and click on the "Delete organization" button. Please note that this action is irreversible and will permanently delete all data associated with the organization.
+
 == 2025-03-12
 
 === Playground
