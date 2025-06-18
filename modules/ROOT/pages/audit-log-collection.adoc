@@ -5,7 +5,7 @@ With just a simple configuration change, you can configure the PDPs to securely 
 
 == Enabling collection
 
-To get started, you need to obtain a set of client credentials. Navigate to the Client Credntials tab of the Deployment to collect audit logs from and click on "Generate client credentials" to generate a client ID and a client secret and ensure a "Read/Write" key is selected. The client secret is not stored on Cerbos Hub and cannot be recovered. Make sure to save it in a secure place.
+To get started, you need to obtain a set of client credentials. Navigate to the **Settings** → **Client credentials** tab of the Deployment to collect audit logs from and click on **Generate a client credential** to generate a client ID and a client secret and ensure a **Read & Write** key is selected. The client secret is not stored on Cerbos Hub and cannot be recovered. Make sure to save it in a secure place.
 
 The client credentials can be provided to the PDP using environment variables or the configuration file. The environment variables to set are:
 

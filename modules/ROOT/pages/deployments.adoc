@@ -1,21 +1,21 @@
 = Deployments
 
-Cerbos Hub Deployments are immutable, versioned bundles of policies that Cerbos Hub builds, validates, tests, and distributes to your connected xref:decision-points.adoc[Policy Decision Points (PDPs)]. A single Deployment can combine policies from one or more xref:policy-stores.adoc[Policy Stores], letting you layer global guard rails, environment specific rules, and tenant specific overrides in one cohesive unit. Any change in a linked Policy Store, whether it comes from Git, a CI pipeline, the API, the CLI, or a direct UI upload, automatically triggers a new build so every PDP is always running the latest validated policy bundle.
+Cerbos Hub Deployments are immutable, versioned bundles of policies that Cerbos Hub builds, validates, tests, and distributes to your connected xref:decision-points.adoc[Policy Decision Points (PDPs)]. A single Deployment can combine policies from one or more xref:policy-stores.adoc[Policy Stores], letting you layer global guard rails, environment-specific rules, and tenant-specific overrides in one cohesive unit. Any change in a linked Policy Store, whether it comes from Git, a CI pipeline, the API, the CLI, or a direct UI upload, automatically triggers a new build so every PDP is always running the latest validated policy bundle.
 
 [unordered.stack]
 Source agnostic inputs:: Populate a Policy Store from any Git provider, CI system, API, CLI, or direct upload, so your existing workflows remain intact.
-Multi store composition:: Reference multiple stores in a Deployment to separate ownership, for example security team versus product team, or to blend static Git managed policies with dynamic API driven rules.
-End to end automation:: Build, compilation, testing, signing, and distribution are fully managed by Cerbos Hub, giving you a consistent CI or CD style pipeline for authorization without extra infrastructure.
+Multi-store composition:: Reference multiple stores in a Deployment to separate ownership, for example security team versus product team, or to blend static Git-managed policies with dynamic API-driven rules.
+End-to-end automation:: Build, compilation, testing, signing, and distribution are fully managed by Cerbos Hub, giving you a consistent CI or CD style pipeline for authorization without extra infrastructure.
 Traceability and rollback:: Every Deployment is immutable and carries a unique version identifier, making it easy to audit which policies were active for any PDP decision and to roll back if needed.
 
 == Build life cycle
 
-Whenever Cerbos Hub detects a change in any Policy Store referenced by a Deployment it launches a new build.
+Whenever Cerbos Hub detects a change in any Policy Store referenced by a Deployment, it launches a new build.
 
-. In progress: The build appears in the Cerbos Hub UI with the status In progress.
-. Compilation failures: If policy compilation fails, the error is surfaced next to the build version so you can diagnose it quickly.
-. Test execution: After successful compilation, Cerbos Hub runs all policy tests found across the contributing stores. Failures are displayed in the build details view with full logs for debugging.
-. Bundle generation: When compilation and tests pass, the bundle status changes to Generated and all PDPs that are assigned to this Deployment receive a push notification instructing them to download and activate the bundle immediately.
+. **In progress**: The build appears in the Cerbos Hub UI with the status **In progress**.
+. **Compilation failures**: If policy compilation fails, the error is surfaced next to the build version so you can diagnose it quickly.
+. **Test execution**: After successful compilation, Cerbos Hub runs all policy tests found across the contributing stores. Failures are displayed in the build details view with full logs for debugging.
+. **Bundle generation**: When compilation and tests pass, the bundle status changes to **Generated** and all PDPs that are assigned to this Deployment receive a push notification instructing them to download and activate the bundle immediately.
 
 image:builds_in_progress.png[alt="Build in progress",role="center-img"]
 
@@ -27,6 +27,5 @@ image:deployments.png[alt="Deployment history",role="center-img"]
 
 For details on creating Policy Stores and connecting PDPs to receive bundles, see the related guides:
 
-xref:policy-stores.adoc[Policy Stores]
-
-xref:decision-points.adoc[PDP configuration]
+* xref:policy-stores.adoc[Policy Stores]
+* xref:decision-points.adoc[PDP configuration]

@@ -2,18 +2,18 @@
 
 == Prerequisites
 
-A GitHub repository that contains your Cerbos policies and, optionally, tests. It can be private. If you are starting from scratch use https://github.com/cerbos/example-cerbos-policy-repository as a template.
+* A GitHub repository that contains your Cerbos policies and, optionally, tests. It can be private. If you are starting from scratch, use https://github.com/cerbos/example-cerbos-policy-repository as a template.
 
-Cerbos version 0.45.0 or higher.
+* Cerbos version 0.45.0 or higher.
 
-Outbound internet access from your Cerbos instances so that they can connect to Cerbos Hub to fetch bundle updates and, if enabled, upload audit logs.
+* Outbound internet access from your Cerbos instances so that they can connect to Cerbos Hub to fetch bundle updates and, if enabled, upload audit logs.
 
 == Create a Policy Store and connect your Git repository
 
 . Sign in to Cerbos Hub at https://hub.cerbos.cloud and follow the on-boarding wizard to create an Organization and its first Workspace.
-. Inside the Workspace select Policy Stores then New Store.
-. Give the Store a clear name, for example orders-service, choose GitHub repository as the source and connect to your GitHub account.
-. Pick the branch you want Hub to track, usually main, and save. Cerbos Hub immediately ingests the repository, compiles the policies, and shows the first successful build.
+. Inside the Workspace, select **Policy Stores** then **New Store**.
+. Give the Store a clear name, for example `orders-service`, choose **GitHub repository** as the source and connect to your GitHub account.
+. Pick the branch you want Hub to track, usually `main`, and save. Cerbos Hub immediately ingests the repository, compiles the policies, and shows the first successful build.
 
 TIP: You can create additional Stores for other branches, teams or projects.
 
@@ -21,13 +21,13 @@ TIP: You can create additional Stores for other branches, teams or projects.
 
 Deployments package one or more Policy Stores into a single, versioned bundle.
 
-. Open Deployments then click New Deployment.
+. Open **Deployments** then click **New Deployment**.
 . Select the Store you just created.
-. Click Create. Hub starts the initial build. When it finishes note the Deployment ID shown on the detail page - something like `C0TLEV4XCTAZ`. You will use this ID when configuring the PDP.
+. Click **Create**. Hub starts the initial build. When it finishes, note the Deployment ID shown on the detail page - something like `C0TLEV4XCTAZ`. You will use this ID when configuring the PDP.
 
 == Generate client credentials
 
-Navigate to Settings → Client credentials and click "Generate a client crendential", giving it a name and select "Read & Write" so that polices can be pulled down and Audit Logs pushed back.. Copy both the Client ID and Client secret. The secret is shown only once.
+Navigate to **Settings** → **Client credentials** and click **Generate a client credential**, giving it a name and select **Read & Write** so that policies can be pulled down and Audit Logs pushed back. Copy both the Client ID and Client secret. The secret is shown only once.
 
 == Configure and run a Cerbos PDP
 
@@ -37,7 +37,7 @@ You can pass the Hub connection settings as environment variables or in a YAML c
 ----
 docker run --rm --name cerbos
   -p 3592:3592 -p 3593:3593
-  -e CERBOS_HUB_DEPLOYMENT_ID="C0TLEV4XCTAZ" \ # Deployment ID from Hub
+  -e CERBOS_HUB_DEPLOYMENT_ID="..." \ # Deployment ID from Hub
   -e CERBOS_HUB_CLIENT_ID="..." \ # From Deployment ▸ Client credentials
   -e CERBOS_HUB_CLIENT_SECRET="..." \ # From Deployment ▸ Client credentials
   ghcr.io/cerbos/cerbos:latest server
@@ -65,7 +65,7 @@ storage:
   driver: hub
   hub:
     remote:
-    deploymentID: deploy_4c12ef # Deployment ID from Hub
+      deploymentID: "..." # Deployment ID from Hub
 ----
     
 Assuming you saved the file as .cerbos.yaml in the current directory, start Cerbos with:
@@ -75,10 +75,10 @@ Assuming you saved the file as .cerbos.yaml in the current directory, start Cerb
 docker run --rm --name cerbos
   -v $(pwd):/conf
   -p 3592:3592 -p 3593:3593
-ghcr.io/cerbos/cerbos:latest server --config=/conf/.cerbos.yaml
+  ghcr.io/cerbos/cerbos:latest server --config=/conf/.cerbos.yaml
+----
 
 See xref:cerbos:configuration:index.adoc[] for advanced configuration options.
-----
 
 == Enable audit log collection (optional)
 
