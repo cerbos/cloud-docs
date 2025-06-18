@@ -21,6 +21,7 @@ docker run --rm --name cerbos \
 
 The environment variables to set are:
 
+[horizontal]
 `CERBOS_HUB_DEPLOYMENT_ID`:: The deployment ID to load policies from
 `CERBOS_HUB_CLIENT_ID`:: Client ID
 `CERBOS_HUB_CLIENT_SECRET`:: Client secret

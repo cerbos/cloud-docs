@@ -29,4 +29,4 @@ For details on creating Policy Stores and connecting PDPs to receive bundles, se
 
 xref:policy-stores.adoc[Policy Stores]
 
-xref:decision-points-service.adoc[Service PDP configuration]
+xref:decision-points.adoc[PDP configuration]

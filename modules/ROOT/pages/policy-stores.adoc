@@ -18,7 +18,7 @@ Full visibility and auditability:: View every policy file in Hub, see which Stor
 |Method |Typical use case
 
 |Git repository
-|Structured policy as code managed with pull requests and reviews.
+|Structured policy as code managed with pull requests and reviews. If you are using GitHub, you can connect your repository directly to a Policy Store in Cerbos Hub.
 
 |CI or CD pipeline
 |Push the policies produced by a build job, for example when generating service specific policies or promoting between environments.
@@ -26,7 +26,7 @@ Full visibility and auditability:: View every policy file in Hub, see which Stor
 |Cerbos Hub API (REST, SDKs)
 |Programmatic updates such as per tenant roles, user defined permissions, or event driven changes.
 
-|`cerbosctl`` CLI
+|`cerbosctl` CLI
 |Local scripting, quick one off uploads, or integration into existing tooling.
 
 |Browser upload

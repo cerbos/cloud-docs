@@ -34,12 +34,15 @@ Navigate to Settings → Client credentials and click "Generate a client crenden
 You can pass the Hub connection settings as environment variables or in a YAML configuration file. The example below uses environment variables for a quick start:
 
 [source,shell]
+----
 docker run --rm --name cerbos
--p 3592:3592 -p 3593:3593
--e CERBOS_HUB_DEPLOYMENT_ID="C0TLEV4XCTAZ" \ # Deployment ID from Hub
--e CERBOS_HUB_CLIENT_ID="..." \ # From Deployment ▸ Client credentials
--e CERBOS_HUB_CLIENT_SECRET="..." \ # From Deployment ▸ Client credentials
-ghcr.io/cerbos/cerbos:latest server
+  -p 3592:3592 -p 3593:3593
+  -e CERBOS_HUB_DEPLOYMENT_ID="C0TLEV4XCTAZ" \ # Deployment ID from Hub
+  -e CERBOS_HUB_CLIENT_ID="..." \ # From Deployment ▸ Client credentials
+  -e CERBOS_HUB_CLIENT_SECRET="..." \ # From Deployment ▸ Client credentials
+  ghcr.io/cerbos/cerbos:latest server
+----
+
 Optional variable:
 
 [horizontal]
@@ -48,6 +51,7 @@ CERBOS_HUB_PDP_ID:: The friendly name that will appear on the Cerbos Hub monitor
 === YAML alternative
 
 [source,yaml]
+----
 server:
   httpListenAddr: ":3592"
   grpcListenAddr: ":3593"
@@ -63,27 +67,31 @@ storage:
   hub:
     remote:
     deploymentID: deploy_4c12ef # Deployment ID from Hub
+----
     
 Assuming you saved the file as .cerbos.yaml in the current directory, start Cerbos with:
 
 [source,shell]
+----
 docker run --rm --name cerbos
   -v $(pwd):/conf
   -p 3592:3592 -p 3593:3593
 ghcr.io/cerbos/cerbos:latest server --config=/conf/.cerbos.yaml
 
 See xref:cerbos:configuration:index.adoc[] for advanced configuration options.
+----
 
 == Enable audit log collection (optional)
 
 Add the Hub audit backend to stream decision logs to Cerbos Hub:
 
 [source,yaml]
+----
 audit:
   backend: hub
   hub:
     storagePath: "/var/cerbos/audit-buffer" # Local buffer used when the network is unavailable
-
+----
 
 Refer to xref:audit-log-collection.adoc[] for details on filtering sensitive fields and other advanced options.
 
