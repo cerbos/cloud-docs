@@ -10,8 +10,7 @@
 ** xref:user-management.adoc[User management]
 * xref:reliability.adoc[Reliability]
 * xref:troubleshooting.adoc[Troubleshooting]
-* xref:release-notes.adoc[Release notes]
-** Legacy
+* Legacy
 ** xref:legacy:concepts.adoc[Concepts]
 ** xref:legacy:getting-started.adoc[Getting started]
 ** xref:legacy:audit-log-collection.adoc[Audit log collection]
@@ -20,3 +19,4 @@
 ** xref:legacy:decision-points.adoc[Policy Decision Points (PDPs)]
 *** xref:legacy:decision-points-service.adoc[Service]
 *** xref:legacy:decision-points-embedded.adoc[Embedded]
+* xref:release-notes.adoc[Release notes]
