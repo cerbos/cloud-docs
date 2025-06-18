@@ -1,4 +1,5 @@
 = Deployment labels
+:page-llm-ignore: true
 
 NOTE: This documentation is for the legacy Cerbos Hub workspaces. If you are using the new Cerbos Hub, with Deployments and Policy Stores refer to the latest xref:index.adoc[Cerbos Hub documentation].
 
