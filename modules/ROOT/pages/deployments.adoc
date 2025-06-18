@@ -25,7 +25,16 @@ image:failed_tests.png[alt="Tests failed",role="center-img"]
 
 image:deployments.png[alt="Deployment history",role="center-img"]
 
+
 For details on creating Policy Stores and connecting PDPs to receive bundles, see the related guides:
 
 * xref:policy-stores.adoc[Policy Stores]
 * xref:decision-points.adoc[PDP configuration]
+
+== Best practices
+
+[unordered.stack]
+Use meaningful names:: Name Deployments after their purpose such as application, environment, or team, for example payments-service-production.
+Automate testing:: Include comprehensive test cases with each Policy Store to catch regressions before they reach production PDPs.
+Implement rollback strategy:: Document a process for emergency rollbacks to previous Deployment versions when needed.
+Validate in staging:: Use staging Deployments to verify policy changes in a pre-production environment before promoting to production.
