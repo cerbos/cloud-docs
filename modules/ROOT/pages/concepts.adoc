@@ -1,7 +1,7 @@
 = Concepts
 
 [unordered.stack]
-Client credentials:: The policy decision points (PDPs) establish an authenticated connection to Cerbos Hub using a client ID and a secret. You can create a client credentials for a Deployment or a Policy Store in the Client Credentials section.
+Client credentials:: Used establish an authenticated connection to Cerbos Hub using a client ID and a secret. You can create a client credentials for a Deployment to be used to with a Policy Decision Point to load policies and send back Audit Logs or a Policy Store for programmatic access to the policies in the store. Client credentials are created in the Settings → Client credentials section of Cerbos Hub.
 Deployment:: A versioned, immutable set of policies from one or many Policy Stores that Cerbos Hub compiles, validates, and packages into a bundle for distribution to PDPs. A new Deployment is built automatically whenever any of its referenced Policy Stores change, ensuring every connected PDP receives the same tested bundle at the same version, with full traceability and audit trail.
 Organization:: An Organization serves as the top-level entity in Cerbos Hub and provides centralized control over billing, access control, and Workspace management. Typically a business would have one Organization and a number of Workspaces underneath it.
 Policy bundle:: An encrypted file containing optimised binary representations of policies corresponding to a git commit. On every commit to the policy repository, if the git reference of the commit matches a configured label, Cerbos Hub validates the policies in the new commit, runs tests if there are any and produces a policy bundle that is then pushed to all connected PDPs that are configured to watch that label.

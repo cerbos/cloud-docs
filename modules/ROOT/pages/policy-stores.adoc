@@ -23,7 +23,7 @@ Full visibility and auditability:: View every policy file in Hub, see which Stor
 |CI or CD pipeline
 |Push the policies produced by a build job, for example when generating service specific policies or promoting between environments.
 
-|Cerbos Hub API (REST, SDKs)
+|Cerbos Hub SDKs
 |Programmatic updates such as per tenant roles, user defined permissions, or event driven changes.
 
 |`cerbosctl` CLI

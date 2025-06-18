@@ -1,6 +1,6 @@
 = CI/CD pipeline
 
-NOTE: This documentation is for the legacy audit log collection feature. If you are using the new Cerbos Hub, refer to the latest xref:index.adoc[Cerbos Hub documentation].
+NOTE: This documentation is for the legacy Cerbos Hub workspaces. If you are using the new Cerbos Hub, with Deployments and Policy Stores refer to the latest xref:index.adoc[Cerbos Hub documentation].
 
 Cerbos Hub serves as a managed CI/CD pipeline specifically designed for validating, testing, and distributing policies in a more efficient manner compared to the open-source version. With Cerbos Hub, you can effortlessly automate and streamline the entire policy management process in a few minutes.
 
