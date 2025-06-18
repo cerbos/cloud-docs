@@ -1,5 +1,7 @@
 = Audit log collection
 
+NOTE: This documentation is for the legacy audit log collection feature. If you are using the new Cerbos Hub, refer to the latest xref:index.adoc[Cerbos Hub documentation].
+
 With just a simple configuration change, you can configure the PDPs to securely send audit logs to Cerbos Hub. This vastly simplifies the work that would otherwise be required to configure and deploy a log aggregation solution to securely collect, store and query audit logs from across your fleet.
 
 

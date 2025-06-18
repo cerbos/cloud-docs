@@ -1,5 +1,7 @@
 = Getting started
 
+NOTE: This documentation is for the legacy audit log collection feature. If you are using the new Cerbos Hub, refer to the latest xref:index.adoc[Cerbos Hub documentation].
+
 == Prerequisites
 
 - Currently GitHub is the only supported git provider. You must have access to a GitHub repository that contains your policies and (optional) tests. This repository can be a private one. An example repository is available at https://github.com/cerbos/example-cerbos-policy-repository that you can use as a template if you are starting from scratch.

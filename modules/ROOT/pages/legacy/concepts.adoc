@@ -1,5 +1,7 @@
 = Concepts
 
+NOTE: This documentation is for the legacy audit log collection feature. If you are using the new Cerbos Hub, refer to the latest xref:index.adoc[Cerbos Hub documentation].
+
 [unordered.stack]
 Client credentials:: The policy decision points (PDPs) establish an authenticated connection to Cerbos Hub using a client ID and a secret. You can create a client credential using the settings section of Cerbos Hub.
 Deployment label:: Within a Workspace, you can define a set of labels which are aliases pointing to branches, tags or specific commits in your git repository. This allows you to have multiple versions of policies active at the same time. For example, you could have a `production` label that points to the trunk and a `staging` label that points to your work-in-progress branch. On every push to the git repository, Cerbos Hub determines the set of labels affected by that push and builds bundles for each of them. Each one of your on-premise PDPs must be configured with the name of a label to watch. Cerbos Hub takes care of distributing the correct bundles to each PDP based on the label they are configured to watch. The set of labels must be defined in a file named `.cerbos-hub.yaml` stored in the root of the default branch you defined when setting up the workspace.

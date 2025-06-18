@@ -45,7 +45,6 @@ docker run --rm --name cerbos
 
 Optional variable:
 
-[horizontal]
 CERBOS_HUB_PDP_ID:: The friendly name that will appear on the Cerbos Hub monitoring page. If omitted a random identifier is generated.
 
 === YAML alternative
@@ -57,10 +56,10 @@ server:
   grpcListenAddr: ":3593"
 
 hub:
-credentials:
-  pdpID: "orders-pdp-01" # Optional
-  clientID: "..."
-  clientSecret: "..."
+  credentials:
+    pdpID: "orders-pdp-01" # Optional
+    clientID: "..."
+    clientSecret: "..."
 
 storage:
   driver: hub

@@ -1,5 +1,7 @@
 = Policy Decision Points
 
+NOTE: This documentation is for the legacy audit log collection feature. If you are using the new Cerbos Hub, refer to the latest xref:index.adoc[Cerbos Hub documentation].
+
 Cerbos Hub supports two types of policy decision points for making authorization decisions.
 
 Service:: The open source Cerbos server running as a service or sidecar within your infrastructure and connected to Cerbos Hub to automatically receive bundle updates. This is the most suitable option for majority of authorization requirements and has benefits such as query planner, full audit logging, centralised management and horizontal scalability.
