@@ -1,4 +1,4 @@
-= Policy Stores CI with GitLab Runners
+= Policy Stores: CI with GitLab Runners
 
 This guide shows you how to set up a GitLab CI/CD pipeline to automatically upload your Cerbos policies to a Cerbos Hub Store whenever you push changes to the `main` branch of your repository.
 

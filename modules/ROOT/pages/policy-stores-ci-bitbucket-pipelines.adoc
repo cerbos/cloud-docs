@@ -1,4 +1,4 @@
-= Policy Stores CI with Bitbucket Pipelines
+= Policy Stores: CI with Bitbucket Pipelines
 
 This guide shows you how to set up a Bitbucket Pipelines workflow to automatically upload your Cerbos policies to a Cerbos Hub Store whenever you push changes to the `main` branch of your repository.
 

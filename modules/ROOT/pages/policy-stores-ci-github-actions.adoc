@@ -1,4 +1,4 @@
-= Policy Stores CI with GitHub Actions
+= Policy Stores: CI with GitHub Actions
 
 This guide shows you how to set up a GitHub Actions workflow to automatically upload your Cerbos policies to a Cerbos Hub Store whenever you push changes to the `main` branch of your repository.
 
