@@ -4,7 +4,7 @@
 
 * A GitHub repository that contains your Cerbos policies and, optionally, tests. It can be private. If you are starting from scratch, use https://github.com/cerbos/example-cerbos-policy-repository as a template.
 
-* Cerbos version 0.45.0 or higher.
+* Cerbos version 0.46.0 or higher.
 
 * Outbound internet access from your Cerbos instances so that they can connect to Cerbos Hub to fetch bundle updates and, if enabled, upload audit logs.
 

@@ -1,0 +1,91 @@
+= Policy Stores CI with Azure DevOps
+
+This guide shows you how to set up an Azure DevOps Pipeline to automatically upload your Cerbos policies to a Cerbos Hub Store whenever you push changes to the `main` branch of your repository.
+
+== Prerequisites
+
+* An Azure DevOps organization and a Project.
+* Your policies is hosted in a repository (either Azure Repos or linked from GitHub, Bitbucket).
+* Your `CERBOS_HUB_CLIENT_ID` and `CERBOS_HUB_CLIENT_SECRET` values.
+
+== Step 1: Create the Pipeline YAML File
+. In the root directory of your repository, create a new file named `azure-pipelines.yml`.
+. Copy and paste the following code into the file. This code defines the trigger, the agent environment, and the steps to run.
+. Replace `[STORE_ID]` with the ID of your Cerbos Hub Store. You can find this in the Cerbos Hub UI under the Store settings.
+
+[source,yaml]
+----
+# azure-pipelines.yml
+trigger:
+  branches:
+    include:
+      - main # This pipeline runs on pushes to the main branch
+
+pool:
+  vmImage: 'ubuntu-latest' # Use a Microsoft-hosted Linux agent
+
+jobs:
+- job: UploadCerbosPolicies
+  displayName: 'Upload Cerbos Policies'
+  steps:
+    # Step 1: Check out the source code from the repository
+    - checkout: self
+
+    # Step 2: Run the docker command to upload policies
+    - script: |
+        docker run --rm \
+          -e CERBOS_HUB_STORE_ID="[STORE_ID]" \
+          -e CERBOS_HUB_CLIENT_ID=$CERBOS_HUB_CLIENT_ID \
+          -e CERBOS_HUB_CLIENT_SECRET=$CERBOS_HUB_CLIENT_SECRET \
+          -v "$(System.DefaultWorkingDirectory)":/app \
+          ghcr.io/cerbos/cerbosctl:latest \
+          hub store replace-files /app --message="Policy upload from Azure DevOps"
+      displayName: 'Upload Policies to Cerbos Hub'
+      env:
+        # Map the secret variables created in the UI to environment variables for this script
+        CERBOS_HUB_CLIENT_ID: $(CERBOS_HUB_CLIENT_ID)
+        CERBOS_HUB_CLIENT_SECRET: $(CERBOS_HUB_CLIENT_SECRET)
+----
+
+*Key Azure DevOps Concepts Used:*
+
+* `trigger`: Defines when the pipeline runs, equivalent to `on:` in GitHub Actions.
+* `pool`: Specifies the type of build agent to use, equivalent to `runs-on`.
+* `job` and `steps`: Structure the work to be done.
+* `checkout: self`: The task to get your source code.
+* `script`: A simple task to run a shell script.
+* `$(System.DefaultWorkingDirectory)`: The predefined variable for the checkout directory, like `$PWD` or `$CI_PROJECT_DIR`.
+* `env:`: The section where you map pipeline variables to environment variables for the script, note the `$(VariableName)` syntax.
+
+== Step 2: Create the Pipeline in Azure DevOps
+. Go to your Azure DevOps project. In the left sidebar, click on *Pipelines*.
+. Click the *New pipeline* button (or *Create pipeline* if it is your first one).
+. *Where is your code?* Select the correct location, for example, *Azure Repos Git*, *GitHub*. You may need to authorize access.
+. *Select a repository:* Choose the repository where you just added the `azure-pipelines.yml` file.
+. *Configure your pipeline:* Azure DevOps detects your YAML file. Select *Existing Azure Pipelines YAML file*.
+. Select the branch, for example, `main` and the path, `/azure-pipelines.yml`, then click *Continue*.
+
+== Step 3: Add Your Secrets
+. You now see the YAML file in the pipeline editor view. *Do not run it yet.*
+. In the top right corner, click the *Variables* button.
+. Click *New variable*.
+
+* *Name:* `CERBOS_HUB_CLIENT_ID`
+* *Value:* Paste your client ID.
+* Check the box for *Keep this value secret*.
+* Click *OK*.
+  . Click *New variable* again.
+* *Name:* `CERBOS_HUB_CLIENT_SECRET`
+* *Value:* Paste your client secret.
+* Check the box for *Keep this value secret*.
+* Click *OK*.
+  . Click the *Save* button at the bottom of the variables pane.
+
+== Step 4: Save and Run the Pipeline
+. Now that the secrets are saved, click the *Save and run* button, or just *Run*, in the top right corner.
+. Confirm the branch and commit message, and click *Save and run* again.
+
+== Step 5: Verify the Run
+. You are taken to the pipeline run summary page.
+. Click on the `Upload Cerbos Policies` job to see the live logs.
+. If everything is configured correctly, all steps complete with a green checkmark, and your policies are uploaded to Cerbos Hub.

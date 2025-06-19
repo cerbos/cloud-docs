@@ -1,0 +1,48 @@
+= Policy Stores CI with Bitbucket Pipelines
+
+This guide shows you how to set up a Bitbucket Pipelines workflow to automatically upload your Cerbos policies to a Cerbos Hub Store whenever you push changes to the `main` branch of your repository.
+
+== Prerequisites
+* A Bitbucket account and a repository.
+* Pipelines enabled for your repository (menu:Repository settings[Pipelines > Settings]).
+
+== Step 1: Create the Pipeline File
+. In the root directory of your repository, create a file named `bitbucket-pipelines.yml`.
+. Copy and paste the following code into it:
+. Replace `[STORE_ID]` with the ID of your Cerbos Hub Store. You can find this in the Cerbos Hub UI under the Store settings.
+
+
+[source,yaml]
+----
+# bitbucket-pipelines.yml
+pipelines:
+  branches:
+    main:
+      - step:
+          name: Upload Policies to Cerbos Hub
+          services:
+            - docker # Enable the Docker service
+          script:
+            - >
+              docker run --rm
+              -e CERBOS_HUB_STORE_ID="[STORE_ID]"
+              -e CERBOS_HUB_CLIENT_ID=$CERBOS_HUB_CLIENT_ID
+              -e CERBOS_HUB_CLIENT_SECRET=$CERBOS_HUB_CLIENT_SECRET
+              -v "$BITBUCKET_CLONE_DIR":/app
+              ghcr.io/cerbos/cerbosctl:latest
+              hub store replace-files /app --message="Policy upload from Bitbucket"
+----
+
+== Step 2: Add Your Secrets
+. In your Bitbucket repository, go to *Repository settings*.
+. In the left sidebar, under the "Pipelines" section, click *Repository variables*.
+. Enter `CERBOS_HUB_CLIENT_ID` as the *Name*, paste your client ID in the *Value* box, and *check the "Secured" checkbox*. Click *Add*.
+. Repeat the process for `CERBOS_HUB_CLIENT_SECRET`.
+
+== Step 3: Commit and Push
+. Commit the `bitbucket-pipelines.yml` file.
+. Push your changes to the `main` branch.
+
+== Step 4: Verify the Run
+. In your Bitbucket repository, click *Pipelines* in the left sidebar.
+. You will see a new pipeline run. Click on it to view the logs and status.

@@ -1,0 +1,60 @@
+= Policy Stores CI with GitHub Actions
+
+This guide shows you how to set up a GitHub Actions workflow to automatically upload your Cerbos policies to a Cerbos Hub Store whenever you push changes to the `main` branch of your repository.
+
+
+== Prerequisites
+* A GitHub account and a repository.
+
+== Step 1: Create the Workflow File
+. In your repository, create a new directory named `.github/workflows`.
+. Inside `.github/workflows`, create a new file named `upload-policies.yml`.
+. Copy and paste the following code into the `upload-policies.yml` file:
+. Replace `[STORE_ID]` with the ID of your Cerbos Hub Store. You can find this in the Cerbos Hub UI under the Store settings.
+
+[source,yaml]
+----
+# .github/workflows/upload-policies.yml
+name: Upload Cerbos Policies
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  upload-policies:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Upload Policies
+        env:
+          CERBOS_HUB_CLIENT_ID: ${{ secrets.CERBOS_HUB_CLIENT_ID }}
+          CERBOS_HUB_CLIENT_SECRET: ${{ secrets.CERBOS_HUB_CLIENT_SECRET }}
+        run: |
+          docker run --rm \
+            -e CERBOS_HUB_STORE_ID="[STORE_ID]" \
+            -e CERBOS_HUB_CLIENT_ID=$CERBOS_HUB_CLIENT_ID \
+            -e CERBOS_HUB_CLIENT_SECRET=$CERBOS_HUB_CLIENT_SECRET \
+            -v "$PWD":/app \
+            ghcr.io/cerbos/cerbosctl:latest \
+            hub store replace-files /app --message="Policy upload from GitHub Actions"
+----
+
+== Step 2: Add Your Secrets
+. In your GitHub repository, go to the *Settings* tab.
+. In the left sidebar, navigate to menu:Secrets and variables[Actions].
+. Click the *New repository secret* button.
+. For the *Name*, enter `CERBOS_HUB_CLIENT_ID`.
+. In the *Secret* box, paste your client ID value. Click *Add secret*.
+. Repeat the process: click *New repository secret* again. This time, use `CERBOS_HUB_CLIENT_SECRET` for the name and paste your client secret value.
+
+== Step 3: Commit and Push
+. Commit the new `.github/workflows/upload-policies.yml` file to your repository.
+. Push your changes to the `main` branch.
+
+== Step 4: Verify the Run
+. Go to the *Actions* tab in your GitHub repository.
+. You will see a new workflow run named "Upload Cerbos Policies". Click on it.
+. You can see the job running. If it succeeds, you'll see a green checkmark next to the "Upload Policies" step.
