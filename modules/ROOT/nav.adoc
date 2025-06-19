@@ -13,6 +13,8 @@
 *** xref:policy-stores-ci-gitlab-runners.adoc[GitLab Runners]
 *** xref:policy-stores-ci-bitbucket-pipelines.adoc[Bitbucket Pipelines]
 *** xref:policy-stores-ci-azure-devops-pipelines.adoc[Azure Pipelines]
+*** xref:policy-stores-ci-circleci.adoc[CircleCI]
+*** xref:policy-stores-ci-buildkite.adoc[Buildkite]
 ** API/SDK integrations
 *** xref:policy-stores-api-javascript.adoc[Javascript SDK]
 *** xref:policy-stores-api-python.adoc[Python SDK]
