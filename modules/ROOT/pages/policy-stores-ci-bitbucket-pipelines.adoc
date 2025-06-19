@@ -5,6 +5,8 @@ This guide shows you how to set up a Bitbucket Pipelines workflow to automatical
 == Prerequisites
 * A Bitbucket account and a repository.
 * Pipelines enabled for your repository (menu:Repository settings[Pipelines > Settings]).
+* Your `CERBOS_HUB_CLIENT_ID` and `CERBOS_HUB_CLIENT_SECRET` values.
+* Your Policy Store ID
 
 == Step 1: Create the Pipeline File
 . In the root directory of your repository, create a file named `bitbucket-pipelines.yml`.

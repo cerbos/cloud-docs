@@ -5,6 +5,8 @@ This guide will help you set up a CI/CD pipeline in CircleCI to automatically up
 == Prerequisites
 * A CircleCI account, linked to your GitHub or Bitbucket account.
 * Your repository "set up" as a project in CircleCI.
+* Your `CERBOS_HUB_CLIENT_ID` and `CERBOS_HUB_CLIENT_SECRET` values.
+* Your Policy Store ID
 
 == Step 1: Create the Config File
 . In your repository, create a directory named `.circleci`.
