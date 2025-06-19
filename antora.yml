@@ -4,4 +4,3 @@ title: Cerbos Hub
 version: ~
 nav:
   - modules/ROOT/nav.adoc
-  - modules/legacy/nav.adoc
