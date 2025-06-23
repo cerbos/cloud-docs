@@ -1,6 +1,6 @@
 = Deployments
 
-Cerbos Hub Deployments are immutable, versioned bundles of policies that Cerbos Hub builds, validates, tests, and distributes to your connected xref:decision-points.adoc[Policy Decision Points (PDPs)]. A single Deployment can combine policies from one or more xref:policy-stores.adoc[Policy Stores], letting you layer global guard rails, environment-specific rules, and tenant-specific overrides in one cohesive unit. Any change in a linked Policy Store, whether it comes from Git, a CI pipeline, the API, the CLI, or a direct UI upload, automatically triggers a new build so every PDP is always running the latest validated policy bundle.
+A deployment is a specific configuration of xref:policy-stores.adoc[policy stores] (such as ‘production’ or ‘staging’) that can be connected to a set of PDPs. Each new change to the underlying store(s) results in a new policy build that’s automatically delivered to the xref:decision-points.adoc[policy decision points (PDPs)] if the tests are successful.
 
 [unordered.stack]
 Source agnostic inputs:: Populate a Policy Store from any Git provider, CI system, API, CLI, or direct upload, so your existing workflows remain intact.
