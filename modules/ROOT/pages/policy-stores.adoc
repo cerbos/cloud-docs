@@ -2,7 +2,7 @@
 
 Policy stores are flexible containers for Cerbos policy files managed inside Cerbos Hub. A Store decouples policy storage from any specific source control system, letting each team choose the workflow that best fits its needs while Cerbos Hub guarantees validation, versioning, and secure delivery to xref:deployments.adoc[deployments]. 
 
-== Why use Policy stores
+== Why use policy stores
 
 [unordered.stack]
 Clear boundaries and ownership:: Create one Store per team, product, tenant, or environment so each group owns just the policies that matter to them, reducing cognitive load. 
