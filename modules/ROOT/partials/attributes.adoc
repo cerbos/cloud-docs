@@ -4,5 +4,5 @@
 :app-github-url: https://github.com/cerbos/cerbos
 :app-github-download-page: {app-github-url}/releases/download/v{app-version}
 :app-github-releases-page: {app-github-url}/releases/tag/v{app-version}
-:cerbosctl-docker-img: {app-container-registry}/cerbos/cerbosctl:{app-version}
-:cerbosctl-docker-img-alt: {app-container-alt-registry}/cerbos/cerbosctl:{app-version}
+:cerbosctl-docker-img: {app-container-registry}/cerbos/cerbosctl:latest
+:cerbosctl-docker-img-alt: {app-container-alt-registry}/cerbos/cerbosctl:latest
