@@ -6,8 +6,8 @@ This guide will help you set up a CI/CD pipeline in Buildkite to automatically u
 == Prerequisites
 * A Buildkite account and a configured "Pipeline".
 * Your own "agent" running on a machine that has Docker installed.
-* Your `CERBOS_HUB_CLIENT_ID` and `CERBOS_HUB_CLIENT_SECRET` values.
-* Your Policy Store ID
+* The ID of your Cerbos Hub Store, which you can find in the store section of the Cerbos Hub.
+* Your `CERBOS_HUB_CLIENT_ID` and `CERBOS_HUB_CLIENT_SECRET` values generated in the **Client credentials** section of the Cerbos Hub store. Make sure to select the `Read & Write` option when creating the credentials to allow uploading policies.
 
 == Step 1: Configure Secrets on Your Agent Machine
 Buildkite agents pull secrets from their environment. The simplest way is to define them directly on the agent machine.

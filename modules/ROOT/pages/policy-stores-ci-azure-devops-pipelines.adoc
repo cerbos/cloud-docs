@@ -6,8 +6,8 @@ This guide shows you how to set up an Azure DevOps Pipeline to automatically upl
 
 * An Azure DevOps organization and a Project.
 * Your policies is hosted in a repository (either Azure Repos or linked from GitHub, Bitbucket).
-* Your `CERBOS_HUB_CLIENT_ID` and `CERBOS_HUB_CLIENT_SECRET` values.
-* Your Policy Store ID
+* The ID of your Cerbos Hub Store, which you can find in the store section of the Cerbos Hub.
+* Your `CERBOS_HUB_CLIENT_ID` and `CERBOS_HUB_CLIENT_SECRET` values generated in the **Client credentials** section of the Cerbos Hub store. Make sure to select the `Read & Write` option when creating the credentials to allow uploading policies.
 
 == Step 1: Create the Pipeline YAML File
 . In the root directory of your repository, create a new file named `azure-pipelines.yml`.

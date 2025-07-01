@@ -5,8 +5,8 @@ This guide will help you set up a CI/CD pipeline in CircleCI to automatically up
 == Prerequisites
 * A CircleCI account, linked to your GitHub or Bitbucket account.
 * Your repository "set up" as a project in CircleCI.
-* Your `CERBOS_HUB_CLIENT_ID` and `CERBOS_HUB_CLIENT_SECRET` values.
-* Your Policy Store ID
+* The ID of your Cerbos Hub Store, which you can find in the store section of the Cerbos Hub.
+* Your `CERBOS_HUB_CLIENT_ID` and `CERBOS_HUB_CLIENT_SECRET` values generated in the **Client credentials** section of the Cerbos Hub store. Make sure to select the `Read & Write` option when creating the credentials to allow uploading policies.
 
 == Step 1: Create the Config File
 . In your repository, create a directory named `.circleci`.
