@@ -1,0 +1,84 @@
+include::partial$attributes.adoc[]
+
+= Policy stores: CLI upload (binary)
+
+== Installation
+
+`cerbosctl` binaries are available for multiple operating systems and architectures. See the link:{app-github-releases-page}[releases page] for all available downloads.
+
+
+[caption=]
+[%header,cols=".^1,.^1,3m",grid=rows]
+|===
+|OS | Arch | Bundle
+|Linux | x86-64 | cerbosctl_{app-version}_Linux_x86_64.tar.gz
+|Linux | arm64 | cerbosctl_{app-version}_Linux_arm64.tar.gz
+|MacOS | universal | cerbosctl_{app-version}_Darwin_all.tar.gz
+|MacOS | x86-64 | cerbosctl_{app-version}_Darwin_x86_64.tar.gz
+|MacOS | arm64 | cerbosctl_{app-version}_Darwin_arm64.tar.gz
+|===
+
+You can download the binaries by running the following command. Substitute `<BUNDLE>` with the appropriate value from the above table.
+
+[source,sh,subs="attributes,macros"]
+----
+curl -L -o cerbosctl.tar.gz "{app-github-download-page}/$$<$$BUNDLE$$>$$"
+tar xvf cerbosctl.tar.gz
+chmod +x cerbosctl
+mv cerbosctl /usr/local/bin/ # or somewhere on your PATH
+----
+
+[NOTE]
+====
+
+Cerbos binaries are signed using link:https://www.sigstore.dev[sigstore] tools during the automated build process and the verification bundle is published along with the binary as `<BUNDLE>.bundle`.
+
+The following example demonstrates how to verify the Linux X86_64 bundle archive.
+
+[source,sh,subs="attributes,macros"]
+----
+# Download the bundle archive
+curl -L \
+  -o cerbosctl_{app-version}_Linux_x86_64.tar.gz \
+  "{app-github-download-page}/cerbosctl_{app-version}_Linux_x86_64.tar.gz"
+
+# Download the verification bundle
+curl -L \
+  -o cerbosctl_{app-version}_Linux_x86_64.tar.gz.bundle \
+  "{app-github-download-page}/cerbosctl_{app-version}_Linux_x86_64.tar.gz.bundle"
+
+# Verify the signature
+cosign verify-blob \
+  --certificate-oidc-issuer="https://token.actions.githubusercontent.com" \
+  --certificate-identity="https://github.com/cerbos/cerbos/.github/workflows/release.yaml@refs/tags/v{app-version}" \
+  --bundle="cerbosctl_{app-version}_Linux_x86_64.tar.gz.bundle" \
+  "cerbosctl_{app-version}_Linux_x86_64.tar.gz"
+----
+
+====
+
+== Usage
+
+The `cerbosctl` CLI tool can be used to upload policies to a policy store in Cerbos Hub. 
+
+First generate a set of client credentials for the policy store in Cerbos Hub - you can do this in the **Client credentials** section in the UI. Make sure to select the `Read & Write` option when creating the credentials to allow uploading policies.
+
+Then export the following environment variables with the values from the generated client credentials and the store ID:
+
+[source,sh,subs="attributes,macros"]
+----
+export CERBOS_HUB_CLIENT_ID=...
+export CERBOS_HUB_CLIENT_SECRET=...
+export CERBOS_HUB_STORE_ID=...
+----
+
+The following command uploads policy files from the current directory and replaces all the files in the store.
+
+[source,sh,subs="attributes,macros"]
+----
+cerbosctl hub store replace-files .
+----
+
+== Full CLI Reference
+
+include::partial$cli-usage.adoc[]
