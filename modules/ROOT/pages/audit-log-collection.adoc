@@ -5,7 +5,7 @@ With just a simple configuration change, you can configure the PDPs to securely 
 
 == Enabling collection
 
-To get started, you need to obtain a set of client credentials. Navigate to the **Settings** → **Client credentials** tab of the Deployment, click on **Generate a client credential** and generate a **Read & write** credential. Make sure to save the client secret in a safe place as it cannot be recovered.
+To get started, you need to obtain a set of client credentials. Navigate to the **Settings** → **Client credentials** tab of the deployment, click on **Generate a client credential** and generate a **Read & write** credential. Make sure to save the client secret in a safe place as it cannot be recovered.
 
 The client credentials can be provided to the PDP using environment variables or the configuration file. The environment variables to set are:
 

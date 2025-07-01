@@ -1,3 +1,3 @@
-= Policy Stores: Browser Upload
+= Policy stores: Browser Upload
 
 This guide shows you how to directly upload your Cerbos policies to a Cerbos Hub Store right from your browser, without needing to set up a CI/CD pipeline.

@@ -1,15 +1,15 @@
-= Policy Stores
+= Policy stores
 
-Policy Stores are flexible containers for Cerbos policy files managed inside Cerbos Hub. A Store decouples policy storage from any specific source control system, letting each team choose the workflow that best fits its needs while Cerbos Hub guarantees validation, versioning, and secure delivery to xref:deployments.adoc[Deployments]. 
+Policy stores are flexible containers for Cerbos policy files managed inside Cerbos Hub. A Store decouples policy storage from any specific source control system, letting each team choose the workflow that best fits its needs while Cerbos Hub guarantees validation, versioning, and secure delivery to xref:deployments.adoc[deployments]. 
 
-== Why use Policy Stores
+== Why use Policy stores
 
 [unordered.stack]
 Clear boundaries and ownership:: Create one Store per team, product, tenant, or environment so each group owns just the policies that matter to them, reducing cognitive load. 
-Independent update cadence:: Teams can update their Store at any time without blocking others, a new Deployment is built only when you choose to combine the Stores. 
-Layered policy logic:: Combine multiple Stores in a single Deployment to apply global guard rails, platform defaults, application-level rules, and tenant overrides in a predictable hierarchy. 
+Independent update cadence:: Teams can update their Store at any time without blocking others, a new deployment is built only when you choose to combine the Stores. 
+Layered policy logic:: Combine multiple Stores in a single deployment to apply global guard rails, platform defaults, application-level rules, and tenant overrides in a predictable hierarchy. 
 Source agnostic workflows:: Populate a Store from Git, a CI pipeline, the Cerbos Hub API, the xref:cerbos:cli:cerbosctl.adoc[`cerbosctl` CLI], or a direct UI upload, no GitHub lock-in. 
-Full visibility and auditability:: View every policy file in Hub, see which Store and commit contributed to a Deployment, and trace any PDP decision back to the exact policy version. 
+Full visibility and auditability:: View every policy file in Hub, see which Store and commit contributed to a deployment, and trace any PDP decision back to the exact policy version. 
 
 == Supported ingestion methods
 
@@ -18,7 +18,7 @@ Full visibility and auditability:: View every policy file in Hub, see which Stor
 |Method |Typical use case
 
 |Git repository
-|Structured policy as code managed with pull requests and reviews. If you are using GitHub, you can connect your repository directly to a Policy Store in Cerbos Hub.
+|Structured policy as code managed with pull requests and reviews. If you are using GitHub, you can connect your repository directly to a policy store in Cerbos Hub.
 
 |CI or CD pipeline
 |Push the policies produced by a build job, for example when generating service-specific policies or promoting between environments.
@@ -38,13 +38,13 @@ Full visibility and auditability:: View every policy file in Hub, see which Stor
 . Create a Store in **Cerbos Hub** workspace.
 . Add or update policy files using any supported ingestion method.
 . Automatic validation ensures policies are correctly formatted.
-. Reference the Store in one or more Deployments to build a versioned bundle.
+. Reference the Store in one or more deployments to build a versioned bundle.
 
 == Best practices
 
 [unordered.stack]
 Use meaningful names:: Name Stores after their responsibility, for example security-global, platform-core, payments-service, or tenant-alpha.
 Keep tests with policies:: Store-specific tests catch regressions early and run automatically on every change.
-Protect production Stores:: Restrict write access and require review for Stores that feed your production Deployment.
+Protect production Stores:: Restrict write access and require review for Stores that feed your production deployment.
 Isolate dynamic inputs:: Create a dedicated Store for API-driven or user-defined policies to avoid mixing static and dynamic files.
-Review Store composition:: Periodically confirm that each Deployment references only the Stores it needs and in the correct order.
+Review Store composition:: Periodically confirm that each deployment references only the Stores it needs and in the correct order.

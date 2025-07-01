@@ -1,5 +1,5 @@
-= Policy Stores: Python SDK
+= Policy stores: Python SDK
 
-The Python SDK for Policy Stores allows you to interact with policy stores programmatically using Python. This SDK provides a set of functions and types that make it easy to upload, manage, and retrieve policies from a policy store.
+The Python SDK for policy stores allows you to interact with policy stores programmatically using Python. This SDK provides a set of functions and types that make it easy to upload, manage, and retrieve policies from a policy store.
 
 Find the Python SDK on GitHub: https://github.com/cerbos/cerbos-sdk-python

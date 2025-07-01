@@ -1,5 +1,5 @@
-= Policy Stores: JavaScript SDK
+= Policy stores: JavaScript SDK
 
-The JavaScript SDK for Policy Stores allows you to interact with policy stores programmatically using JavaScript/TypeScript. This SDK provides a set of functions and types that make it easy to upload, manage, and retrieve policies from a policy store.
+The JavaScript SDK for policy stores allows you to interact with policy stores programmatically using JavaScript/TypeScript. This SDK provides a set of functions and types that make it easy to upload, manage, and retrieve policies from a policy store.
 
 Find the JavaScript SDK on GitHub: https://github.com/cerbos/cerbos-sdk-javascript

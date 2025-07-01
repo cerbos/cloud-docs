@@ -18,12 +18,12 @@ Cerbos Hub is a cloud-hosted management control plane, while Cerbos instances an
 
 image:how_cerbos_hub_works.png[alt="How Cerbos Hub works",role="center-img"]
 
-. Make a change to policies and submit it to a Policy Store through Git, a CI pipeline, an API call, a CLI upload, or a direct drag and drop in the browser.
+. Make a change to policies and submit it to a policy store through Git, a CI pipeline, an API call, a CLI upload, or a direct drag and drop in the browser.
 . Cerbos Hub detects the update and starts a new build.
 . Validate and compile the policies.
 . Run all policy tests found in the store.
 . Generate a compact encrypted policy bundle.
-. Increment the Deployment version and notify every PDP that is assigned to this Deployment that a new bundle is available.
+. Increment the deployment version and notify every PDP that is assigned to this deployment that a new bundle is available.
 . PDP instances download the new bundle and start serving it immediately.
 
 Optionally, configure Cerbos Hub as an audit backend for the PDPs. Logs are streamed securely, with sensitive data removed locally before leaving your network perimeter.

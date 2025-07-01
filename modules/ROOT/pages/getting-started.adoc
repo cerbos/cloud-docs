@@ -8,10 +8,10 @@
 
 * Outbound internet access from your Cerbos instances so that they can connect to Cerbos Hub to fetch bundle updates and, if enabled, upload audit logs.
 
-== Create a Policy Store and connect your Git repository
+== Create a policy store and connect your Git repository
 
 . Sign in to Cerbos Hub at https://hub.cerbos.cloud and follow the on-boarding wizard to create an Organization and its first Workspace.
-. Inside the Workspace, select **Policy Stores** then **New Store**.
+. Inside the Workspace, select **Policy stores** then **New Store**.
 . Give the Store a clear name, for example `orders-service`, choose **GitHub repository** as the source and connect to your GitHub account.
 . Pick the branch you want Hub to track, usually `main`, and save. Cerbos Hub immediately ingests the repository, compiles the policies, and shows the first successful build.
 
@@ -21,9 +21,9 @@ TIP: You can create additional Stores for other branches, teams or projects.
 
 Deployments package policies from one or more policy stores into versioned bundles that are automatically distributed to connected Cerbos PDPs.
 
-. Open **Deployments** then click **New Deployment**.
+. Open **Deployments** then click **New deployment**.
 . Select the Store you just created.
-. Click **Create**. Hub starts the initial build. When it finishes, note the Deployment ID shown on the detail page. You will need this ID to configure the PDP.
+. Click **Create**. Hub starts the initial build. When it finishes, note the deployment ID shown on the detail page. You will need this ID to configure the PDP.
 
 == Generate client credentials
 
@@ -94,4 +94,4 @@ audit:
 
 Refer to xref:audit-log-collection.adoc[] for details on filtering sensitive fields and other advanced options.
 
-With a Policy Store connected, a Deployment created, and at least one PDP running, you are ready to iterate on your policies. Push a change to the repository, watch Cerbos Hub build a new Deployment version, and see the PDP update itself automatically within seconds.
+With a policy store connected, a deployment created, and at least one PDP running, you are ready to iterate on your policies. Push a change to the repository, watch Cerbos Hub build a new deployment version, and see the PDP update itself automatically within seconds.

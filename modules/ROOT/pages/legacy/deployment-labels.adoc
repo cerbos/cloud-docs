@@ -1,7 +1,7 @@
 = Deployment labels
 :page-llm-ignore: true
 
-NOTE: This documentation is for the legacy Cerbos Hub workspaces. If you are using the new Cerbos Hub, with Deployments and Policy Stores refer to the latest xref:index.adoc[Cerbos Hub documentation].
+NOTE: This documentation is for the legacy Cerbos Hub workspaces. If you are using the new Cerbos Hub, with deployments and policy stores refer to the latest xref:index.adoc[Cerbos Hub documentation].
 
 GitOps is a first-class citizen in the Cerbos ecosystem. Cerbos Hub is no exception with support for branches, tags and commit hashes as policy sources. You can build multiple versions of policy bundles based on Git references and distribute them to Cerbos PDPs.
 

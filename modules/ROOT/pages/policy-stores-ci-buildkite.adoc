@@ -1,4 +1,4 @@
-= Policy Stores: CI with Buildkite
+= Policy stores: CI with Buildkite
 
 This guide will help you set up a CI/CD pipeline in Buildkite to automatically upload your Cerbos policies to a Cerbos Hub Store whenever you push changes to the `main` branch of your Git repository.
 

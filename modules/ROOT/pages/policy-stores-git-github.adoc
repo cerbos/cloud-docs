@@ -1,4 +1,4 @@
-= Policy Stores: Git repo integration with GitHub
+= Policy stores: Git repo integration with GitHub
 
 
 TBC

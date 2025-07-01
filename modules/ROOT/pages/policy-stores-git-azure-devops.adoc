@@ -1,4 +1,4 @@
-= Policy Stores: Git repo integration with Azure DevOps
+= Policy stores: Git repo integration with Azure DevOps
 
 This guide shows you how to set up an Azure DevOps Pipeline to automatically upload your Cerbos policies to a Cerbos Hub Store whenever you push changes to the `main` branch of your repository.
 

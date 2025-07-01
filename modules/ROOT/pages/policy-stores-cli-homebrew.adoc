@@ -1,4 +1,4 @@
-= Policy Stores: CLI upload (Homebrew)
+= Policy stores: CLI upload (Homebrew)
 
 == Installation
 
@@ -12,9 +12,9 @@ brew install cerbos
 
 == Usage
 
-The `cerbosctl` CLI tool can be used to upload policies to a Policy Store in Cerbos Hub. 
+The `cerbosctl` CLI tool can be used to upload policies to a policy store in Cerbos Hub. 
 
-First generate a set of client credentials for the Policy Store in Cerbos Hub - you can do this in the **Client credentials** section in the UI. Make sure to select the `Read & Write` option when creating the credentials to allow uploading policies.
+First generate a set of client credentials for the policy store in Cerbos Hub - you can do this in the **Client credentials** section in the UI. Make sure to select the `Read & Write` option when creating the credentials to allow uploading policies.
 
 Then export the following environment variables with the values from the generated client credentials and the store ID:
 

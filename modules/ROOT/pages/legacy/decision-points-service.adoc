@@ -1,7 +1,7 @@
 = Service Policy Decision Point
 :page-llm-ignore: true
 
-NOTE: This documentation is for the legacy Cerbos Hub workspaces. If you are using the new Cerbos Hub, with Deployments and Policy Stores refer to the latest xref:index.adoc[Cerbos Hub documentation].
+NOTE: This documentation is for the legacy Cerbos Hub workspaces. If you are using the new Cerbos Hub, with deployments and policy stores refer to the latest xref:index.adoc[Cerbos Hub documentation].
 
 The open source Cerbos server instances that you run in your own infrastructure are called service PDPs. Cerbos Hub is the management control plane for PDP instances that are running inside your environment. Rather than each PDP being responsible for detecting policy changes, parsing, compiling and loading them, they get pre-compiled policy bundles pushed to them from Cerbos Hub. This model ensures that all your data remains within your network perimeter and that authorization checks happen locally with low latency while reducing the overhead of policy updates and the time it takes for the whole fleet to get in sync. A PDP must be configured with the name of a label, workspace secret and client credentials in order to connect to Cerbos Hub.
 

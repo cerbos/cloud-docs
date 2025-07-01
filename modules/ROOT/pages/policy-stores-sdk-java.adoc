@@ -1,5 +1,5 @@
-= Policy Stores: Java SDK
+= Policy stores: Java SDK
 
-The Java SDK for Policy Stores allows you to interact with policy stores programmatically using Java. This SDK provides a set of functions and types that make it easy to upload, manage, and retrieve policies from a policy store.
+The Java SDK for policy stores allows you to interact with policy stores programmatically using Java. This SDK provides a set of functions and types that make it easy to upload, manage, and retrieve policies from a policy store.
 
 Find the Java SDK on GitHub: https://github.com/cerbos/cerbos-sdk-java

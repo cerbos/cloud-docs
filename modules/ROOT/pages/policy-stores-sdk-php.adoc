@@ -1,5 +1,5 @@
-= Policy Stores: PHP SDK
+= Policy stores: PHP SDK
 
-The PHP SDK for Policy Stores allows you to interact with policy stores programmatically using PHP. This SDK provides a set of functions and types that make it easy to upload, manage, and retrieve policies from a policy store.
+The PHP SDK for policy stores allows you to interact with policy stores programmatically using PHP. This SDK provides a set of functions and types that make it easy to upload, manage, and retrieve policies from a policy store.
 
 Find the PHP SDK on GitHub: https://github.com/cerbos/cerbos-sdk-php
