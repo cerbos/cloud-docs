@@ -1,4 +1,4 @@
-include::partial$attributes.adoc[]
+include::cerbos:partial$attributes.adoc[]
 
 = Policy Stores: CLI upload (binary)
 
