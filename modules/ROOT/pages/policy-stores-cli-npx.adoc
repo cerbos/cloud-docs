@@ -4,7 +4,7 @@
 
 `cerbosctl` binaries are published to npm for easy installation. To install the `cerbosctl` CLI tool, run the following command:
 
-[source,sh,subs="attributes,macros"]
+[source,sh]
 ----
 npm install -g cerbosctl
 ----
@@ -20,7 +20,7 @@ First generate a set of client credentials for the Policy Store in Cerbos Hub - 
 
 Then export the following environment variables with the values from the generated client credentials and the store ID:
 
-[source,sh,subs="attributes,macros"]
+[source,sh]
 ----
 export CERBOS_HUB_CLIENT_ID=...
 export CERBOS_HUB_CLIENT_SECRET=...
@@ -30,13 +30,13 @@ export CERBOS_HUB_STORE_ID=...
 The following command uploads policy files from the current directory and replaces all the files in the store.
 
 === via global NPM installation
-[source,sh,subs="attributes,macros"]
+[source,sh]
 ----
 cerbosctl hub store replace-files .
 ----
 
 === via npx
-[source,sh,subs="attributes,macros"]
+[source,sh]
 ----
 npx cerbosctl hub store replace-files .
 ----
