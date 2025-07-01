@@ -59,12 +59,22 @@ cosign verify-blob \
 
 == Usage
 
-The `cerbosctl` CLI tool can be used to upload policies to a Policy Store in Cerbos Hub. The following command uploads policy files from the current directory to the store.
+The `cerbosctl` CLI tool can be used to upload policies to a Policy Store in Cerbos Hub. 
+
+First generate a set of client credentials for the Policy Store in Cerbos Hub - you can do this in the **Client credentials** section in the UI. Make sure to select the `Read & Write` option when creating the credentials to allow uploading policies.
+
+Then export the following environment variables with the values from the generated client credentials and the store ID:
 
 [source,sh,subs="attributes,macros"]
 ----
 export CERBOS_HUB_CLIENT_ID=...
 export CERBOS_HUB_CLIENT_SECRET=...
 export CERBOS_HUB_STORE_ID=...
+----
+
+The following command uploads policy files from the current directory to the store.
+
+[source,sh,subs="attributes,macros"]
+----
 cerbosctl hub store replace-files --store-id=$CERBOS_HUB_STORE_ID .
 ----
