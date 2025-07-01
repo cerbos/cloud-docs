@@ -1,1 +1,34 @@
 = Policy Stores: CLI upload (npx)
+
+== Installation
+
+`cerbosctl` binaries are published to npm for easy installation. To install the `cerbosctl` CLI tool, run the following command:
+
+[source,sh,subs="attributes,macros"]
+----
+npm install -g cerbosctl
+----
+
+alternatively, you can use `npx` to run the CLI without installing it globally.
+
+
+== Usage
+The `cerbosctl` CLI tool can be used to upload policies to a Policy Store in Cerbos Hub. The following command uploads policy files from the current directory to the store.
+
+=== via global NPM installation
+[source,sh,subs="attributes,macros"]
+----
+export CERBOS_HUB_CLIENT_ID=...
+export CERBOS_HUB_CLIENT_SECRET=...
+export CERBOS_HUB_STORE_ID=...
+cerbosctl hub store replace-files --store-id=$CERBOS_HUB_STORE_ID .
+----
+
+=== via npx
+[source,sh,subs="attributes,macros"]
+----
+export CERBOS_HUB_CLIENT_ID=...
+export CERBOS_HUB_CLIENT_SECRET=...
+export CERBOS_HUB_STORE_ID=...
+npx cerbosctl hub store replace-files --store-id=$CERBOS_HUB_STORE_ID .
+----

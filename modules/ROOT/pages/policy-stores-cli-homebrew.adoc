@@ -1,1 +1,23 @@
 = Policy Stores: CLI upload (Homebrew)
+
+== Installation
+
+`cerbosctl` binaries are available via Homebrew for simple installation on macOS. To install the `cerbosctl` CLI tool, run the following command:
+
+[source,sh,subs="attributes,macros"]
+----
+brew tap cerbos/tap
+brew install cerbos
+----
+
+== Usage
+
+The `cerbosctl` CLI tool can be used to upload policies to a Policy Store in Cerbos Hub. The following command uploads policy files from the current directory to the store.
+
+[source,sh,subs="attributes,macros"]
+----
+export CERBOS_HUB_CLIENT_ID=...
+export CERBOS_HUB_CLIENT_SECRET=...
+export CERBOS_HUB_STORE_ID=...
+cerbosctl hub store replace-files --store-id=$CERBOS_HUB_STORE_ID .
+----
