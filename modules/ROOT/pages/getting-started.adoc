@@ -4,7 +4,7 @@
 
 * A GitHub repository that contains your Cerbos policies and, optionally, tests. It can be private. If you are starting from scratch, use https://github.com/cerbos/example-cerbos-policy-repository as a template.
 
-* Cerbos version 0.46.0 or higher.
+* Cerbos version 0.45.1 or higher.
 
 * Outbound internet access from your Cerbos instances so that they can connect to Cerbos Hub to fetch bundle updates and, if enabled, upload audit logs.
 
@@ -19,11 +19,11 @@ TIP: You can create additional Stores for other branches, teams or projects.
 
 == Create a Deployment
 
-Deployments package one or more Policy Stores into a single, versioned bundle.
+Deployments package policies from one or more policy stores into versioned bundles that are automatically distributed to connected Cerbos PDPs.
 
 . Open **Deployments** then click **New Deployment**.
 . Select the Store you just created.
-. Click **Create**. Hub starts the initial build. When it finishes, note the Deployment ID shown on the detail page - something like `C0TLEV4XCTAZ`. You will use this ID when configuring the PDP.
+. Click **Create**. Hub starts the initial build. When it finishes, note the Deployment ID shown on the detail page. You will need this ID to configure the PDP.
 
 == Generate client credentials
 

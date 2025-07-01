@@ -7,7 +7,7 @@ Cerbos Hub simplifies the process of authoring authorization policies, testing c
 [unordered.stack]
 Collaborative policy editing:: Cerbos Hub playgrounds provide private, collaborative, IDE-like development environments to help author and test policies with ease.
 Managed build and release pipeline:: Cerbos Hub automatically validates, tests, signs, and distributes every policy change, giving you a turnkey CI/CD pipeline without extra infrastructure.
-Source agnostic policy stores:: Populate Policy Stores from any Git provider, CI artifact, API request, CLI upload, or browser drop, so your existing workflows stay intact.
+Source agnostic policy stores:: Populate policy stores from any source using any of the many integration methods available.
 Coordinated rollout of policy changes:: Cerbos Hub pushes new policy bundles to every connected PDP instance, ensuring fleet-wide consistency and eliminating manual polling or reload logic.
 PDP monitoring:: Cerbos Hub shows which policies each PDP is serving, the exact bundle version, and when the instance was last seen.
 Audit log aggregation:: With one line of configuration you can stream PDP decision logs to Cerbos Hub, filter sensitive fields locally, and retain searchable history without running a separate log stack.
@@ -26,4 +26,4 @@ image:how_cerbos_hub_works.png[alt="How Cerbos Hub works",role="center-img"]
 . Increment the Deployment version and notify every PDP that is assigned to this Deployment that a new bundle is available.
 . PDP instances download the new bundle and start serving it immediately.
 
-Optionally, configure Cerbos Hub as an audit backend for the PDPs. Logs are streamed securely, with sensitive data removed at the edge before leaving your network perimeter.
+Optionally, configure Cerbos Hub as an audit backend for the PDPs. Logs are streamed securely, with sensitive data removed locally before leaving your network perimeter.

@@ -5,12 +5,12 @@ A deployment is a specific configuration of xref:policy-stores.adoc[policy store
 [unordered.stack]
 Source agnostic inputs:: Populate a Policy Store from any Git provider, CI system, API, CLI, or direct upload, so your existing workflows remain intact.
 Multi-store composition:: Reference multiple stores in a Deployment to separate ownership, for example security team versus product team, or to blend static Git-managed policies with dynamic API-driven rules.
-End-to-end automation:: Build, compilation, testing, signing, and distribution are fully managed by Cerbos Hub, giving you a consistent CI or CD style pipeline for authorization without extra infrastructure.
-Traceability and rollback:: Every Deployment is immutable and carries a unique version identifier, making it easy to audit which policies were active for any PDP decision and to roll back if needed.
+End-to-end automation:: Building, testing, and distribution of policies is fully managed by Cerbos Hub, giving you a consistent CI/CD style pipeline for authorization without the need for extra infrastructure.
+Strong versioning:: Every Deployment attempt is attached to a set of immutable policy store versions, making it easy to audit exactly which policies were in effect at any given point in time and to revert any changes if needed.
 
 == Build life cycle
 
-Whenever Cerbos Hub detects a change in any Policy Store referenced by a Deployment, it launches a new build.
+Whenever Cerbos Hub detects a change in any policy store connected to a deployment, it launches a new build.
 
 . **In progress**: The build appears in the Cerbos Hub UI with the status **In progress**.
 . **Compilation failures**: If policy compilation fails, the error is surfaced next to the build version so you can diagnose it quickly.
@@ -36,5 +36,4 @@ For details on creating Policy Stores and connecting PDPs to receive bundles, se
 [unordered.stack]
 Use meaningful names:: Name Deployments after their purpose such as application, environment, or team, for example payments-service-production.
 Automate testing:: Include comprehensive test cases with each Policy Store to catch regressions before they reach production PDPs.
-Implement rollback strategy:: Document a process for emergency rollbacks to previous Deployment versions when needed.
 Validate in staging:: Use staging Deployments to verify policy changes in a pre-production environment before promoting to production.
