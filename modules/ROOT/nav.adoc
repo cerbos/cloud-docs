@@ -25,7 +25,7 @@
 *** xref:policy-stores-sdk-rust.adoc[Rust SDK]
 ** CLI tool
 *** xref:policy-stores-cli-binary.adoc[Binary]
-*** xref:policy-stores-cli-docker.adoc[Docker container]
+*** xref:policy-stores-cli-container.adoc[Container]
 *** xref:policy-stores-cli-homebrew.adoc[Homebrew]
 *** xref:policy-stores-cli-npx.adoc[npx]
 ** xref:policy-stores-upload.adoc[Browser upload]

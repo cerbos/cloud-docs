@@ -27,16 +27,20 @@ export CERBOS_HUB_CLIENT_SECRET=...
 export CERBOS_HUB_STORE_ID=...
 ----
 
-The following command uploads policy files from the current directory to the store.
+The following command uploads policy files from the current directory and replaces all the files in the store.
 
 === via global NPM installation
 [source,sh,subs="attributes,macros"]
 ----
-cerbosctl hub store replace-files --store-id=$CERBOS_HUB_STORE_ID .
+cerbosctl hub store replace-files .
 ----
 
 === via npx
 [source,sh,subs="attributes,macros"]
 ----
-npx cerbosctl hub store replace-files --store-id=$CERBOS_HUB_STORE_ID .
+npx cerbosctl hub store replace-files .
 ----
+
+
+== Full CLI Reference
+include::partial$cli-usage.adoc[]
