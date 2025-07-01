@@ -1,17 +1,17 @@
 = Policy stores: Git repo integration with GitLab
 
-This guide shows you how to set up a GitLab CI/CD pipeline to automatically upload your Cerbos policies to a Cerbos Hub Store whenever you push changes to the `main` branch of your repository.
+This guide shows you how to set up a GitLab CI/CD pipeline to automatically upload your Cerbos policies to a Cerbos Hub store whenever you push changes to the `main` branch of your repository.
 
 == Prerequisites
 * A GitLab account and a project.
 * Access to Shared Runners (enabled by default on GitLab.com).
-* The ID of your Cerbos Hub Store, which you can find in the store section of the Cerbos Hub.
+* The ID of your Cerbos Hub store, which you can find in the store section of the Cerbos Hub.
 * Your `CERBOS_HUB_CLIENT_ID` and `CERBOS_HUB_CLIENT_SECRET` values generated in the **Client credentials** section of the Cerbos Hub store. Make sure to select the `Read & Write` option when creating the credentials to allow uploading policies.
 
 == Step 1: Create the CI/CD File
 . In the root directory of your project, create a file named `.gitlab-ci.yml`.
 . Copy and paste the following code into it:
-. Replace `[STORE_ID]` with the ID of your Cerbos Hub Store. You can find this in the Cerbos Hub UI under the Store settings.
+. Replace `[STORE_ID]` with the ID of your Cerbos Hub store. You can find this in the Cerbos Hub UI under the store settings.
 
 [source,yaml]
 ----

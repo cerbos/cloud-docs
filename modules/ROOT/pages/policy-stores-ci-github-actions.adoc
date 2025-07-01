@@ -1,18 +1,18 @@
 = Policy stores: CI with GitHub Actions
 
-This guide shows you how to set up a GitHub Actions workflow to automatically upload your Cerbos policies to a Cerbos Hub Store whenever you push changes to the `main` branch of your repository.
+This guide shows you how to set up a GitHub Actions workflow to automatically upload your Cerbos policies to a Cerbos Hub store whenever you push changes to the `main` branch of your repository.
 
 
 == Prerequisites
 * A GitHub account and a repository.
-* The ID of your Cerbos Hub Store, which you can find in the store section of the Cerbos Hub.
+* The ID of your Cerbos Hub store, which you can find in the store section of the Cerbos Hub.
 * Your `CERBOS_HUB_CLIENT_ID` and `CERBOS_HUB_CLIENT_SECRET` values generated in the **Client credentials** section of the Cerbos Hub store. Make sure to select the `Read & Write` option when creating the credentials to allow uploading policies.
 
 == Step 1: Create the Workflow File
 . In your repository, create a new directory named `.github/workflows`.
 . Inside `.github/workflows`, create a new file named `upload-policies.yml`.
 . Copy and paste the following code into the `upload-policies.yml` file:
-. Replace `[STORE_ID]` with the ID of your Cerbos Hub Store. You can find this in the Cerbos Hub UI under the Store settings.
+. Replace `[STORE_ID]` with the ID of your Cerbos Hub store. You can find this in the Cerbos Hub UI under the store settings.
 
 [source,yaml]
 ----

@@ -11,18 +11,18 @@
 == Create a policy store and connect your Git repository
 
 . Sign in to Cerbos Hub at https://hub.cerbos.cloud and follow the on-boarding wizard to create an Organization and its first Workspace.
-. Inside the Workspace, select **Policy stores** then **New Store**.
-. Give the Store a clear name, for example `orders-service`, choose **GitHub repository** as the source and connect to your GitHub account.
+. Inside the Workspace, select **Policy stores** then **New store**.
+. Give the store a clear name, for example `orders-service`, choose **GitHub repository** as the source and connect to your GitHub account.
 . Pick the branch you want Hub to track, usually `main`, and save. Cerbos Hub immediately ingests the repository, compiles the policies, and shows the first successful build.
 
-TIP: You can create additional Stores for other branches, teams or projects.
+TIP: You can create additional stores for other branches, teams or projects.
 
 == Create a Deployment
 
 Deployments package policies from one or more policy stores into versioned bundles that are automatically distributed to connected Cerbos PDPs.
 
 . Open **Deployments** then click **New deployment**.
-. Select the Store you just created.
+. Select the store you just created.
 . Click **Create**. Hub starts the initial build. When it finishes, note the deployment ID shown on the detail page. You will need this ID to configure the PDP.
 
 == Generate client credentials
