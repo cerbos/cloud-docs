@@ -1,4 +1,28 @@
-= Policy stores: Git repo integration with GitHub
+= Cerbos Hub GitHub Integration
 
+The Cerbos Hub GitHub integration allows you to manage your policies in a GitHub repository. This integration supports both public and private repositories, enabling you to store your policies securely and manage them using Git workflows.
 
-TBC
+== Prerequisites
+Before you can use the Cerbos Hub GitHub integration, you need to have the following:
+* A GitHub account.
+* A GitHub repository where you want to store your policies.
+* Permission to add a GitHub App to your repository.
+
+== Setting Up the GitHub Integration
+To set up the GitHub integration, follow these steps:
+
+1. Go to the [Cerbos Hub](https://hub.cerbos.dev) and log in with your Cerbos account.
+2. Inside a workspace, create a new policy store by clicking on "Policy Stores" in the sidebar.
+3. In the Import tab, select "GitHub" as the source for your policy store.
+4. Follow the prompts to authorize the Cerbos Hub to access your GitHub account.
+5. Select the repository you want to use for storing your policies.
+6. Configure the branch or tag for the integration to track, and optionally a directory where your policies will be stored.
+  image:policy_store_github_connection_setup.png[alt="GitHub connection status",role="center-img"]
+7. Click "Save" to complete the setup.
+
+== Using the GitHub Integration
+Once the GitHub integration is set up, you can monitor and manage your policies directly in the GitHub connection tab. The integration will automatically sync changes made to the policies in your GitHub repository.
+
+image:policy_store_github_connection.png[alt="GitHub connection status",role="center-img"]
+
+To reconfigure the GitHub integration, you can click on the "Update configuration" button in the GitHub connection tab. This allows you to change the repository, branch, or directory settings.
