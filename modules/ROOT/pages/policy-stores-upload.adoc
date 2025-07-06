@@ -1,3 +1,18 @@
 = Policy stores: Browser Upload
 
-This guide shows you how to directly upload your Cerbos policies to a Cerbos Hub store right from your browser, without needing to set up a CI/CD pipeline.
+The browser upload feature allows you to manually upload policy files directly to a policy store using the Cerbos Hub web interface. This is useful for when you want to quickly add policies without using a Git repository or CI/CD pipeline.
+
+== Uploading Policies
+
+image:policy_store_upload.png[alt="Browser upload",role="center-img"]
+
+To upload policies using the browser, follow these steps:
+
+1. Go to the https://hub.cerbos.dev[Cerbos Hub] and log in with your Cerbos account.
+2. Inside a workspace, create a new policy store by clicking on "Policy Stores" in the sidebar.
+3. In the Import tab, select "Browser upload" as the source for your policy store.
+4. Click on the "Upload files" button to select a ZIP file of your policies or drag and drop the ZIP file into the designated area.
+5. Once the file is uploaded, the policies will be processed and added to the policy store.
+6. You can then view and manage the uploaded policies in the policy store Policies tab.
+
+NOTE: Uploading policies via the browser does a full replace of the existing policies in the store. If you want to append or update specific policies, consider using a Git repository or CI/CD pipeline instead.
