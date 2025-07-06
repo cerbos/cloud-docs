@@ -32,3 +32,4 @@ Commands:
 
   hub store delete-files --store-id=STRING --client-id=STRING --client-secret=STRING <paths> ... [flags]
     Delete files from the store
+----
