@@ -2,13 +2,27 @@
 
 == Prerequisites
 
-* A GitHub repository that contains your Cerbos policies and, optionally, tests. It can be private. If you are starting from scratch, use https://github.com/cerbos/example-cerbos-policy-repository as a template.
+* A set of Cerbos policies. An example set of policies are avaliable at https://github.com/cerbos/example-cerbos-policy-repository.
 
 * Cerbos version 0.45.1 or higher.
 
 * Outbound internet access from your Cerbos instances so that they can connect to Cerbos Hub to fetch bundle updates and, if enabled, upload audit logs.
 
-== Create a policy store and connect your Git repository
+== Create a policy store
+
+Cerbos Hub uses policy stores to manage your policies. A policy store is a collection of policies and tests that can be built into a deployment and distributed to Cerbos PDPs. 
+
+For the guick start, you can create a policy store using the browser and upload a ZIP file containing policies (https://github.com/cerbos/example-cerbos-policy-repository/archive/refs/heads/main.zip[example]) or fork the GitHub https://github.com/cerbos/example-cerbos-policy-repository[example repository] and connect it to Cerbos Hub.
+
+=== Upload policies via browser
+
+. Sign in to Cerbos Hub at https://hub.cerbos.cloud and follow the on-boarding wizard to create an Organization and its first Workspace.
+. Inside the Workspace, select **Policy stores** then **New store**.
+. Give the store a clear name, for example `orders-service`, choose **Browser upload** as the source, and click **Create**.
+. In the store detail page, click **Upload files** and select a ZIP file containing your policies. The ZIP file should contain the policies in the root directory, not in a subdirectory.
+. Cerbos Hub immediately ingests the ZIP file, compiles the policies, and shows the first successful build.
+
+=== GitHub repository
 
 . Sign in to Cerbos Hub at https://hub.cerbos.cloud and follow the on-boarding wizard to create an Organization and its first Workspace.
 . Inside the Workspace, select **Policy stores** then **New store**.
