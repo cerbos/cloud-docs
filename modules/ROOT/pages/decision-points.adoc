@@ -1,37 +1,68 @@
-= Policy Decision Points
+= Service Policy Decision Point
 
-Cerbos Hub supports two types of policy decision points for making authorization decisions.
+The open source Cerbos server instances that you run in your own infrastructure are called service PDPs. Cerbos Hub is the management control plane for PDP instances that are running inside your environment. Rather than each PDP being responsible for detecting policy changes, parsing, compiling, and loading them, they get pre-compiled policy bundles pushed to them from Cerbos Hub. This model ensures that all your data remains within your network perimeter and that authorization checks happen locally with low latency while reducing the overhead of policy updates and the time it takes for the whole fleet to get in sync. A PDP must be configured with the ID of a deployment and client credentials in order to connect to Cerbos Hub.
 
-Service:: The open source Cerbos server running as a service or sidecar within your infrastructure and connected to Cerbos Hub to automatically receive bundle updates. This is the most suitable option for majority of authorization requirements and has benefits such as query planner, full audit logging, centralised management and horizontal scalability.
-Embedded:: A self-contained snapshot of a policy set that can be embedded into any WebAssembly framework. Suitable for use cases where authorization decisions cannot be made over the network due to deployment constraints.
+== Deploying a PDP
 
-.Decision point feature matrix
-[cols="1a,1,1"]
-|===
-| |Service |Embedded
+Connecting to Cerbos Hub is a matter of configuring the `hub` storage driver, which can be configured using the configuration file, environment variables or command line arguments.
 
-|
-*Check permissions*
+The simplest method to get a connected PDP up and running is to run the container with configuration passed via environment variables:
 
-Evaluate whether a given principal, can perform a given action on resource.
+[source,shell]
+----
+docker run --rm --name cerbos \
+ -p 3592:3592 -p 3593:3593 \
+ -e CERBOS_HUB_DEPLOYMENT_ID="..." \
+ -e CERBOS_HUB_CLIENT_ID="..." \
+ -e CERBOS_HUB_CLIENT_SECRET="..." \
+ -e CERBOS_HUB_PDP_ID="..." \
+ ghcr.io/cerbos/cerbos:latest server
+----
 
-|Yes
-|Yes
+The environment variables to set are:
 
-|
-*Query plan*
+[horizontal]
+`CERBOS_HUB_DEPLOYMENT_ID`:: The deployment ID to load policies from
+`CERBOS_HUB_CLIENT_ID`:: Client ID
+`CERBOS_HUB_CLIENT_SECRET`:: Client secret
+`CERBOS_HUB_PDP_ID`:: Optional. The name shown for the PDP in the Cerbos Hub monitoring page. If not provided, a random value is used.
 
-Perform a partial evaluation of policy to return a the conditions to apply to a query to return just the instances of a resource a principal has access to.
+Alternatively, you can define these values in the Cerbos configuration file as follows:
 
-|Yes
-|No
+[source,yaml]
+----
+server:
+  httpListenAddr: ":3592" # The port the HTTP server will listen on
+  grpcListenAddr: ":3593" # The port the gRPC server will listen on
 
-|
-*Audit logs*
+hub:
+  credentials:
+    pdpID: "..." # Optional. Identifier for this Cerbos instance.
+    clientID: "..." # ClientID
+    clientSecret: "..." # ClientSecret
 
-Audit logs capture access records and decisions made by the engine along with the associated context data.
-|Yes
-|No
-|===
+storage:
+  driver: hub
+  hub:
+    remote:
+      deploymentID: latest # The deployment ID to load policies for
+----
+
+Assuming you saved the configuration file as `.cerbos.yaml` in the current directory, you can start Cerbos as follows:
 
 
+[source,shell]
+----
+docker run --rm --name cerbos \
+ -v $(pwd):/conf \
+ -p 3592:3592 -p 3593:3593 \
+ ghcr.io/cerbos/cerbos:latest server --config=/conf/.cerbos.yaml
+----
+
+See xref:cerbos:configuration:index.adoc[] for more information about configuring Cerbos.
+
+== Monitoring
+
+The Decsion points page in Cerbos Hub provides a view of all the recently connected PDP instances of the workspace.
+
+image:connected_pdps.png[alt="Connected instances",role="center-img"]

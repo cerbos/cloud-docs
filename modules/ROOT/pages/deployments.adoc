@@ -1,0 +1,30 @@
+= Deployments
+
+A deployment is a specific configuration of xref:policy-stores.adoc[policy stores] (such as ‘production’ or ‘staging’) that can be connected to a set of PDPs. Each new change to the underlying store(s) results in a new policy build that’s automatically delivered to the xref:decision-points.adoc[policy decision points (PDPs)] if the tests are successful.
+
+[unordered.stack]
+Source agnostic inputs:: Populate a policy store from any Git provider, CI system, API, CLI, or direct upload, so your existing workflows remain intact.
+Multi-store composition:: Reference multiple stores in a deployment to separate ownership, for example security team versus product team, or to blend static Git-managed policies with dynamic API-driven rules.
+End-to-end automation:: Building, testing, and distribution of policies is fully managed by Cerbos Hub, giving you a consistent CI/CD style pipeline for authorization without the need for extra infrastructure.
+Strong versioning:: Every deployment attempt is attached to a set of immutable policy store versions, making it easy to audit exactly which policies were in effect at any given point in time and to revert any changes if needed.
+
+== Build life cycle
+
+Whenever Cerbos Hub detects a change in any policy store connected to a deployment, it launches a new build.
+
+. **In progress**: The build is listed in the Build section of the deployment with the status **In progress**.
+. **Compilation failures**: If policy compilation fails, the error is surfaced next to the build version so you can diagnose it quickly.
+. **Test execution**: After successful compilation, Cerbos Hub runs all policy tests found across the contributing stores. Failures are displayed in the build details view with full logs for debugging.
+. **Bundle generation**: When compilation and tests pass, the bundle status changes to **Generated** and all PDPs that are assigned to this deployment receive a push notification instructing them to download and activate the bundle immediately.
+
+For details on creating policy stores and connecting PDPs to receive bundles, see the related guides:
+
+* xref:policy-stores.adoc[Policy stores]
+* xref:decision-points.adoc[PDP configuration]
+
+== Best practices
+
+[unordered.stack]
+Use meaningful names:: Name deployments after their purpose such as application, environment, or team, for example payments-service-production.
+Automate testing:: Include comprehensive test cases with each policy store to catch regressions before they reach production PDPs.
+Validate in staging:: Use staging deployments to verify policy changes in a pre-production environment before promoting to production.

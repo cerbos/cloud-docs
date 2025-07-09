@@ -2,127 +2,110 @@
 
 == Prerequisites
 
-- Currently GitHub is the only supported git provider. You must have access to a GitHub repository that contains your policies and (optional) tests. This repository can be a private one. An example repository is available at https://github.com/cerbos/example-cerbos-policy-repository that you can use as a template if you are starting from scratch.
-- Cerbos version 0.31.0 or higher. Audit log collection requires Cerbos 0.36.0 or higher.
-- Outbound internet connection for your Cerbos instances so that they can connect to Cerbos Hub to fetch bundle updates and upload audit logs (optional).
+* A set of Cerbos policies. An example set of policies are avaliable at https://github.com/cerbos/example-cerbos-policy-repository.
 
+* Cerbos version 0.45.1 or higher.
 
-== Create a label mapping file
+* Outbound internet access from your Cerbos instances so that they can connect to Cerbos Hub to fetch bundle updates and, if enabled, upload audit logs.
 
+== Create a policy store
 
-In order to work with Cerbos Hub you need to first define a label mapping. A label is a symbolic name for a git reference, which can be a branch, a tag or a commit hash. You need to define at least one label to get started with Cerbos Hub. Labels are defined in a special file named `.cerbos-hub.yaml` that must be stored at the root of a branch picked by you to be the config branch for Cerbos Hub. It can be any normal branch containing other files. Typically it would be the `main` or `master` branch.
+Cerbos Hub uses policy stores to manage your policies. A policy store is a collection of policies and tests that can be built into a deployment and distributed to Cerbos PDPs. 
 
-.Structure of .cerbos-hub.yaml
-[source,yaml,linenums]
-----
----
-apiVersion: api.cerbos.cloud/v1
-labels:
-  latest: <1>
-    branch: main <2>
-  v2:
-    tag: v2 <3>
-  hotfix:
-    commitHash: 28b70bbcc0ce7301b16e4482c835b485ee471647 <4>
-----
-<1> Name of the label
-<2> Branch reference: resolves to the `HEAD` of the branch
-<3> Tag reference
-<4> Reference to a specific commit hash
+For the guick start, you can create a policy store using the browser and upload a ZIP file containing policies (https://github.com/cerbos/example-cerbos-policy-repository/archive/refs/heads/main.zip[example]) or fork the GitHub https://github.com/cerbos/example-cerbos-policy-repository[example repository] and connect it to Cerbos Hub.
 
+=== Upload policies via browser
 
-Create a `.cerbos-hub.yaml` file at the root of the file tree of the branch, commit and push it to the remote repo before moving on to the next step.
+. Sign in to Cerbos Hub at https://hub.cerbos.cloud and follow the on-boarding wizard to create an Organization and its first Workspace.
+. Inside the Workspace, select **Policy stores** then **New store**.
+. Give the store a clear name, for example `orders-service`, choose **Browser upload** as the source, and click **Create**.
+. In the store detail page, click **Upload files** and select a ZIP file containing your policies. The ZIP file should contain the policies in the root directory, not in a subdirectory.
+. Cerbos Hub immediately ingests the ZIP file, compiles the policies, and shows the first successful build.
 
-== Sign up to Cerbos Hub and create your workspace
+=== GitHub repository
 
-Go to https://cerbos.cloud to sign up for Cerbos Hub. You can sign up using your Google or GitHub accounts or an email address. The onboarding wizard will guide you through creating an Organization and a workspace. Make sure to save the workspace secret in a secure place. You will need it to configure the PDPs.
+. Sign in to Cerbos Hub at https://hub.cerbos.cloud and follow the on-boarding wizard to create an Organization and its first Workspace.
+. Inside the Workspace, select **Policy stores** then **New store**.
+. Give the store a clear name, for example `orders-service`, choose **GitHub repository** as the source and connect to your GitHub account.
+. Pick the branch you want Hub to track, usually `main`, and save. Cerbos Hub immediately ingests the repository, compiles the policies, and shows the first successful build.
 
-== Generate client credentials pair
+TIP: You can create additional stores for other branches, teams or projects.
 
-Navigate to the Settings tab of your workspace and click on "Generate client credentials" to generate a client ID and a client secret. The client secret is not stored on Cerbos Hub and cannot be recovered. Make sure to save it in a secure place as well.
+== Create a Deployment
 
-== Connect a Cerbos PDP to Hub
+Deployments package policies from one or more policy stores into versioned bundles that are automatically distributed to connected Cerbos PDPs.
 
-Connecting to Cerbos Hub is a matter of configuring the `hub` storage driver, which can be configured using the configuration file, environment variables or command line arguments.
+. Open **Deployments** then click **New deployment**.
+. Select the store you just created.
+. Click **Create**. Hub starts the initial build. When it finishes, note the deployment ID shown on the detail page. You will need this ID to configure the PDP.
 
-The simplest method to get a connected PDP up and running is to run the container with configuration passed via environment variables:
+== Generate client credentials
+
+Navigate to **Settings** → **Client credentials** and click **Generate a client credential**, giving it a name and select **Read & Write** so that policies can be pulled down and Audit Logs pushed back. Copy both the Client ID and Client secret. The secret is shown only once.
+
+== Configure and run a Cerbos PDP
+
+You can pass the Hub connection settings as environment variables or in a YAML configuration file. The example below uses environment variables for a quick start:
 
 [source,shell]
 ----
-docker run --rm --name cerbos \
- -p 3592:3592 -p 3593:3593 \
- -e CERBOS_HUB_BUNDLE="latest" \
- -e CERBOS_HUB_WORKSPACE_SECRET="..." \
- -e CERBOS_HUB_CLIENT_ID="..." \
- -e CERBOS_HUB_CLIENT_SECRET="..." \
- ghcr.io/cerbos/cerbos:latest server
+docker run --rm --name cerbos
+  -p 3592:3592 -p 3593:3593
+  -e CERBOS_HUB_DEPLOYMENT_ID="..." \ # Deployment ID from Hub
+  -e CERBOS_HUB_CLIENT_ID="..." \ # From Deployment ▸ Client credentials
+  -e CERBOS_HUB_CLIENT_SECRET="..." \ # From Deployment ▸ Client credentials
+  ghcr.io/cerbos/cerbos:latest server
 ----
 
-The environment variables to set are:
+Optional variable:
 
-[horizontal]
-`CERBOS_HUB_BUNDLE`:: The label to load policies from
-`CERBOS_HUB_WORKSPACE_SECRET`:: Secret key to decrypt the bundles -- generated during workspace creation
-`CERBOS_HUB_CLIENT_ID`:: Client ID
-`CERBOS_HUB_CLIENT_SECRET`:: Client secret
-`CERBOS_HUB_PDP_ID`:: Optional. The name shown for the PDP in the Cerbos Hub monitoring page. If not provided, a random value is used.
+CERBOS_HUB_PDP_ID:: The friendly name that will appear on the Cerbos Hub monitoring page. If omitted a random identifier is generated.
 
-Alternatively, you can define these values in the Cerbos configuration file as follows:
+=== YAML alternative
 
 [source,yaml]
 ----
 server:
-  httpListenAddr: ":3592" # The port the HTTP server will listen on
-  grpcListenAddr: ":3593" # The port the gRPC server will listen on
+  httpListenAddr: ":3592"
+  grpcListenAddr: ":3593"
 
 hub:
   credentials:
-    pdpID: "..." # Optional. Identifier for this Cerbos instance.
-    clientID: "..." # ClientID
-    clientSecret: "..." # ClientSecret
-    workspaceSecret: "..." # WorkspaceSecret to decrypt the bundles -- generated during workspace creation
+    pdpID: "orders-pdp-01" # Optional
+    clientID: "..."
+    clientSecret: "..."
 
 storage:
   driver: hub
   hub:
     remote:
-      bundleLabel: latest # The label to load policies for
+      deploymentID: "..." # Deployment ID from Hub
 ----
-
-Assuming you saved the configuration file as `.cerbos.yaml` in the current directory, you can start Cerbos as follows:
+    
+Assuming you saved the file as .cerbos.yaml in the current directory, start Cerbos with:
 
 [source,shell]
 ----
-docker run --rm --name cerbos \
- -v $(pwd):/conf \
- -p 3592:3592 -p 3593:3593 \
- ghcr.io/cerbos/cerbos:latest server --config=/conf/.cerbos.yaml
+docker run --rm --name cerbos
+  -v $(pwd):/conf
+  -p 3592:3592 -p 3593:3593
+  ghcr.io/cerbos/cerbos:latest server --config=/conf/.cerbos.yaml
 ----
 
-
-TIP: See xref:cerbos:configuration:index.adoc[] for more information about configuring Cerbos.
+See xref:cerbos:configuration:index.adoc[] for advanced configuration options.
 
 == Enable audit log collection (optional)
 
-You can configure the `hub` audit backend to enable centralized audit log collection.
+Add the Hub audit backend to stream decision logs to Cerbos Hub:
 
 [source,yaml]
 ----
-server:
-  httpListenAddr: ":3592" # The port the HTTP server will listen on
-  grpcListenAddr: ":3593" # The port the gRPC server will listen on
-
-hub:
-  credentials:
-    pdpID: "..." # Optional. Identifier for this Cerbos instance.
-    clientID: "..." # ClientID
-    clientSecret: "..." # ClientSecret
-    workspaceSecret: "..." # WorkspaceSecret to decrypt the bundles -- generated during workspace creation
-
 audit:
   backend: hub
   hub:
-    storagePath: "..." # Path to a local storage location for buffering audit logs before being sent to Cerbos Hub
+    storagePath: "/var/cerbos/audit-buffer" # Local buffer used when the network is unavailable
 ----
 
-Refer to the xref:audit-log-collection.adoc[audit log collection documentation] for more information about filtering sensitive fields and other advanced configuration options.
+Refer to xref:audit-log-collection.adoc[] for details on filtering sensitive fields and other advanced options.
+
+With a policy store connected, a deployment created, and at least one PDP running, you are ready to iterate on your policies. Push a change to the repository, watch Cerbos Hub build a new deployment version, and see the PDP update itself automatically within seconds.

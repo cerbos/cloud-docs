@@ -1,0 +1,5 @@
+= Policy stores: .NET SDK
+
+The .NET SDK for policy stores allows you to interact with policy stores programmatically using .NET. This SDK provides a set of functions and types that make it easy to upload, manage, and retrieve policies from a policy store.
+
+Find the .NET SDK on GitHub: https://github.com/cerbos/cerbos-sdk-net

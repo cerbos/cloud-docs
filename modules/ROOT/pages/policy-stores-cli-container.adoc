@@ -1,0 +1,49 @@
+include::partial$attributes.adoc[]
+
+= Policy stores: CLI upload (Container)
+
+The `cerbosctl` CLI tool is also available as a Docker container image:
+
+.Via ghcr.io
+[source,sh,subs="attributes"]
+----
+docker run --rm -it {cerbosctl-docker-img} hub store
+----
+
+.Via docker.io
+[source,sh,subs="attributes"]
+----
+docker run --rm -it {cerbosctl-docker-img-alt} hub store
+----
+
+== Usage
+
+The `cerbosctl` container can be used to upload policies to a policy store in Cerbos Hub. 
+
+First generate a set of client credentials for the policy store in Cerbos Hub - you can do this in the **Client credentials** section in the UI. Make sure to select the `Read & Write` option when creating the credentials to allow uploading policies.
+
+
+Then export the following environment variables with the values from the generated client credentials and the store ID:
+
+[source,sh]
+----
+export CERBOS_HUB_CLIENT_ID=...
+export CERBOS_HUB_CLIENT_SECRET=...
+export CERBOS_HUB_STORE_ID=...
+----
+
+The following command uploads policy files from the policies directory and replaces all the files in the store.
+
+[source,sh]
+----
+docker run -it {cerbosctl-docker-img} \
+    -e CERBOS_HUB_CLIENT_ID=$CERBOS_HUB_CLIENT_ID \
+    -e CERBOS_HUB_CLIENT_SECRET=$CERBOS_HUB_CLIENT_SECRET \
+    -e CERBOS_HUB_STORE_ID=$CERBOS_HUB_STORE_ID \
+    -v $(pwd):/policies \
+    hub store replace-files /policies .
+----
+
+== Full CLI Reference
+
+include::partial$cli-usage.adoc[]

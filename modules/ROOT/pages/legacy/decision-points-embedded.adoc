@@ -1,4 +1,7 @@
 = Embedded Policy Decision Point
+:page-llm-ignore: true
+
+NOTE: This documentation is for the legacy Cerbos Hub workspaces. If you are using the new Cerbos Hub, with deployments and policy stores refer to the latest xref:index.adoc[Cerbos Hub documentation].
 
 Exclusive to Cerbos Hub is the ability to generate self-contained policy bundles that can be embedded into any system that supports WebAssembly modules. This is a powerful solution for cases where authorization decisions have to be made locally on device or at the edge without access to a full-fledged Cerbos policy decision point. A common use case for embedded policies is to enable web applications to make decisions about which UI elements to render without making calls to a backend service.
 

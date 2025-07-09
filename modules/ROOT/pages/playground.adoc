@@ -4,16 +4,16 @@ Cerbos Hub playgrounds are fully-interactive, private development environments t
 
 == Creating a playground
 
-Login to Cerbos Hub and select one of the organizations you're a member of. Click on the "Playgrounds" tab to view existing playgrounds or to create a new one.
+Login to Cerbos Hub and select one of the organizations you're a member of. Click on the **Playgrounds** tab to view existing playgrounds or to create a new one.
 
 When creating a new playground, you have a number of options:
 
-- Create an empty playground to start from scratch
-- Generate a starter RBAC policy by answering a few questions about your user roles, resources and actions
-- Start with an example template set of policies covering common use cases
-- If you have xref:getting-started.adoc[created a Cerbos Hub workspace] by connecting a GitHub repository, you have the option of creating a playground populated with files from one of the git branches as well.
+* Create an empty playground to start from scratch
+* Generate a starter RBAC policy by answering a few questions about your user roles, resources and actions
+* Start with an example template set of policies covering common use cases
 
-After creating a playground, click on the "Video tutorial" button on the top right corner of the screen to learn the basics.
+
+After creating a playground, click on the **Video tutorial** button on the top right corner of the screen to learn the basics.
 
 == Playground engine settings
 
@@ -41,4 +41,4 @@ Instructions for starting up a local PDP can be found in the Implement tab under
 
 image:playground_connect_pdp.png[alt="Connect a PDP",role="center-img"]
 
-IMPORTANT: Note that while the Playground PDP connection is an excellent tool for rapid development and testing, it's not intended for production use. When you're ready to release your application to production environments, you should xref:getting-started.adoc[create a workspace] connected to your policy repository and configure the PDPs to receive bundle updates via Cerbos Hub's fully managed CI/CD pipeline. It also allows you to take advantage of Cerbos Hub audit log collection to effortlessly store and analyze all the decisions made by your PDPs.
+IMPORTANT: Note that while the Playground PDP connection is an excellent tool for rapid development and testing, it's not intended for production use. When you're ready to release your application to production environments, you should xref:getting-started.adoc[create a workspace] with a policy store and configure the PDPs to receive bundle updates via Cerbos Hub's fully managed CI/CD pipeline. It also allows you to take advantage of Cerbos Hub audit log collection to effortlessly store and analyze all the decisions made by your PDPs.
