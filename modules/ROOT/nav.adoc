@@ -32,6 +32,7 @@
 * xref:deployments.adoc[Deployments]
 * xref:decision-points.adoc[Policy Decision Points (PDPs)]
 * xref:audit-log-collection.adoc[Audit log collection]
+* xref:usage-dashboard.adoc[Usage dashboard]
 * xref:administration.adoc[Administration]
 ** xref:user-management.adoc[User management]
 * xref:reliability.adoc[Reliability]
