@@ -1,5 +1,19 @@
 = Release notes
 
+== 2025-08-04
+
+=== Usage dashboard
+The new xref:cerbos:usage-dashboard.adoc[Usage Dashboard] provides comprehensive observability into your authorization service. It allows you to monitor key metrics, view trends, and gain insights into how your Cerbos Hub workspace is utililzed.
+
+=== API key lifecycle
+Should an API become blocked due to misconfiguration, you can now unblock it directly from the API key list. 
+
+== 2025-07-17
+
+A major launch of the xref:cerbos:policy-stores.adoc[Policy Stores] feature in Cerbos Hub, which allows you to store and manage your authorization policies more effectively. You can read more in the announcement blog post: https://www.cerbos.dev/blog/updated-cerbos-hub-complete-authorization-solution-for-your-identity-fabrics[Updated Cerbos Hub, the complete authorization solution for your Identity Fabric
+,window=_blank].
+
+
 == 2025-04-28
 
 === Organization deletion

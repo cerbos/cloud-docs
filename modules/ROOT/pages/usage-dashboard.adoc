@@ -1,0 +1,58 @@
+= Usage dashboard
+
+The Usage Dashboard provides comprehensive observability into your authorization service, allowing you to monitor key metrics, view trends, and get insights into how your Cerbos Hub workspace is utilized.
+
+== Overview
+The Usage Dashboard is accessible from two locations:
+
+* The workspace homepage - provides a quick reference overview
+* The dedicated "Usage" section - offers detailed metrics and historical data
+
+== Key metrics
+
+The dashboard surfaces several critical metrics to help you monitor your authorization layer.
+
+=== Monthly Active Principals (MAPs)
+Track the number of unique principals (users, services, or applications) interacting with your authorization policies each month. This metric helps you:
+
+* Understand user adoption and growth
+* Identify unexpected usage patterns
+* Plan for capacity requirements
+
+=== Check API calls
+Monitor the volume of Check API calls and their outcomes. Note that the total number of outcomes might be higher than the number of calls because a single API call could be used to check multiple actions at once.  
+
+* Allowed: Decisions that granted access
+* Denied: Decisions that rejected access
+
+A sudden spike in denied calls could indicate:
+
+* New policy changes that are intentionally or unintentionaly stricter than before
+* Requests for policies or actions that don't exist 
+* Application implementation issues such as typos or requests not conforming to configured schemas  
+
+
+=== Plan API calls
+Monitor the volume of Plan API calls and their outcomes.
+
+* Allowed: Generated plan allows unconditional access
+* Denied: Generated plan denies access unconditionally
+* Conditional: Generated plan allows conditional access
+
+This breakdown is crucial for understanding the API calls that are used to dynamically generate database queries and conditional access patterns.
+
+== Usage details table
+Below the visualization widgets, the "Usage details" table provides granular, month-by-month metrics including:
+
+[cols="1,3"]
+|===
+|Metric |Description
+|Check calls
+|Total number of Check API calls made
+|Plan calls
+|Total number of Plan API calls made
+|Unique principals
+|Count of distinct principals making authorization requests
+|Total calls
+|Combined total of all API calls
+|===
