@@ -3,7 +3,7 @@
 == 2025-08-04
 
 === Usage dashboard
-The new xref:cerbos:usage-dashboard.adoc[Usage Dashboard] provides comprehensive, real-time observability into your authorization service. It allows you to monitor key metrics, analyze trends, and gain insights into how your policies are being used across your organization.
+The new xref:cerbos:usage-dashboard.adoc[Usage Dashboard] provides comprehensive observability into your authorization service. It allows you to monitor key metrics, view trends, and gain insights into how your Cerbos Hub workspace is utililzed.
 
 === API key lifecycle
 Should an API become blocked due to misconfiguration, you can now unblock it directly from the API key list. 

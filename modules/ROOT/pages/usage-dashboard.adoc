@@ -1,6 +1,6 @@
 = Usage dashboard
 
-The Usage Dashboard provides comprehensive, real-time observability into your authorization service, allowing you to monitor key metrics, analyze trends, and get insights into how your policies are being used across your organization.
+The Usage Dashboard provides comprehensive observability into your authorization service, allowing you to monitor key metrics, view trends, and get insights into how your Cerbos Hub workspace is utilized.
 
 == Overview
 The Usage Dashboard is accessible from two locations:
@@ -10,7 +10,7 @@ The Usage Dashboard is accessible from two locations:
 
 == Key metrics
 
-The dashboard surfaces several critical metrics to help you monitor your authorization layer:
+The dashboard surfaces several critical metrics to help you monitor your authorization layer.
 
 === Monthly Active Principals (MAPs)
 Track the number of unique principals (users, services, or applications) interacting with your authorization policies each month. This metric helps you:
@@ -20,26 +20,26 @@ Track the number of unique principals (users, services, or applications) interac
 * Plan for capacity requirements
 
 === Check API calls
-Monitor the volume and outcomes of Check API calls with a clear breakdown of:
+Monitor the volume of Check API calls and their outcomes. Note that the total number of outcomes might be higher than the number of calls because a single API call could be used to check multiple actions at once.  
 
-* Allowed: Successful authorization decisions
-* Denied: Rejected authorization attempts
+* Allowed: Decisions that granted access
+* Denied: Decisions that rejected access
 
 A sudden spike in denied calls could indicate:
 
-* Policy changes that restrict access
-* Misconfigured policies
-* Application bugs  
+* New policy changes that are intentionally or unintentionaly stricter than before
+* Requests for policies or actions that don't exist 
+* Application implementation issues such as typos or requests not conforming to configured schemas  
 
 
 === Plan API calls
-Analyze Plan API calls that generate dynamic queries, showing:
+Monitor the volume of Plan API calls and their outcomes.
 
-* Allowed: Full access granted
-* Denied: No access permitted
-* Conditional: Partial access with constraints
+* Allowed: Generated plan allows unconditional access
+* Denied: Generated plan denies access unconditionally
+* Conditional: Generated plan allows conditional access
 
-This breakdown is crucial for understanding policies that dynamically generate database queries and conditional access patterns.
+This breakdown is crucial for understanding the API calls that are used to dynamically generate database queries and conditional access patterns.
 
 == Usage details table
 Below the visualization widgets, the "Usage details" table provides granular, month-by-month metrics including:
