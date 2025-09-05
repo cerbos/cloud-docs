@@ -10,11 +10,12 @@ Strong versioning:: Every deployment attempt is attached to a set of immutable p
 
 == Build life cycle
 
-Whenever Cerbos Hub detects a change in any policy store connected to a deployment, it launches a new build.
 
-. **In progress**: The build is listed in the Build section of the deployment with the status **In progress**.
-. **Compilation failures**: If policy compilation fails, the error is surfaced next to the build version so you can diagnose it quickly.
-. **Test execution**: After successful compilation, Cerbos Hub runs all policy tests found across the contributing stores. Failures are displayed in the build details view with full logs for debugging.
+Whenever Cerbos Hub detects a change in any policy store connected to a deployment, it launches a new policy build.
+
+. **In progress**: The policy build is listed in the Policies section of the deployment with the status **In progress**.
+. **Compilation failures**: If policy compilation fails, the error is surfaced next to the policy version so you can diagnose it quickly.
+. **Test execution**: After successful compilation, Cerbos Hub runs all policy tests found across the contributing stores. Failures are displayed in the policy details view with full logs for debugging.
 . **Bundle generation**: When compilation and tests pass, the bundle status changes to **Generated** and all PDPs that are assigned to this deployment receive a push notification instructing them to download and activate the bundle immediately.
 
 For details on creating policy stores and connecting PDPs to receive bundles, see the related guides:

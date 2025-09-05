@@ -1,6 +1,7 @@
 = Usage dashboard
 
-The Usage Dashboard provides comprehensive observability into your authorization service, allowing you to monitor key metrics, view trends, and get insights into how your Cerbos Hub workspace is utilized.
+
+The Usage Dashboard provides comprehensive observability into your authorization service, allowing you to monitor key metrics, view trends, and get insights into how your Cerbos Hub workspace is utilized. At the organization level, the dashboard aggregates authorization metrics from all your workspaces into a single view, giving platform owners and engineering leaders a complete picture of request volumes, policy distribution, and usage trends across the entire organization.
 
 == Overview
 The Usage Dashboard is accessible from two locations:
