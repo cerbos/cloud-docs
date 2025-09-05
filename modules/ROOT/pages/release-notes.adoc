@@ -1,5 +1,18 @@
 = Release notes
 
+== 2025-09-09
+
+=== Playground drag and Drop support
+You can now drag and drop policy and test files from your local machine directly into the playground editor. This makes it easier to quickly load and test local policy files without needing to copy and paste.
+
+== 2025-09-01
+
+=== Policy execution traces
+Debugging complex authorization logic is now easier with policy execution traces. This feature provides a detailed, step-by-step view of how Cerbos evaluates a request, showing every rule, condition, and variable evaluation. Traces are available in the playground for real-time testing and in your deployment builds to provide production-level visibility, helping you quickly pinpoint why a specific decision was made.
+
+=== Organization usage dashboard
+A new organization-level usage dashboard is now available, aggregating authorization metrics from all your workspaces into a single view. This dashboard provides a complete picture of request volumes, policy distribution, and usage trends across your entire organization. It helps platform owners and engineering leaders understand adoption patterns, identify which teams might need support, and discover optimization opportunities.
+
 == 2025-08-04
 
 === Usage dashboard
