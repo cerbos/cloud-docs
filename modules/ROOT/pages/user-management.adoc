@@ -2,7 +2,10 @@
 
 A Cerbos Hub user can have a role at the organization level and an optional set of roles for each workspace. All of these roles are considered when determining the permissions for any particular user.
 
+
 == Organization roles
+
+Organizations can be deleted by navigating to the organization settings page and clicking on the "Delete organization" button. This action is irreversible and will permanently delete all data associated with the organization.
 
 Organization roles, except for the `Member` role, apply to all workspaces within the organization. Users with organizational role of `Member` must be explicitly granted workspace roles in order to access a workspace.
 

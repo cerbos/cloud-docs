@@ -1,6 +1,7 @@
 = Policy stores: Browser Upload
 
-The browser upload feature allows you to manually upload policy files directly to a policy store using the Cerbos Hub web interface. This is useful for when you want to quickly add policies without using a Git repository or CI/CD pipeline.
+
+The browser upload feature allows you to manually upload policy files directly to a policy store using the Cerbos Hub web interface. You can quickly add policies by selecting a ZIP file or by dragging and dropping the file into the designated area, without using a Git repository or CI/CD pipeline.
 
 == Uploading Policies
 
