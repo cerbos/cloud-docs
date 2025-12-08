@@ -48,6 +48,25 @@ audit:
 ----
 
 Refer to xref:cerbos:configuration:audit.adoc[Cerbos documentation] for details about common audit configurations that apply to all backends.
+You can configure an optional secondary output for the audit logs. This is useful for cases where you want to aggregate Cerbos audit logs into an existing silo for compliance and monitoring purposes while still taking advantage of the powerful features provided by Cerbos Hub to view and analyze log entries.
+
+The following snippet demonstrates how to configure a secondary output that writes audit entries to standard output of the container.
+
+[source,yaml]
+----
+audit:
+  enabled: true
+  backend: hub
+  hub:
+    storagePath: "..." # Local storage path for buffering the audit logs.
+    pipeOutput: # Secondary output configuration
+      enabled: true
+      backend: file # Any supported audit backend can be used here.
+  file: # Configuration for the file backend which is used by the pipeOutput configuration above.
+    path: stdout
+----
+
+
 
 [TIP]
 ====
