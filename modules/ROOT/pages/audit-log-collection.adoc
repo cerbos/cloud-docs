@@ -97,19 +97,25 @@ Once collection is enabled, the logs can accessed via the _Audit logs_ tab in Ce
 
 The decision logs are records of the authorization decisions made by the Cerbos PDP. These logs provide detailed information about each decision, including the inputs, Cerbos policies evaluated, and the `ALLOW/DENY` decisions along with any outputs from rule evaluation. Besides providing a comprehensive audit trail, these records can be used for troubleshooting purposes and to understand how Cerbos policies are used within your organization.
 
+The log list displays each entry with the timestamp, call ID, request kind (`CheckResources` or `PlanResources`), principal ID, resource kind, resource ID, and action decision. Toggle between the **Decision** view for a compact summary or **JSON** view for raw log data.
 
+==== Log entry details
 
-There are two views in this section. The JSON view provides access to the raw log entry while the decision view provides a compact view consisting of the most pertinent details extracted from the log entry.
+Click on any log entry to open the details panel, which shows:
 
-image:audit_log_decision.png[alt="Decision logs",role="center-img"]
+* **Principal**: The user or service that made the request, including their ID, roles, effective derived roles, and any attributes.
+* **Resource**: The resource being accessed, including kind, ID, scope, and attributes.
+* **Decisions**: The authorization outcome for each action, showing the effect (`ALLOW` or `DENY`) and which policy produced the decision. Click the policy name to navigate directly to that policy in your store.
+* **Outputs**: Any output values returned by policy rules.
+* **Raw JSON**: The complete log entry in JSON format.
 
-image:audit_log_decision_json.png[alt="Decision logs JSON",role="center-img"]
+==== Navigating to policies
 
-In the decision view, clicking on a log entry will open the details pane which shows the full request and response data, including the principal, resource, action, policy decision, and other metadata. In the case of a `PlanResources` request, the detailed plan is also shown.
+In the Decisions section of a log entry, click on any policy name to navigate directly to that policy in your policy store. This makes it easy to investigate authorization decisions and understand the policy logic behind each outcome.
 
-image:audit_log_decision_detail.png[alt="Decision logs detail",role="center-img"]
+==== Filtering
 
-In addition to viewing a particular time range, you can further filter the logs by a particular PDP ID, principal, resource kind, action, or policy decision as well.
+Filter the logs by time range, PDP ID, principal, resource kind, action, or policy decision to find specific entries.
 
 === Access logs
 
