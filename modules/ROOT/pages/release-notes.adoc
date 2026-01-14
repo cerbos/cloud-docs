@@ -5,6 +5,14 @@
 === Create playground from a store
 You can now create a playground directly from an existing policy store, making it easy to experiment with production policies in a safe, isolated environment. This feature streamlines the workflow for testing policy changes before deploying them, allowing you to iterate quickly without affecting live authorization decisions. You can also use a store's policies as a starting point for developing new authorization rules, reducing the time needed to build and validate complex policy structures.
 
+== 2025-12-23
+
+=== Audit log deep linking
+Click on a policy referenced in an audit log entry to navigate directly to that policy in your policy store. This makes it easier to investigate authorization decisions and understand the policy logic that led to a specific outcome.
+
+=== Playground zip file support
+You can now drag and drop zip files containing policies and tests directly into the playground. This simplifies loading entire policy sets for testing and collaboration.
+
 == 2025-12-01
 
 === Test case output diff view
@@ -33,6 +41,9 @@ The system now properly handles expired invitations, displaying clear messages w
 
 == 2025-10-08
 
+=== On-premises deployment
+Cerbos Hub is now available for on-premises deployment, giving you full control over your authorization management platform while maintaining all the features of the cloud-hosted service. On-premises deployment is available for enterprise customers. https://cerbos.dev/contact[Contact us] to learn more.
+
 === Workspace name validation
 Workspace names now require a minimum length, with immediate validation feedback in the creation form. This prevents issues that could arise from very short or ambiguous workspace names, helping teams maintain clear and consistent naming conventions across their organization.
 
@@ -58,21 +69,44 @@ A new organization-level usage dashboard is now available, aggregating authoriza
 == 2025-08-04
 
 === Usage dashboard
-The new xref:cerbos:usage-dashboard.adoc[Usage Dashboard] provides comprehensive observability into your authorization service. It allows you to monitor key metrics, view trends, and gain insights into how your Cerbos Hub workspace is utililzed.
+The new xref:usage-dashboard.adoc[Usage Dashboard] provides comprehensive observability into your authorization service. It allows you to monitor key metrics, view trends, and gain insights into how your Cerbos Hub workspace is utilized.
 
 === API key lifecycle
-Should an API become blocked due to misconfiguration, you can now unblock it directly from the API key list. 
+Should an API key become blocked due to misconfiguration, you can now unblock it directly from the API key list.
 
 == 2025-07-17
 
-A major launch of the xref:cerbos:policy-stores.adoc[Policy Stores] feature in Cerbos Hub, which allows you to store and manage your authorization policies more effectively. You can read more in the announcement blog post: https://www.cerbos.dev/blog/updated-cerbos-hub-complete-authorization-solution-for-your-identity-fabrics[Updated Cerbos Hub, the complete authorization solution for your Identity Fabric
-,window=_blank].
+A major launch of the xref:policy-stores.adoc[Policy Stores] feature in Cerbos Hub, which allows you to store and manage your authorization policies more effectively. You can read more in the announcement blog post: https://www.cerbos.dev/blog/updated-cerbos-hub-complete-authorization-solution-for-your-identity-fabrics[Updated Cerbos Hub, the complete authorization solution for your Identity Fabric,window=_blank].
 
+== 2025-07-09
+
+=== Audit logs general availability
+The audit logs feature is now generally available. The beta badge has been removed and the feature is ready for production use.
+
+== 2025-06-24
+
+=== GitHub-backed policy stores
+Policy stores can now be connected directly to GitHub repositories. Changes pushed to your repository are automatically synced to the store, and you can configure which branch and subdirectory to track. See xref:policy-stores-git-github.adoc[GitHub integration] for details.
+
+== 2025-06-03
+
+=== Import policies wizard
+A new guided wizard helps you import existing policies into a managed policy store. Upload a zip file or connect to a Git repository to quickly populate a new store.
+
+== 2025-05-16
+
+=== Bundle file explorer
+View the contents of policy bundles directly in Cerbos Hub. The build details page now includes a file explorer showing all policies included in the bundle and the ability to inspect individual files.
 
 == 2025-04-28
 
 === Organization deletion
 You can now delete an organization in Cerbos Hub. To delete an organization, navigate to the organization settings page and click on the "Delete organization" button. Please note that this action is irreversible and will permanently delete all data associated with the organization.
+
+== 2025-03-19
+
+=== Role policy and constants templates
+The playground template picker now includes examples for role policies and policy constants, making it easier to get started with these advanced policy features.
 
 == 2025-03-12
 
@@ -88,7 +122,7 @@ Time-based functions used in condition expressions such as `getHours` and `getMi
 
 === Embedded Policy Decision Point
 
-We’ve introduced support for capturing audit decision logs from the Cerbos Hub Embedded Policy Decision Points (ePDP) using the latest version of the https://github.com/cerbos/cerbos-sdk-javascript[Cerbos Javascript SDK]. This feature enables organizations to track and analyze authorization decisions made locally in embedded environments, ensuring complete visibility and auditability, without relying on a centralized PDP or Cerbos Hub.
+We've introduced support for capturing audit decision logs from the Cerbos Hub Embedded Policy Decision Points (ePDP) using the latest version of the https://github.com/cerbos/cerbos-sdk-javascript[Cerbos Javascript SDK]. This feature enables organizations to track and analyze authorization decisions made locally in embedded environments, ensuring complete visibility and auditability, without relying on a centralized PDP or Cerbos Hub.
 
 
 == 2025-02-01
@@ -99,5 +133,3 @@ The Builds section of Cerbos Hub has been renamed Policies. The Policies section
 
 === Playground
 Added support for xref:cerbos:configuration:engine.adoc#_globals[globals] in playground engine settings. Global variables defined in the xref:playground.adoc[playground settings] are exposed to policy conditions via the `globals` object.
-
-

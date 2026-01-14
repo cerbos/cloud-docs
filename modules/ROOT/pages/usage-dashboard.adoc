@@ -1,59 +1,63 @@
 = Usage dashboard
 
+The Usage Dashboard provides comprehensive observability into your authorization service, allowing you to monitor key metrics, view trends, and gain insights into how your Cerbos Hub workspace is utilized. At the organization level, the dashboard aggregates authorization metrics from all your workspaces into a single view, giving platform owners and engineering leaders a complete picture of request volumes, policy distribution, and usage trends across the entire organization.
 
-The Usage Dashboard provides comprehensive observability into your authorization service, allowing you to monitor key metrics, view trends, and get insights into how your Cerbos Hub workspace is utilized. At the organization level, the dashboard aggregates authorization metrics from all your workspaces into a single view, giving platform owners and engineering leaders a complete picture of request volumes, policy distribution, and usage trends across the entire organization.
+== Summary metrics
 
-== Overview
-The Usage Dashboard is accessible from two locations:
+The top of the dashboard displays three key metrics for the current month, each showing the change from the previous month:
 
-* The workspace homepage - provides a quick reference overview
-* The dedicated "Usage" section - offers detailed metrics and historical data
+[unordered.stack]
+Active principals:: The number of unique principals (users, services, or applications) making authorization requests. Track this to understand adoption and identify unexpected usage patterns.
+Decisions:: The total number of authorization decisions made via the Check API. A single API call can check multiple actions, so this count may exceed the number of calls.
+Query plans:: The total number of Plan API calls used to generate query filters for data access.
 
-== Key metrics
+== Trend charts
 
-The dashboard surfaces several critical metrics to help you monitor your authorization layer.
+=== Active principals
 
-=== Monthly Active Principals (MAPs)
-Track the number of unique principals (users, services, or applications) interacting with your authorization policies each month. This metric helps you:
+A line chart showing the number of unique principals over time. Use this to identify growth trends, seasonal patterns, or unexpected drops in usage.
 
-* Understand user adoption and growth
-* Identify unexpected usage patterns
-* Plan for capacity requirements
+=== Check calls
 
-=== Check API calls
-Monitor the volume of Check API calls and their outcomes. Note that the total number of outcomes might be higher than the number of calls because a single API call could be used to check multiple actions at once.  
+A stacked bar chart showing Check API activity by month, broken down by outcome:
 
-* Allowed: Decisions that granted access
-* Denied: Decisions that rejected access
+* **Check calls**: Total number of Check API requests
+* **Allowed actions**: Decisions that granted access
+* **Denied actions**: Decisions that rejected access
 
-A sudden spike in denied calls could indicate:
+A sudden spike in denied actions could indicate policy changes that are stricter than intended, requests for policies that don't exist, or application issues such as typos in resource or action names.
 
-* New policy changes that are intentionally or unintentionaly stricter than before
-* Requests for policies or actions that don't exist 
-* Application implementation issues such as typos or requests not conforming to configured schemas  
+=== Plan calls
 
+A stacked bar chart showing Plan API activity by month, broken down by outcome:
 
-=== Plan API calls
-Monitor the volume of Plan API calls and their outcomes.
+* **Plan calls**: Total number of Plan API requests
+* **Allowed actions**: Plans that grant unconditional access
+* **Denied actions**: Plans that deny access unconditionally
+* **Conditional actions**: Plans that include conditions to filter data
 
-* Allowed: Generated plan allows unconditional access
-* Denied: Generated plan denies access unconditionally
-* Conditional: Generated plan allows conditional access
+This breakdown helps you understand how query planning is being used to generate database filters and conditional access patterns.
 
-This breakdown is crucial for understanding the API calls that are used to dynamically generate database queries and conditional access patterns.
+== Usage details
 
-== Usage details table
-Below the visualization widgets, the "Usage details" table provides granular, month-by-month metrics including:
+The table at the bottom provides month-by-month metrics with the following columns:
 
 [cols="1,3"]
 |===
-|Metric |Description
-|Check calls
-|Total number of Check API calls made
-|Plan calls
-|Total number of Plan API calls made
+|Column |Description
+
+|Month
+|The calendar month for this row of data
+
+|Call type
+|Whether the row represents Check or Plan API calls
+
 |Unique principals
-|Count of distinct principals making authorization requests
+|Count of distinct principals making requests of this type
+
 |Total calls
-|Combined total of all API calls
+|Number of API calls made
+
+|Call breakdown
+|Visual breakdown showing allowed, denied, and (for Plan calls) conditional outcomes
 |===

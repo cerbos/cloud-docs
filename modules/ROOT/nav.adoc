@@ -36,6 +36,7 @@
 * xref:administration.adoc[Administration]
 ** xref:user-management.adoc[User management]
 * xref:reliability.adoc[Reliability]
+* xref:on-premises.adoc[On-premises deployment]
 * xref:troubleshooting.adoc[Troubleshooting]
 * Legacy
 ** xref:legacy/concepts.adoc[Concepts]

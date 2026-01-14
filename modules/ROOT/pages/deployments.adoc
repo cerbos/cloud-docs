@@ -1,6 +1,6 @@
 = Deployments
 
-A deployment is a specific configuration of xref:policy-stores.adoc[policy stores] (such as ‘production’ or ‘staging’) that can be connected to a set of PDPs. Each new change to the underlying store(s) results in a new policy build that’s automatically delivered to the xref:decision-points.adoc[policy decision points (PDPs)] if the tests are successful.
+A deployment is a specific configuration of xref:policy-stores.adoc[policy stores] (such as 'production' or 'staging') that can be connected to a set of PDPs. Each new change to the underlying store(s) results in a new policy build that's automatically delivered to the xref:decision-points.adoc[policy decision points (PDPs)] if the tests are successful.
 
 [unordered.stack]
 Source agnostic inputs:: Populate a policy store from any Git provider, CI system, API, CLI, or direct upload, so your existing workflows remain intact.
@@ -8,15 +8,59 @@ Multi-store composition:: Reference multiple stores in a deployment to separate 
 End-to-end automation:: Building, testing, and distribution of policies is fully managed by Cerbos Hub, giving you a consistent CI/CD style pipeline for authorization without the need for extra infrastructure.
 Strong versioning:: Every deployment attempt is attached to a set of immutable policy store versions, making it easy to audit exactly which policies were in effect at any given point in time and to revert any changes if needed.
 
-== Build life cycle
+== Deployment overview
 
+Each deployment page provides several tabs to manage and monitor your policy pipeline:
+
+[unordered.stack]
+Builds:: View the history of deployed versions, showing which policy bundles have been active and when. Each build shows the contributing policy stores and their versions.
+Policies:: Browse the current policies included in this deployment and view their contents.
+Decision points:: See the PDPs currently connected to this deployment. Each PDP shows its ID, the build it's running, active sessions, Cerbos version, when it was last seen, and a link to its audit logs.
+Client credentials:: Manage API credentials scoped to this deployment for PDP connections and audit log collection.
+Settings:: Configure deployment options including which policy stores contribute to builds.
+
+== Deployed versions
+
+The Builds tab displays the history of policy bundles that have been deployed. Each row in the table shows:
+
+[unordered.stack]
+Build reference:: A unique identifier for the build. Click to view detailed information about the build including test results and bundle contents.
+Active from:: The timestamp when this build was activated and pushed to connected PDPs.
+Active to:: The timestamp when this build was replaced by a newer version, or a dash if it is the currently active build.
+Included policies:: The policy stores and specific versions that contributed to this build. This makes it easy to trace exactly which policies were in effect at any point in time.
+
+== Build life cycle
 
 Whenever Cerbos Hub detects a change in any policy store connected to a deployment, it launches a new policy build.
 
-. **In progress**: The policy build is listed in the Policies section of the deployment with the status **In progress**.
-. **Compilation failures**: If policy compilation fails, the error is surfaced next to the policy version so you can diagnose it quickly.
-. **Test execution**: After successful compilation, Cerbos Hub runs all policy tests found across the contributing stores. Failures are displayed in the policy details view with full logs for debugging.
-. **Bundle generation**: When compilation and tests pass, the bundle status changes to **Generated** and all PDPs that are assigned to this deployment receive a push notification instructing them to download and activate the bundle immediately.
+. **In progress**: The policy build is queued and begins processing.
+. **Compilation**: Policies from all contributing stores are compiled together. If compilation fails, the error is surfaced so you can diagnose it quickly.
+. **Test execution**: After successful compilation, Cerbos Hub runs all policy tests found across the contributing stores. Failures are displayed with full logs for debugging.
+. **Bundle generation**: When compilation and tests pass, the bundle is generated and all PDPs assigned to this deployment receive a push notification to download and activate the new bundle immediately.
+
+== Build details
+
+Click on any build reference to view detailed information about that specific build.
+
+=== Build summary
+
+The top of the page displays key metrics at a glance:
+
+* **Status**: Whether the build succeeded or failed
+* **Build completed**: When the build finished
+* **Build time**: How long the build took to complete
+* **Test results**: Total tests run, passed, skipped, and failed
+
+=== Compile and test stages
+
+Expandable sections show the results of each build stage:
+
+* **Compile**: Shows whether policy compilation succeeded. Expand to see any compilation errors or warnings.
+* **Test**: Shows whether all policy tests passed. Expand to see detailed test results, including any failures with full output for debugging.
+
+=== Files
+
+The file explorer displays the contents of the generated bundle, organized by contributing policy store. You can browse the directory structure and inspect individual policy files to verify the correct versions were bundled.
 
 For details on creating policy stores and connecting PDPs to receive bundles, see the related guides:
 
