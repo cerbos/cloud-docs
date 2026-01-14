@@ -1,5 +1,47 @@
 = Release notes
 
+== 2026-01-05
+
+=== Create playground from a store
+You can now create a playground directly from an existing policy store, making it easy to experiment with production policies in a safe, isolated environment. This feature streamlines the workflow for testing policy changes before deploying them, allowing you to iterate quickly without affecting live authorization decisions. You can also use a store's policies as a starting point for developing new authorization rules, reducing the time needed to build and validate complex policy structures.
+
+== 2025-12-01
+
+=== Test case output diff view
+When a test case fails, you can now view a side-by-side diff comparing the expected output with the actual output. This visual comparison makes it significantly easier to identify exactly what went wrong—whether it's a missing permission, an unexpected denial, or an incorrect output value. By highlighting the specific differences, you can quickly understand the root cause and fix failing tests with confidence.
+
+=== Execution traces in playground explore tab
+Execution traces are now available directly in the playground's explore tab, providing real-time visibility into how Cerbos evaluates your authorization requests. As you experiment with different principals, resources, and actions, you can inspect the complete policy evaluation path to understand exactly how decisions are made. This makes it easier to debug complex policy logic and verify that your authorization rules behave as expected before deploying them.
+
+=== Accessibility improvements
+Icon-only buttons throughout the interface now have proper accessibility labels, ensuring screen reader users can navigate and interact with all controls effectively. Additionally, identifiers such as policy names, resource kinds, and action names are now displayed using a fixed-width font, improving readability and making it easier to scan lists of technical values.
+
+== 2025-11-06
+
+=== Combobox input improvements
+Fixed an issue with combobox components when using multiselect and free-input modes together. This resolves problems that could occur when selecting multiple values while also entering custom text, ensuring a smoother form input experience throughout the Hub interface.
+
+== 2025-10-27
+
+=== Store import wizard fix
+Fixed an issue that prevented the store import wizard from completing successfully in certain scenarios. The wizard now reliably guides you through importing policies from external sources, ensuring a smooth onboarding experience when migrating existing authorization rules into Cerbos Hub.
+
+== 2025-10-21
+
+=== Expired invitation handling
+The system now properly handles expired invitations, displaying clear messages when users attempt to accept an invitation that is no longer valid. This prevents confusion and guides users to request a new invitation from their organization administrator, streamlining the team onboarding process.
+
+== 2025-10-08
+
+=== Workspace name validation
+Workspace names now require a minimum length, with immediate validation feedback in the creation form. This prevents issues that could arise from very short or ambiguous workspace names, helping teams maintain clear and consistent naming conventions across their organization.
+
+=== Invitation management improvements
+Improved handling when inviting users who are already members of an organization. The system now prevents duplicate invitations and provides clearer error messages explaining why an invitation cannot be sent. This reduces confusion for administrators managing team access and ensures invitation workflows remain straightforward.
+
+=== Build status fix
+Fixed an issue where the wrong build status was displayed in the UI for certain policy stores. Build indicators now accurately reflect the current state of your policy compilation, giving you reliable feedback on whether your latest changes have been successfully processed.
+
 == 2025-09-09
 
 === Playground drag-and-drop support
