@@ -1,0 +1,24 @@
+= On-premises deployment
+
+Cerbos Hub can be deployed on-premises in your own infrastructure, giving you full control over your authorization management platform while maintaining all the features of the cloud-hosted service.
+
+== Overview
+
+On-premises deployment is suitable for organizations that:
+
+* Require data residency within their own infrastructure
+* Have regulatory or compliance requirements that prevent use of cloud services
+* Need to integrate Hub deeply with internal systems
+* Want to operate Hub in air-gapped or restricted network environments
+
+The on-premises deployment includes all core Cerbos Hub features:
+
+* Policy stores and deployments
+* Policy validation and testing
+* Bundle generation and distribution to PDPs
+* Audit log collection and analysis
+* User management and access control
+
+== Getting started
+
+On-premises deployment of Cerbos Hub is available for enterprise customers. To learn more about deploying Cerbos Hub in your own infrastructure, please https://cerbos.dev/contact[contact us]. Our team will work with you to understand your requirements and help you get set up.

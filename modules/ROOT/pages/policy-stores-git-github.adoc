@@ -21,6 +21,26 @@ To set up the GitHub integration, follow these steps:
   image:policy_store_github_connection_setup.png[alt="GitHub connection setup",role="center-img"]
 7. Click "Save" to complete the setup.
 
+== Syncing a subdirectory
+
+If your policies are stored in a subdirectory of your repository, you can configure the store to sync only that path. This is useful when your authorization policies are part of a larger monorepo or when you want to organize policies into separate directories.
+
+When configuring the GitHub connection, specify the path to the directory containing your policies in the directory field. Cerbos Hub will only sync files from that directory and its subdirectories. You can also sync hidden directories (those starting with a dot) if needed.
+
+For example, if your repository structure looks like this:
+
+----
+my-repo/
+├── src/
+├── docs/
+└── policies/
+    └── cerbos/
+        ├── resource_policies/
+        └── derived_roles/
+----
+
+You would set the directory to `policies/cerbos` to sync only the Cerbos policy files.
+
 == Using the GitHub Integration
 Once the GitHub integration is set up, you can monitor and manage your policies directly in the GitHub connection tab. The integration will automatically sync changes made to the policies in your GitHub repository.
 

@@ -1,6 +1,6 @@
 = Collaborative policy playgrounds
 
-Cerbos Hub playgrounds are fully-interactive, private development environments that provide an IDE-like experience for authoring policies. You can quickly create or edit policies and test fixtures with instant feedback on syntax issues and test failures. Drag and drop policy and test files from your local machine directly into the playground editor for fast loading and testing. Take advantage of the powerful collaborative editing features to pair with colleagues to develop new authorization rules or use it as a sandbox to train new team members on Cerbos policies.
+Cerbos Hub playgrounds are fully-interactive, private development environments that provide an IDE-like experience for authoring policies. You can quickly create or edit policies and test fixtures with instant feedback on syntax issues and test failures. Drag and drop policy files, test files, or zip archives from your local machine directly into the playground editor for fast loading and testing. Take advantage of the powerful collaborative editing features to pair with colleagues to develop new authorization rules or use it as a sandbox to train new team members on Cerbos policies.
 
 == Creating a playground
 
@@ -28,6 +28,31 @@ The playground engine settings in the Settings tab allow you to configure the xr
 
 You can find full details of these settings in the xref:cerbos:configuration:engine.adoc[Cerbos configuration reference].
 
+== Explore tab
+
+The Explore tab lets you interactively test authorization decisions against your policies. Select a fixtures folder containing test data, then choose a principal and resource to evaluate.
+
+The panel displays:
+
+* **Actions and effects**: Each action shows its authorization result (`ALLOW` or `DENY`). Click **Trace** next to any action to see the detailed evaluation path.
+* **Effective derived roles**: Shows which derived roles were activated for the selected principal, helping you understand role-based access decisions.
+
+Click **+ Add action** to test additional actions, or **Create auxiliary data fixtures** to add test data for your evaluations.
+
+== Test results
+
+The bottom panel shows test execution results with two tabs:
+
+* **Problems**: Displays any syntax errors or validation issues in your policies.
+* **Test results**: Shows the outcome of all policy tests. Filter by **Passed**, **Failed**, **Skipped**, or **Errored** to focus on specific results.
+
+Click on any test file to see detailed results. For failed tests, a side-by-side diff view highlights the differences between expected and actual outputs.
+
+== Execution traces
+
+When debugging complex authorization logic, execution traces provide a detailed, step-by-step view of how Cerbos evaluates a request. Traces show every rule, condition, and variable evaluation, helping you understand exactly why a specific decision was made.
+
+To view execution traces, click the **Trace** button next to any action in the Explore tab. Expand individual trace entries to see the evaluation path, including which rules matched and how conditions were evaluated.
 
 == Try the API
 
