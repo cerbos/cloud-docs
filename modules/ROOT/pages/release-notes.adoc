@@ -1,5 +1,14 @@
 = Release notes
 
+== 2026-01-21
+
+=== Permissions matrix view
+
+The playground now includes a matrix check view that displays permission evaluation results in a comprehensive grid format. This makes it easier to visualize how policies affect different principal and resource combinations during demos and policy development.
+
+=== Playground README support
+
+Playgrounds now support README.md files that display as rendered markdown when opened. READMEs can include relative links to other files in the playground and external links (with a confirmation dialog). When opening a playground with a README and no file selected, the README displays automatically, making it easier to document and share playground examples.
 == 2026-01-05
 
 === Create playground from a store
