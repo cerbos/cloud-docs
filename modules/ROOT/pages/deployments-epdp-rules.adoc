@@ -22,6 +22,8 @@ Edge functions and CDN workers operate in environments where round-trips to orig
 
 Mobile applications operate with intermittent connectivity. An ePDP allows the application to make authorization decisions while offline, using the most recently downloaded policy bundle. When connectivity is restored, the bundle updates automatically.
 
+React Native applications can use the JavaScript SDK today. Native iOS and Android SDK support is planned.
+
 === Serverless functions
 
 Serverless functions incur cold start latency when loading external dependencies. An ePDP embedded in the function bundle eliminates the need for network calls to an authorization service during function execution.
@@ -784,9 +786,9 @@ For browser applications, monitor bundle size as policies grow. Large bundles in
 
 === Platform support
 
-The JavaScript SDK is the only supported client. The WebAssembly module is designed for JavaScript host environments (browsers, Node.js, edge runtimes).
+The JavaScript SDK supports browsers, Node.js, edge runtimes, and React Native. The WebAssembly module executes in any JavaScript host environment.
 
-Other platforms (mobile native, Go, Python, etc.) are not currently supported for embedded PDPs. Use xref:decision-points.adoc[service PDPs] for these environments.
+Native iOS and Android SDK support is planned. For other platforms (Go, Python, etc.), use xref:decision-points.adoc[service PDPs].
 
 === Concurrent access
 
