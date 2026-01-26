@@ -161,6 +161,8 @@ Policies scoped to `acme.us` or `acme.ap` are excluded.
 
 Select **Require specific scope at fetch time** to require clients to specify scopes when downloading the bundle. The bundle is filtered to the requested scopes on each request.
 
+NOTE: If the rule has scope patterns configured, the scopes requested by clients must match one of those patterns. Requests for scopes outside the allowed patterns are rejected.
+
 Use dynamic scopes when:
 
 * The set of scopes is large, such as one scope per customer tenant
@@ -504,13 +506,13 @@ When the rule uses **Require specific scope at fetch time**, specify scopes when
 const cerbos = new Embedded({
   policies: {
     ruleId: "<RULE_ID>",
-    scopes: ["tenant-acme", "tenant-acme.department-eng"],
+    scopes: ["tenant-acme.department-eng", "tenant-acme.department-sales"],
   },
   wasm,
 });
 ----
 
-The bundle returned includes only policies applicable to the specified scopes and their ancestors.
+The bundle returned includes only policies applicable to the specified scopes and their ancestors. In this example, the bundle includes policies for `tenant-acme.department-eng`, `tenant-acme.department-sales`, `tenant-acme` (shared ancestor), and the root scope.
 
 To change scopes, create a new client instance. Scopes cannot be changed on an existing client.
 
