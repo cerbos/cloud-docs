@@ -8,9 +8,9 @@ Policy bundle:: An encrypted file containing optimised binary representations of
 Policy Decision Point (PDP):: A component that evaluates authorization requests against policies. Cerbos Hub supports two types of PDPs:
 +
 --
-Service PDP::: The open source Cerbos server instances that you run in your own infrastructure. Cerbos Hub pushes pre-compiled policy bundles to service PDPs, ensuring all your data remains within your network perimeter while reducing the overhead of policy updates. See xref:decision-points.adoc[Service PDPs].
+Service PDP::: The open source Cerbos PDP instances that you run in your own infrastructure. Cerbos Hub pushes pre-compiled policy bundles to service PDPs, ensuring all your data remains within your network perimeter while reducing the overhead of policy updates. See xref:decision-points.adoc[Service PDPs].
 
-Embedded PDP::: A WebAssembly module that executes authorization logic locally within an application, without network calls to a Cerbos server. Embedded PDPs are suited for browser applications, edge functions, and other environments where latency or connectivity constraints make server-side authorization impractical. See xref:deployments-epdp-rules.adoc[Embedded PDPs].
+Embedded PDP::: A WebAssembly module that executes authorization logic locally within an application, without network calls to a Cerbos PDP. Embedded PDPs are suited for browser applications, edge functions, and other environments where latency or connectivity constraints make server-side authorization impractical. See xref:deployments-epdp-rules.adoc[Embedded PDPs].
 --
 Policy playground:: A browser-based policy editor to quickly prototype, test and collaborate on Cerbos policies. An organization can have multiple playground instances and all authorized users of the organization have access to those instances.
 Policy store:: A versioned, cloud-based storage container for Cerbos policies. A policy store can be either linked to a supported git provider for automatic mirroring or managed manually using the Cerbos Hub user interface, Cerbos Hub SDKs or the xref:cerbos:cli:cerbosctl.adoc[`cerbosctl`] utility. Multiple stores can be connected to a single deployment, making it easy to manage policies by teams or tenants or any other desired level of organization and combine them all at deployment time to distribute to PDPs.

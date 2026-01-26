@@ -1,8 +1,8 @@
 = Embedded Policy Decision Points
 
-Embedded policy decision points (ePDPs) execute authorization logic locally using WebAssembly, without requiring network calls to a Cerbos server. Policy bundles are downloaded from Cerbos Hub and evaluated in-process by a WASM runtime.
+Embedded policy decision points (ePDPs) execute authorization logic locally using WebAssembly, without requiring network calls to a Cerbos PDP. Policy bundles are downloaded from Cerbos Hub and evaluated in-process by a WASM runtime.
 
-For server-side authorization using the open source Cerbos server, see xref:decision-points.adoc[Service PDPs].
+For server-side authorization using the open source Cerbos PDP, see xref:decision-points.adoc[Service PDPs].
 
 == When to use embedded PDPs
 
