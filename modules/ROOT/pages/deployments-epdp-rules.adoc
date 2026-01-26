@@ -1,0 +1,799 @@
+= Embedded Policy Decision Points
+
+Embedded policy decision points (ePDPs) execute authorization logic locally using WebAssembly, without requiring network calls to a Cerbos PDP. Policy bundles are downloaded from Cerbos Hub and evaluated in-process by a WASM runtime.
+
+For server-side authorization using the open source Cerbos PDP, see xref:decision-points.adoc[Service PDPs].
+
+== When to use embedded PDPs
+
+ePDPs address scenarios where server-side authorization is impractical due to latency, connectivity, or architectural constraints.
+
+=== Browser applications
+
+Web applications often need to make authorization decisions to determine which UI elements to render. A document editor might show or hide the "Delete" button based on whether the current user has permission to delete the document. Making a network request for each visibility check introduces latency and creates a dependency on backend availability.
+
+With an ePDP, the browser downloads a policy bundle once and evaluates all permission checks locally. The bundle updates automatically when policies change, and the application continues to function if the network is temporarily unavailable.
+
+=== Edge computing
+
+Edge functions and CDN workers operate in environments where round-trips to origin servers are expensive. An edge function that needs to authorize a request before proxying it to the backend can evaluate policies locally, reducing total request latency.
+
+=== Mobile applications
+
+Mobile applications operate with intermittent connectivity. An ePDP allows the application to make authorization decisions while offline, using the most recently downloaded policy bundle. When connectivity is restored, the bundle updates automatically.
+
+React Native applications can use the JavaScript SDK today. Native iOS and Android SDK support is planned.
+
+=== Serverless functions
+
+Serverless functions incur cold start latency when loading external dependencies. An ePDP embedded in the function bundle eliminates the need for network calls to an authorization service during function execution.
+
+== ePDP rules
+
+An ePDP rule defines:
+
+* Which subset of policies to include in the bundle
+* Under what conditions the bundle can be accessed
+* What security controls apply to bundle downloads
+
+Each deployment can have multiple ePDP rules. This allows different bundle configurations for different clients or environments. For example:
+
+* A rule serving a minimal bundle for browser clients, containing only UI-relevant policies
+* A rule serving a full bundle for edge workers, containing all policies
+* A rule per tenant in a multi-tenant application, each filtered to that tenant's scope
+
+=== Creating a rule
+
+To create an ePDP rule:
+
+. Navigate to the xref:deployments.adoc[deployment] in Cerbos Hub
+. Select the **Embedded PDP rules** tab
+. Click **Create rule**
+. Enter a unique name for the rule
+. Configure access control and policy bundle filtering options
+. Click **Save rule**
+
+After saving, the rule appears in the list with its rule ID displayed. Click **Copy** next to the rule ID to copy it for use in your client application.
+
+=== Enabling and disabling rules
+
+Each rule has an enabled/disabled toggle. Disabled rules cannot serve bundles. Requests for a disabled rule's bundle return an error.
+
+To disable a rule, toggle the switch on the rule card. A confirmation dialog appears before the rule is disabled.
+
+Use this to:
+
+* Temporarily suspend access to a bundle without deleting the rule configuration
+* Prepare a rule configuration before making it available to clients
+* Revoke access in response to a security concern
+
+=== Managing rules
+
+Each rule card provides actions:
+
+[horizontal]
+Edit:: Modify the rule configuration.
+Duplicate:: Create a new rule with the same configuration. Useful for creating variations of an existing rule.
+Delete:: Permanently remove the rule. A confirmation dialog appears before deletion.
+
+== Filtering policies
+
+By default, an ePDP bundle contains all policies from the deployment. Filters reduce the bundle to only the policies required by the client application.
+
+Filtering serves two purposes:
+
+[horizontal]
+Performance:: Smaller bundles download faster and consume less memory. A browser application checking permissions on three resource types does not need policies for the fifty other resource types in the system.
+Security:: Bundles may be served to environments you do not fully control, such as end-user browsers. Filtering prevents exposure of server-side authorization logic that clients do not need.
+
+Filters are applied when the bundle is requested. The source policies in the deployment are not modified.
+
+=== Resources and actions
+
+The **Resources and actions** setting specifies which authorization rules to include based on the resource types and actions they govern.
+
+If no filter entries are defined, all resources and actions are included.
+
+Click **Add filter entry** to create a filter. Each entry can specify:
+
+* Resources only: Include all rules for the specified resource types, regardless of action
+* Actions only: Include all rules for the specified actions, regardless of resource type
+* Both: Include only rules matching both the specified resources and actions
+
+Multiple filter entries can be defined. The resulting bundle includes rules matching any of the entries.
+
+.Example: Browser application
+A browser application checks three permissions:
+
+* `document:view`
+* `document:edit`
+* `folder:view`
+
+Configure two filter entries:
+
+. Resources: `document`, Actions: `view`, `edit`
+. Resources: `folder`, Actions: `view`
+
+The bundle includes only the rules necessary for these checks. Rules governing `document:delete`, `folder:create`, or other resource types are excluded.
+
+.Example: Action-based filter
+An application checks the `view` action across many resource types but never checks `delete` or `admin` actions.
+
+Configure one filter entry:
+
+* Actions: `view`
+
+The bundle includes `view` rules for all resource types, excluding rules for other actions.
+
+=== Scopes
+
+Scope filtering supports multi-tenant architectures and hierarchical permission structures.
+
+Cerbos policies can be scoped to specific contexts. A policy with scope `acme.eu` applies only when requests specify that scope or a descendant scope like `acme.eu.prod`. Scope filtering determines which scoped policies appear in the bundle.
+
+The **Scopes** setting offers three options:
+
+[horizontal]
+All:: Include policies for all scopes. No filtering is applied.
+Specific:: Include policies matching specified scope patterns. Configure this in the rule definition.
+Require specific scope at fetch time:: Require clients to specify scopes when downloading the bundle. The bundle is filtered dynamically based on the requested scopes.
+
+==== Static scopes (Specific)
+
+Select **Specific** and enter scope patterns in the rule definition. The bundle includes policies matching those patterns.
+
+Use static scopes when:
+
+* The set of scopes is small and known in advance
+* All clients using this rule need the same scopes
+* Scopes do not change frequently
+
+.Example
+A rule serving bundles for European customers specifies scope pattern `acme.eu`. The bundle includes:
+
+* Policies with scope `acme.eu`
+* Policies with scope `acme` (ancestor)
+* Policies with no scope (root)
+
+Policies scoped to `acme.us` or `acme.ap` are excluded.
+
+==== Dynamic scopes
+
+Select **Require specific scope at fetch time** to require clients to specify scopes when downloading the bundle. The bundle is filtered to the requested scopes on each request.
+
+NOTE: If the rule has scope patterns configured, the scopes requested by clients must match one of those patterns. Requests for scopes outside the allowed patterns are rejected.
+
+Use dynamic scopes when:
+
+* The set of scopes is large, such as one scope per customer tenant
+* Scopes change frequently as tenants are added or removed
+* Different clients need different scopes from the same rule
+
+.Example
+A multi-tenant application has thousands of customer tenants, each with a unique scope like `tenant-a`, `tenant-b`, etc. Rather than creating thousands of ePDP rules, create one rule with dynamic scopes enabled.
+
+When client code initializes:
+
+[source,typescript]
+----
+const cerbos = new Embedded({
+  policies: {
+    ruleId: "<RULE_ID>",
+    scopes: [currentTenant.scopeId],
+  },
+  wasm,
+});
+----
+
+The bundle returned contains only policies applicable to that tenant's scope.
+
+==== Scope hierarchy
+
+When a scope is requested, ancestor scopes are included automatically.
+
+Requesting scope `acme.eu.prod` includes policies for:
+
+* `acme.eu.prod` (exact match)
+* `acme.eu` (parent)
+* `acme` (grandparent)
+* Root scope (no scope specified)
+
+This ensures that inherited policies from parent scopes are available for evaluation.
+
+=== Roles
+
+The **Roles** setting specifies which roles to include. Select **Specific** and enter role names to filter. Only rules referencing the specified roles are included in the bundle.
+
+If set to **All**, all roles are included.
+
+.Example
+A browser application is used only by users with `viewer` or `editor` roles. Administrative actions are performed through a separate interface.
+
+Configure role filter: `viewer`, `editor`
+
+The bundle excludes rules that apply only to `admin` or other roles, reducing bundle size and avoiding exposure of administrative authorization logic.
+
+=== Versions
+
+The **Versions** setting specifies which policy versions to include. Select **Specific** and enter version identifiers to filter.
+
+Cerbos policies support versioning, allowing different rule sets for different API versions or feature flags. If your policies use versions, you can filter the bundle to include only the versions relevant to the client.
+
+If set to **All**, all versions are included.
+
+.Example
+An application has migrated from policy version `v1` to `v2`, but some legacy clients still use `v1`.
+
+* Rule for modern clients: version filter `v2`
+* Rule for legacy clients: version filter `v1`
+
+== Security controls
+
+ePDP bundles contain compiled authorization logic. Depending on your security requirements, this logic may need protection from unauthorized access.
+
+=== Threat model
+
+Consider what is exposed if an ePDP bundle is obtained by an unauthorized party:
+
+* **Policy structure**: Which resource types and actions exist in the system
+* **Authorization rules**: The conditions under which access is granted or denied
+* **Role definitions**: Which roles exist and what permissions they grant
+* **Attribute checks**: Which principal and resource attributes influence decisions
+
+For some applications, this information is not sensitive. A publicly documented API with straightforward role-based access control may have no authorization logic worth protecting.
+
+For other applications, authorization rules are proprietary or security-sensitive. An attacker studying the rules might identify edge cases to exploit or gain insight into system architecture.
+
+Evaluate your requirements and apply controls accordingly.
+
+=== Authentication
+
+The **Authentication** setting controls whether credentials are required to download bundles.
+
+[horizontal]
+Public access:: Bundles are served without authentication. Any client with the rule ID can download the bundle.
+Client credential:: Clients must provide valid credentials to download bundles. Credentials are a xref:concepts.adoc#_client_credentials[client ID and client secret], issued from the deployment's **Client credentials** tab in Cerbos Hub. These are the same credentials used by xref:decision-points.adoc[service PDPs].
+
+==== Browser applications
+
+Client credentials must not be exposed to end users. Browser JavaScript is readable by users, and credentials embedded in client-side code are not secret.
+
+For browser applications requiring authenticated bundles:
+
+[horizontal]
+Backend-for-frontend:: Your server fetches the bundle using credentials and serves it to the browser. The browser never sees the credentials.
+Server-side rendering:: Evaluate permissions on the server and send only the results to the browser. The browser does not load the ePDP bundle at all.
+Accept public bundles:: If the authorization logic is not sensitive, disable authentication and serve bundles directly to browsers.
+
+==== Server-side applications
+
+Node.js servers, edge workers with secret storage, and other server-side environments can safely use credentials. Store credentials in environment variables or a secrets manager, not in source code.
+
+=== IP allowlist
+
+The **IP allowlist** specifies CIDR ranges permitted to download bundles. Requests from IP addresses outside these ranges are rejected, regardless of authentication status.
+
+Both IPv4 and IPv6 ranges are supported.
+
+.Examples
+[cols="1,2"]
+|===
+| CIDR | Description
+
+| `203.0.113.0/24`
+| Single IPv4 /24 block
+
+| `203.0.113.42/32`
+| Single IPv4 address
+
+| `2001:db8::/32`
+| IPv6 block
+
+| `0.0.0.0/0`
+| All IPv4 addresses (effectively disables the allowlist)
+|===
+
+Use the IP allowlist to:
+
+* Limit bundle access to your corporate network
+* Restrict access to known CDN or edge provider IP ranges
+* Add defense-in-depth alongside authentication
+
+The IP allowlist applies to the bundle download request, not to subsequent policy evaluations. Once a client has downloaded a bundle, it can evaluate policies from any network location.
+
+== JavaScript SDK
+
+The https://www.npmjs.com/package/@cerbos/embedded-client[@cerbos/embedded-client] package provides a client for loading and evaluating ePDP bundles in JavaScript environments.
+
+=== Installation
+
+[source,bash]
+----
+npm install @cerbos/embedded-client @cerbos/embedded-server
+----
+
+The `@cerbos/embedded-server` package contains the WebAssembly module that executes policy evaluation.
+
+=== Initializing the client
+
+The client requires two inputs:
+
+[horizontal]
+`policies`:: Source of the policy bundle, typically a rule ID pointing to Cerbos Hub
+`wasm`:: Source of the WebAssembly module
+
+[source,typescript]
+----
+import { Embedded } from "@cerbos/embedded-client";
+import wasm from "@cerbos/embedded-server/server.wasm?init";
+
+const cerbos = new Embedded({
+  policies: { ruleId: "<RULE_ID>" },
+  wasm,
+});
+----
+
+Replace `<RULE_ID>` with the rule ID from the Embedded PDP rules tab in Cerbos Hub.
+
+The client begins downloading the policy bundle immediately upon construction. The first authorization check waits for the download to complete.
+
+=== Checking permissions
+
+The client provides several methods for authorization checks.
+
+==== isAllowed
+
+Check if a single action is allowed:
+
+[source,typescript]
+----
+const allowed = await cerbos.isAllowed({
+  principal: {
+    id: "user-123",
+    roles: ["editor"],
+    attr: {
+      department: "engineering",
+      clearanceLevel: 3,
+    },
+  },
+  resource: {
+    kind: "document",
+    id: "doc-456",
+    attr: {
+      owner: "user-789",
+      confidential: false,
+    },
+  },
+  action: "edit",
+});
+
+if (allowed) {
+  // Show edit button
+}
+----
+
+==== checkResource
+
+Check multiple actions on a single resource:
+
+[source,typescript]
+----
+const result = await cerbos.checkResource({
+  principal: {
+    id: "user-123",
+    roles: ["editor"],
+  },
+  resource: {
+    kind: "document",
+    id: "doc-456",
+  },
+  actions: ["view", "edit", "delete", "share"],
+});
+
+const canView = result.isAllowed("view");
+const canEdit = result.isAllowed("edit");
+const canDelete = result.isAllowed("delete");
+const canShare = result.isAllowed("share");
+----
+
+==== checkResources
+
+Check actions across multiple resources:
+
+[source,typescript]
+----
+const result = await cerbos.checkResources({
+  principal: {
+    id: "user-123",
+    roles: ["editor"],
+  },
+  resources: [
+    {
+      resource: { kind: "document", id: "doc-1" },
+      actions: ["view", "edit"],
+    },
+    {
+      resource: { kind: "document", id: "doc-2" },
+      actions: ["view", "edit"],
+    },
+    {
+      resource: { kind: "folder", id: "folder-1" },
+      actions: ["view"],
+    },
+  ],
+});
+
+const canEditDoc1 = result.isAllowed({
+  resource: { kind: "document", id: "doc-1" },
+  action: "edit",
+});
+----
+
+==== planResources
+
+Generate a query plan for filtering resources:
+
+[source,typescript]
+----
+const plan = await cerbos.planResources({
+  principal: {
+    id: "user-123",
+    roles: ["editor"],
+  },
+  resource: { kind: "document" },
+  action: "view",
+});
+
+switch (plan.kind) {
+  case "KIND_ALWAYS_ALLOWED":
+    // User can view all documents
+    break;
+  case "KIND_ALWAYS_DENIED":
+    // User cannot view any documents
+    break;
+  case "KIND_CONDITIONAL":
+    // User can view documents matching plan.condition
+    break;
+}
+----
+
+=== Authenticated access
+
+When the rule uses **Client credential** authentication, provide credentials:
+
+[source,typescript]
+----
+import { Embedded } from "@cerbos/embedded-client";
+import wasm from "@cerbos/embedded-server/server.wasm?init";
+
+const cerbos = new Embedded({
+  policies: {
+    ruleId: "<RULE_ID>",
+    credentials: {
+      clientId: process.env.CERBOS_HUB_CLIENT_ID,
+      clientSecret: process.env.CERBOS_HUB_CLIENT_SECRET,
+    },
+  },
+  wasm,
+});
+----
+
+The `credentialsFromEnv` helper reads credentials from standard environment variables:
+
+[source,typescript]
+----
+import { Embedded } from "@cerbos/embedded-client";
+import { credentialsFromEnv } from "@cerbos/hub";
+import wasm from "@cerbos/embedded-server/server.wasm?init";
+
+const cerbos = new Embedded({
+  policies: {
+    ruleId: "<RULE_ID>",
+    credentials: credentialsFromEnv(),
+  },
+  wasm,
+});
+----
+
+This reads `CERBOS_HUB_CLIENT_ID` and `CERBOS_HUB_CLIENT_SECRET` from `process.env`.
+
+=== Dynamic scopes
+
+When the rule uses **Require specific scope at fetch time**, specify scopes when creating the client:
+
+[source,typescript]
+----
+const cerbos = new Embedded({
+  policies: {
+    ruleId: "<RULE_ID>",
+    scopes: ["tenant-acme.department-eng", "tenant-acme.department-sales"],
+  },
+  wasm,
+});
+----
+
+The bundle returned includes only policies applicable to the specified scopes and their ancestors. In this example, the bundle includes policies for `tenant-acme.department-eng`, `tenant-acme.department-sales`, `tenant-acme` (shared ancestor), and the root scope.
+
+To change scopes, create a new client instance. Scopes cannot be changed on an existing client.
+
+=== Automatic bundle updates
+
+The SDK polls Cerbos Hub for bundle updates. When policies change and a new bundle is available, it is downloaded and activated automatically.
+
+The default polling interval is 60 seconds. Configure a different interval:
+
+[source,typescript]
+----
+const cerbos = new Embedded({
+  policies: {
+    ruleId: "<RULE_ID>",
+    interval: 300, // Poll every 5 minutes
+  },
+  wasm,
+});
+----
+
+The minimum interval is 10 seconds. Values below 10 are increased to 10.
+
+To disable automatic updates, set `interval: 0`. The client uses the bundle downloaded at initialization and never checks for updates.
+
+==== Update notifications
+
+Register a callback to be notified when updates complete:
+
+[source,typescript]
+----
+const cerbos = new Embedded({
+  policies: {
+    ruleId: "<RULE_ID>",
+    onUpdate: (error) => {
+      if (error) {
+        console.error("Policy update failed:", error);
+      } else {
+        console.info("Policies updated");
+      }
+    },
+  },
+  wasm,
+});
+----
+
+The callback receives an error object if the update failed, or `undefined` if it succeeded.
+
+Update failures are silent by default. The client continues using the previously loaded bundle. Use the `onUpdate` callback to log failures or trigger alerts.
+
+==== Deferred activation
+
+By default, downloaded updates are activated immediately. To control when updates take effect, use the `PolicyLoader` class directly:
+
+[source,typescript]
+----
+import { Embedded, PolicyLoader } from "@cerbos/embedded-client";
+import wasm from "@cerbos/embedded-server/server.wasm?init";
+
+const loader = new PolicyLoader({
+  ruleId: "<RULE_ID>",
+  activateOnLoad: false,
+  onUpdate: (error) => {
+    if (!error) {
+      console.info("New policy bundle ready for activation");
+    }
+  },
+});
+
+const cerbos = new Embedded({
+  policies: loader,
+  wasm,
+});
+
+// Later, when ready to apply the update:
+loader.activate();
+----
+
+This is useful for:
+
+* Activating updates only on page navigation to avoid layout shifts
+* Batching updates with other application state changes
+* Implementing user-facing "Refresh policies" functionality
+
+==== Stopping updates
+
+To stop polling for updates:
+
+[source,typescript]
+----
+loader.stop();
+----
+
+Call this when the client is no longer needed, such as during application shutdown or when navigating away from a page.
+
+=== Loading the WebAssembly module
+
+The WebAssembly module must be loaded and provided to the client. The loading mechanism depends on your build tooling and runtime environment.
+
+==== Vite
+
+Vite supports WebAssembly imports with the `?init` suffix:
+
+[source,typescript]
+----
+import wasm from "@cerbos/embedded-server/server.wasm?init";
+
+const cerbos = new Embedded({
+  policies: { ruleId: "<RULE_ID>" },
+  wasm,
+});
+----
+
+==== Webpack
+
+Configure Webpack to handle `.wasm` files as assets, then import:
+
+[source,typescript]
+----
+import wasmUrl from "@cerbos/embedded-server/server.wasm";
+
+const cerbos = new Embedded({
+  policies: { ruleId: "<RULE_ID>" },
+  wasm: wasmUrl,
+});
+----
+
+Webpack configuration varies by version. Consult the Webpack documentation for WebAssembly handling.
+
+==== Node.js
+
+Read the module from the filesystem:
+
+[source,typescript]
+----
+import { readFile } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
+import { Embedded } from "@cerbos/embedded-client";
+
+const cerbos = new Embedded({
+  policies: { ruleId: "<RULE_ID>" },
+  wasm: readFile(
+    fileURLToPath(import.meta.resolve("@cerbos/embedded-server/server.wasm")),
+  ),
+});
+----
+
+==== URL
+
+Fetch the module from a URL:
+
+[source,typescript]
+----
+const cerbos = new Embedded({
+  policies: { ruleId: "<RULE_ID>" },
+  wasm: "https://cdn.example.com/cerbos-server.wasm",
+});
+----
+
+The module is fetched using the Fetch API and compiled using `WebAssembly.instantiateStreaming`.
+
+==== Precompiled module
+
+If you have a precompiled `WebAssembly.Module`:
+
+[source,typescript]
+----
+const cerbos = new Embedded({
+  policies: { ruleId: "<RULE_ID>" },
+  wasm: precompiledModule,
+});
+----
+
+=== Configuration options
+
+[cols="2,1,4"]
+|===
+| Option | Default | Description
+
+| `defaultPolicyVersion`
+| `"default"`
+| Policy version applied to requests that do not specify one. Requests can override this per-call.
+
+| `defaultScope`
+| `""`
+| Scope applied to requests that do not specify one. Requests can override this per-call.
+
+| `globals`
+| `{}`
+| Global variables passed to policy conditions. Use this for environment-specific values like feature flags or deployment region.
+
+| `lenientScopeSearch`
+| `false`
+| When enabled, if a policy with the exact requested scope is not found, the engine tries ancestor scopes in order. When disabled, the exact scope must exist.
+
+| `schemaEnforcement`
+| `NONE`
+| Validation level for input schemas defined in policies. `NONE` skips validation. `WARN` validates and includes errors in the response. `REJECT` denies the action if validation fails.
+
+| `onDecision`
+| (none)
+| Callback invoked after each authorization decision. Receives a decision log entry containing the request, response, and evaluation metadata. Use for local logging or analytics.
+
+| `decodeJWTPayload`
+| (throws)
+| Function to verify and decode JWTs passed as auxiliary data. Required if your policies reference JWT claims. See the SDK documentation for implementation examples.
+|===
+
+=== Error handling
+
+The client throws errors for initialization failures and unrecoverable conditions:
+
+[source,typescript]
+----
+import { NotOK, Status } from "@cerbos/core";
+
+try {
+  const cerbos = new Embedded({
+    policies: { ruleId: "<RULE_ID>" },
+    wasm,
+  });
+  await cerbos.isAllowed({ /* ... */ });
+} catch (error) {
+  if (error instanceof NotOK) {
+    switch (error.code) {
+      case Status.UNAUTHENTICATED:
+        // Credentials required but not provided, or invalid
+        break;
+      case Status.PERMISSION_DENIED:
+        // IP address not in allowed list
+        break;
+      case Status.NOT_FOUND:
+        // Rule ID does not exist
+        break;
+      case Status.FAILED_PRECONDITION:
+        // Rule is disabled
+        break;
+      case Status.INVALID_ARGUMENT:
+        // Scope parameter required but not provided
+        break;
+    }
+  }
+}
+----
+
+Authorization check methods (`isAllowed`, `checkResource`, etc.) do not throw for denied permissions. A denied permission is a valid result, not an error.
+
+== Constraints and limitations
+
+=== Bundle updates
+
+ePDP bundles are point-in-time snapshots of compiled policies. Changes to policies in Cerbos Hub do not affect already-downloaded bundles until the client downloads an update.
+
+The SDK's automatic update mechanism handles this for long-running applications. For short-lived processes like serverless functions, each invocation downloads the current bundle.
+
+=== Feature support
+
+The WebAssembly runtime supports core Cerbos policy evaluation. Some features available in service PDPs are not supported:
+
+* **Audit logging to external sinks**: Decision logs can be captured via the `onDecision` callback but are not automatically sent to Cerbos Hub or other destinations.
+* **Admin API**: The embedded runtime does not expose administrative endpoints.
+* **Runtime configuration changes**: Options like `globals` and `schemaEnforcement` are fixed at client initialization.
+
+=== Bundle size
+
+Bundle size depends on policy complexity:
+
+* Number of resource types, actions, and roles
+* Complexity of conditions (CEL expressions)
+* Number of scopes
+* Schema definitions
+
+For browser applications, monitor bundle size as policies grow. Large bundles increase initial page load time. Use filtering to include only necessary policies.
+
+=== Platform support
+
+The JavaScript SDK supports browsers, Node.js, edge runtimes, and React Native. The WebAssembly module executes in any JavaScript host environment.
+
+Native iOS and Android SDK support is planned. For other platforms (Go, Python, etc.), use xref:decision-points.adoc[service PDPs].
+
+=== Concurrent access
+
+The `Embedded` client is safe to use concurrently. Multiple authorization checks can be in flight simultaneously.
+
+Creating multiple `Embedded` clients with the same `PolicyLoader` shares the underlying bundle. Updates are applied to all clients sharing the loader.

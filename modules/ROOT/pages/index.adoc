@@ -10,6 +10,7 @@ Managed build and release pipeline:: Cerbos Hub automatically validates, tests, 
 Source agnostic policy stores:: Populate policy stores from any source using any of the many integration methods available.
 Coordinated rollout of policy changes:: Cerbos Hub pushes new policy bundles to every connected PDP instance, ensuring fleet-wide consistency and eliminating manual polling or reload logic.
 PDP monitoring:: Cerbos Hub shows which policies each PDP is serving, the exact bundle version, and when the instance was last seen.
+Embedded policy decision points:: Evaluate policies locally in browsers, edge functions, and other JavaScript environments using WebAssembly. Filter bundles by resource, action, scope, or role to expose only what each client needs.
 Audit log aggregation:: With one line of configuration you can stream PDP decision logs to Cerbos Hub, filter sensitive fields locally, and retain searchable history without running a separate log stack.
 Organization usage dashboard:: The organization-level usage dashboard aggregates metrics from all your workspaces, providing a unified view of request volumes, policy distribution, and usage trends across your organization.
 

@@ -16,7 +16,8 @@ Each deployment page provides several tabs to manage and monitor your policy pip
 Builds:: View the history of deployed versions, showing which policy bundles have been active and when. Each build shows the contributing policy stores and their versions.
 Policies:: Browse the current policies included in this deployment and view their contents.
 Decision points:: See the PDPs currently connected to this deployment. Each PDP shows its ID, the build it's running, active sessions, Cerbos version, when it was last seen, and a link to its audit logs.
-Client credentials:: Manage API credentials scoped to this deployment for PDP connections and audit log collection.
+Embedded PDP rules:: Configure xref:deployments-epdp-rules.adoc[embedded policy decision points] for this deployment. Each rule defines which policies to include in the bundle and what access controls apply.
+Client credentials:: Manage API credentials scoped to this deployment for PDP connections, audit log collection, and authenticated ePDP bundle access.
 Settings:: Configure deployment options including which policy stores contribute to builds.
 
 == Deployed versions

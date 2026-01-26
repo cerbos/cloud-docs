@@ -5,7 +5,7 @@ NOTE: This documentation is for the legacy Cerbos Hub workspaces. If you are usi
 
 Cerbos Hub supports two types of policy decision points for making authorization decisions.
 
-Service:: The open source Cerbos server running as a service or sidecar within your infrastructure and connected to Cerbos Hub to automatically receive bundle updates. This is the most suitable option for majority of authorization requirements and has benefits such as query planner, full audit logging, centralised management and horizontal scalability.
+Service:: The open source Cerbos PDP running as a service or sidecar within your infrastructure and connected to Cerbos Hub to automatically receive bundle updates. This is the most suitable option for majority of authorization requirements and has benefits such as query planner, full audit logging, centralised management and horizontal scalability.
 Embedded:: A self-contained snapshot of a policy set that can be embedded into any WebAssembly framework. Suitable for use cases where authorization decisions cannot be made over the network due to deployment constraints.
 
 .Decision point feature matrix
