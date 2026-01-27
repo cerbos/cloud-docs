@@ -1,6 +1,8 @@
 = Audit log collection
 
-With just a simple configuration change, you can configure the PDPs to securely send audit logs to Cerbos Hub. This vastly simplifies the work that would otherwise be required to configure and deploy a log aggregation solution to securely collect, store and query audit logs from across your fleet.
+With a simple configuration change, you can configure your PDPs to securely send audit logs to Cerbos Hub. This vastly simplifies the work that would otherwise be required to configure and deploy a log aggregation solution to securely collect, store and query audit logs from across your fleet.
+
+For embedded PDPs, decision logs can be captured locally using the SDK's `onDecision` callback. See xref:deployments-epdp-rules.adoc#_sdk_options[ePDP SDK options] for details.
 
 
 == Enabling collection
@@ -105,13 +107,13 @@ Click on any log entry to open the details panel, which shows:
 
 * **Principal**: The user or service that made the request, including their ID, roles, effective derived roles, and any attributes.
 * **Resource**: The resource being accessed, including kind, ID, scope, and attributes.
-* **Decisions**: The authorization outcome for each action, showing the effect (`ALLOW` or `DENY`) and which policy produced the decision. Click the policy name to navigate directly to that policy in your store.
+* **Decisions**: The authorization outcome for each action, showing the effect (`ALLOW` or `DENY`) and which policy produced the decision.
 * **Outputs**: Any output values returned by policy rules.
 * **Raw JSON**: The complete log entry in JSON format.
 
-==== Navigating to policies
+==== Deep linking to policies
 
-In the Decisions section of a log entry, click on any policy name to navigate directly to that policy in your policy store. This makes it easy to investigate authorization decisions and understand the policy logic behind each outcome.
+Policy names in audit log entries are clickable links. Click any policy name in the Decisions section to navigate directly to that policy in your policy store. This makes it easy to investigate authorization decisions and understand the policy logic behind each outcome without manually searching for the relevant policy file.
 
 ==== Filtering
 

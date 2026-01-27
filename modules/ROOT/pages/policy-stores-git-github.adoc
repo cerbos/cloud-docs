@@ -12,7 +12,7 @@ Before you can use the Cerbos Hub GitHub integration, you need to have the follo
 == Setting Up the GitHub Integration
 To set up the GitHub integration, follow these steps:
 
-1. Go to the https://hub.cerbos.dev[Cerbos Hub] and log in with your Cerbos account.
+1. Go to https://hub.cerbos.cloud[Cerbos Hub] and sign in.
 2. Inside a workspace, create a new policy store by clicking on "Policy Stores" in the sidebar.
 3. In the Import tab, select "GitHub" as the source for your policy store.
 4. Follow the prompts to authorize the Cerbos Hub to access your GitHub account.

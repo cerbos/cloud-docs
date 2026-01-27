@@ -1,6 +1,16 @@
 = Collaborative policy playgrounds
 
-Cerbos Hub playgrounds are fully-interactive, private development environments that provide an IDE-like experience for authoring policies. You can quickly create or edit policies and test fixtures with instant feedback on syntax issues and test failures. Drag and drop policy files, test files, or zip archives from your local machine directly into the playground editor for fast loading and testing. Take advantage of the powerful collaborative editing features to pair with colleagues to develop new authorization rules or use it as a sandbox to train new team members on Cerbos policies.
+Cerbos Hub playgrounds are fully-interactive, private development environments that provide an IDE-like experience for authoring policies. You can quickly create or edit policies and test fixtures with instant feedback on syntax issues and test failures. Take advantage of the powerful collaborative editing features to pair with colleagues to develop new authorization rules or use it as a sandbox to train new team members on Cerbos policies.
+
+== Importing files
+
+Drag and drop files directly into the playground editor:
+
+* **Individual files**: Drop policy files (`.yaml`, `.yml`) or test files directly into the file tree
+* **Zip archives**: Drop a zip file containing an entire policy directory structure to load multiple files at once
+* **Folders**: Drop entire folders to import complete policy sets
+
+This makes it easy to quickly load local policies for testing, share examples with colleagues, or migrate existing policies into the playground environment.
 
 == Creating a playground
 
@@ -11,9 +21,31 @@ When creating a new playground, you have a number of options:
 * Create an empty playground to start from scratch
 * Generate a starter RBAC policy by answering a few questions about your user roles, resources and actions
 * Start with an example template set of policies covering common use cases
+* Create from an existing policy store to experiment with production policies in a safe environment
 
+=== Create from a policy store
+
+You can create a playground directly from an existing policy store, making it easy to experiment with production policies without affecting live authorization decisions. This is useful for:
+
+* Testing policy changes before deploying them
+* Debugging authorization issues with real policy configurations
+* Training team members using actual policies as examples
+
+To create a playground from a store, navigate to the policy store and click **Create playground**. The playground is pre-populated with all policies and tests from the store.
 
 After creating a playground, click on the **Video tutorial** button on the top right corner of the screen to learn the basics.
+
+== README files
+
+Playgrounds support README.md files that display as rendered markdown when opened. When you open a playground containing a README and no file is selected, the README displays automatically.
+
+README files can include:
+
+* Relative links to other files in the playground (click to open in the editor)
+* External links (opens with a confirmation dialog)
+* Standard markdown formatting
+
+Use README files to document your playground examples, explain policy structure, or provide onboarding instructions for team members.
 
 == Playground engine settings
 
@@ -38,6 +70,16 @@ The panel displays:
 * **Effective derived roles**: Shows which derived roles were activated for the selected principal, helping you understand role-based access decisions.
 
 Click **+ Add action** to test additional actions, or **Create auxiliary data fixtures** to add test data for your evaluations.
+
+=== Permissions matrix view
+
+The matrix view displays permission evaluation results in a comprehensive grid format, showing how policies affect different principal and resource combinations at a glance. This is useful for:
+
+* Visualizing access patterns across multiple principals and resources
+* Demonstrating authorization behavior during policy reviews or demos
+* Quickly identifying unexpected permission gaps or grants
+
+Toggle between the standard explore view and the matrix view using the view selector in the Explore tab.
 
 == Test results
 

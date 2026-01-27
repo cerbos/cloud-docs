@@ -5,8 +5,6 @@ A Cerbos Hub user can have a role at the organization level and an optional set 
 
 == Organization roles
 
-Organizations can be deleted by navigating to the organization settings page and clicking on the "Delete organization" button. This action is irreversible and will permanently delete all data associated with the organization.
-
 Organization roles, except for the `Member` role, apply to all workspaces within the organization. Users with organizational role of `Member` must be explicitly granted workspace roles in order to access a workspace.
 
 [cols="1,1,1,1,1,1", options="header"]
@@ -152,3 +150,7 @@ Permissions assigned at the organization level are inherited by all workspaces. 
 |❌
 |❌
 |===
+
+== Deleting an organization
+
+Organizations can be deleted by navigating to the organization settings page and clicking **Delete organization**. This action is irreversible and permanently deletes all data associated with the organization, including all workspaces, policy stores, deployments, and audit logs.

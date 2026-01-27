@@ -46,7 +46,7 @@ Each policy store has a detail page with the following tabs:
 
 [unordered.stack]
 Import:: Add policies to the store by uploading files, connecting to a Git repository, or using other ingestion methods.
-Policies:: Browse the current contents of the store in a file tree. Select a version from the dropdown to view historical snapshots. Click **Open in playground** to experiment with the policies in an isolated environment.
+Policies:: Browse the current contents of the store in a file tree. Select a version from the dropdown to view historical snapshots. Click **Create playground** to experiment with the policies in an isolated environment—this creates a playground pre-populated with all policies and tests from the store.
 Version history:: View a chronological list of all versions, showing when each was created and what changed.
 Client credentials:: Manage API credentials scoped to this store for programmatic access via SDKs or the CLI. Each credential shows its type (read-only or read and write), usage statistics, and when it was last used.
 Settings:: Configure store options and manage connections to external sources like GitHub.

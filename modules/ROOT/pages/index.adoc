@@ -10,7 +10,7 @@ Managed build and release pipeline:: Cerbos Hub automatically validates, tests, 
 Source agnostic policy stores:: Populate policy stores from any source using any of the many integration methods available.
 Coordinated rollout of policy changes:: Cerbos Hub pushes new policy bundles to every connected PDP instance, ensuring fleet-wide consistency and eliminating manual polling or reload logic.
 PDP monitoring:: Cerbos Hub shows which policies each PDP is serving, the exact bundle version, and when the instance was last seen.
-Embedded policy decision points:: Evaluate policies locally in browsers, edge functions, and other JavaScript environments using WebAssembly. Filter bundles by resource, action, scope, or role to expose only what each client needs.
+Embedded policy decision points:: Evaluate policies locally in browsers, edge functions, and other JavaScript environments using WebAssembly. Configure multiple ePDP rules per deployment, each with independent policy filtering (by resource, action, scope, role, or version), authentication requirements, and IP allowlists. Dynamic scopes enable per-tenant bundles in multi-tenant applications.
 Audit log aggregation:: With one line of configuration you can stream PDP decision logs to Cerbos Hub, filter sensitive fields locally, and retain searchable history without running a separate log stack.
 Organization usage dashboard:: The organization-level usage dashboard aggregates metrics from all your workspaces, providing a unified view of request volumes, policy distribution, and usage trends across your organization.
 
@@ -29,3 +29,9 @@ image:how_cerbos_hub_works.png[alt="How Cerbos Hub works",role="center-img"]
 . PDP instances download the new bundle and start serving it immediately.
 
 Optionally, configure Cerbos Hub as an audit backend for the PDPs. Logs are streamed securely, with sensitive data removed locally before leaving your network perimeter.
+
+== Get started
+
+* xref:getting-started.adoc[Quick start guide] — Create a policy store, deployment, and connect your first PDP.
+* xref:decision-points.adoc[Service PDPs] — Production deployment patterns for server-side authorization.
+* xref:deployments-epdp-rules.adoc[Embedded PDPs] — Client-side authorization for browsers and edge functions.

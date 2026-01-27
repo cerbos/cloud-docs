@@ -331,8 +331,8 @@ Monitor PDP connectivity using the `cerbos_dev_hub_connected` gauge:
 Additional metrics for Hub connectivity:
 
 [horizontal]
-`cerbos_dev_hub_bundle_download_duration_seconds`:: Time to download policy bundles
-`cerbos_dev_hub_bundle_update_count`:: Number of bundle updates received
+`cerbos_dev_store_bundle_updates_count`:: Number of bundle updates received from Cerbos Hub
+`cerbos_dev_store_bundle_op_latency`:: Time to perform bundle operations
 
 See xref:cerbos:configuration:observability.adoc[] for the full list of available metrics.
 
