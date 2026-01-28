@@ -16,7 +16,7 @@ Each deployment page provides several tabs to manage and monitor your policy pip
 Builds:: View the history of deployed versions, showing which policy bundles have been active and when. Each build shows the contributing policy stores and their versions.
 Policies:: Browse the current policies included in this deployment and view their contents.
 Decision points:: See the PDPs currently connected to this deployment. Each PDP shows its ID, the build it's running, active sessions, Cerbos version, when it was last seen, and a link to its audit logs.
-Embedded PDP rules:: Configure xref:deployments-epdp-rules.adoc[embedded policy decision points] for this deployment. Each rule defines which policies to include in the bundle and what access controls apply.
+Embedded PDP rules:: Configure xref:deployments-epdp-rules.adoc[embedded policy decision points] for this deployment. Each rule defines policy filtering criteria (resources, actions, scopes, roles, versions), authentication requirements, and IP allowlists. Multiple rules can serve different clients or environments from the same deployment.
 Client credentials:: Manage API credentials scoped to this deployment for PDP connections, audit log collection, and authenticated ePDP bundle access.
 Settings:: Configure deployment options including which policy stores contribute to builds.
 
@@ -59,9 +59,15 @@ Expandable sections show the results of each build stage:
 * **Compile**: Shows whether policy compilation succeeded. Expand to see any compilation errors or warnings.
 * **Test**: Shows whether all policy tests passed. Expand to see detailed test results, including any failures with full output for debugging.
 
-=== Files
+=== Bundle file explorer
 
-The file explorer displays the contents of the generated bundle, organized by contributing policy store. You can browse the directory structure and inspect individual policy files to verify the correct versions were bundled.
+The file explorer displays the contents of the generated policy bundle. Browse the directory structure organized by contributing policy store, and click any file to view its contents. This lets you verify exactly which policies were included in the bundle and inspect their contents without leaving Cerbos Hub.
+
+Use the file explorer to:
+
+* Confirm the correct policy versions were bundled
+* Debug unexpected authorization behavior by examining the active policies
+* Audit which policies contributed to a specific deployment
 
 For details on creating policy stores and connecting PDPs to receive bundles, see the related guides:
 

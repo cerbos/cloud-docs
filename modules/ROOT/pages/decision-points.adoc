@@ -1,70 +1,345 @@
-= Service Policy Decision Point
+= Service Policy Decision Points
 
-The open source Cerbos PDP instances that you run in your own infrastructure are called service PDPs. Cerbos Hub is the management control plane for PDP instances that are running inside your environment. Rather than each PDP being responsible for detecting policy changes, parsing, compiling, and loading them, they get pre-compiled policy bundles pushed to them from Cerbos Hub. This model ensures that all your data remains within your network perimeter and that authorization checks happen locally with low latency while reducing the overhead of policy updates and the time it takes for the whole fleet to get in sync. A PDP must be configured with the ID of a deployment and client credentials in order to connect to Cerbos Hub.
+Service policy decision points (PDPs) are open source Cerbos instances running in your infrastructure, managed by Cerbos Hub. Cerbos Hub acts as a control plane for your PDP fleet, handling policy compilation, testing, and distribution so your PDPs can focus on serving authorization requests.
 
-For environments where running a Cerbos PDP is impractical, such as browser applications or edge functions, see xref:deployments-epdp-rules.adoc[Embedded PDPs].
+=== Why use Cerbos Hub for PDPs?
+
+Without Cerbos Hub, each PDP must independently detect policy changes, fetch source files, parse, compile, and load them. This creates operational overhead and can lead to version drift across your fleet.
+
+With Cerbos Hub:
+
+[horizontal]
+Pre-compiled bundles:: Policies are compiled once by Cerbos Hub and pushed as optimized bundles. PDPs skip parsing and compilation entirely, reducing startup time and memory usage.
+Instant fleet-wide updates:: Push-based distribution means all PDPs receive updates within seconds—no polling delays or staggered rollouts.
+Validated before deployment:: Policies are tested automatically before distribution. Failed tests block deployment, preventing broken policies from reaching production.
+Centralized visibility:: Monitor all connected PDPs from a single dashboard. See which version each instance is running, when it last connected, and access its audit logs.
+Built-in resilience:: PDPs cache bundles locally and continue operating if Cerbos Hub is temporarily unavailable. New instances can start from cached bundles served by a high-availability fallback service.
+
+For environments where running a Cerbos server is impractical, such as browser applications or edge functions, see xref:deployments-epdp-rules.adoc[Embedded PDPs].
+
+== When to use service PDPs
+
+Service PDPs are the standard deployment model for server-side authorization. Use them when:
+
+=== Backend services
+
+API servers, microservices, and backend applications that need to authorize requests. The PDP runs alongside your application and responds to authorization checks with sub-millisecond latency.
+
+=== Centralized authorization
+
+Organizations that want a dedicated authorization service that multiple applications can query. Deploy one or more PDPs and have all services send authorization requests to them.
+
+=== High-volume workloads
+
+Service PDPs handle thousands of authorization checks per second. The compiled policy format and in-memory evaluation ensure consistent performance under load.
+
+=== Data-sensitive environments
+
+All authorization data stays within your network. Cerbos Hub only pushes policy bundles—your request data, principal attributes, and resource attributes never leave your infrastructure.
+
+== How it works
+
+When a PDP connects to Cerbos Hub, it establishes a two-way communication channel:
+
+. The PDP authenticates using client credentials scoped to a deployment
+. Cerbos Hub pushes the current policy bundle to the PDP
+. The PDP loads the bundle and begins serving authorization requests
+. When policies change, Cerbos Hub pushes a notification to all connected PDPs
+. Each PDP downloads and activates the new bundle
+
+Because there is no polling, all PDPs converge on the same policy version within seconds of a change.
+
+== Deployment patterns
+
+Cerbos supports multiple deployment patterns depending on your requirements.
+
+=== Service model
+
+A central Cerbos deployment shared by multiple applications.
+
+* Cerbos can be upgraded independently from applications
+* Simpler policy management with a single point of control
+* Requires capacity planning to avoid bottlenecks
+
+=== Sidecar model
+
+Each application instance gets its own Cerbos container.
+
+* High performance with no network overhead between application and PDP
+* Upgrades require rolling updates to all application instances
+* Policy updates propagate to each sidecar independently
+
+Cerbos supports serving the API over a Unix domain socket, allowing secure communication with no network overhead. See xref:cerbos:deployment:k8s-sidecar.adoc[Kubernetes sidecar deployment] for details.
+
+=== DaemonSet model
+
+Each Kubernetes node gets one Cerbos instance, shared by all pods on that node.
+
+* Efficient resource usage compared to sidecars
+* Lower latency than centralized service
+* Policy updates roll out node by node
+
+See xref:cerbos:deployment:k8s-daemonset.adoc[Kubernetes DaemonSet deployment] for configuration details.
 
 == Deploying a PDP
 
-Connecting to Cerbos Hub is a matter of configuring the `hub` storage driver, which can be configured using the configuration file, environment variables or command line arguments.
+A PDP requires three pieces of configuration to connect to Cerbos Hub:
 
-The simplest method to get a connected PDP up and running is to run the container with configuration passed via environment variables:
+[horizontal]
+Deployment ID:: Identifies which deployment's policies to load
+Client ID:: Authentication credential
+Client secret:: Authentication credential
+
+These can be configured via environment variables or a configuration file.
+
+=== Environment variables
+
+The simplest method to get a connected PDP running:
 
 [source,shell]
 ----
 docker run --rm --name cerbos \
- -p 3592:3592 -p 3593:3593 \
- -e CERBOS_HUB_DEPLOYMENT_ID="..." \
- -e CERBOS_HUB_CLIENT_ID="..." \
- -e CERBOS_HUB_CLIENT_SECRET="..." \
- -e CERBOS_HUB_PDP_ID="..." \
- ghcr.io/cerbos/cerbos:latest server
+  -p 3592:3592 -p 3593:3593 \
+  -e CERBOS_HUB_DEPLOYMENT_ID="..." \
+  -e CERBOS_HUB_CLIENT_ID="..." \
+  -e CERBOS_HUB_CLIENT_SECRET="..." \
+  -e CERBOS_HUB_PDP_ID="..." \
+  ghcr.io/cerbos/cerbos:latest server
 ----
 
-The environment variables to set are:
-
 [horizontal]
-`CERBOS_HUB_DEPLOYMENT_ID`:: The deployment ID to load policies from
-`CERBOS_HUB_CLIENT_ID`:: Client ID
-`CERBOS_HUB_CLIENT_SECRET`:: Client secret
-`CERBOS_HUB_PDP_ID`:: Optional. The name shown for the PDP in the Cerbos Hub monitoring page. If not provided, a random value is used.
+`CERBOS_HUB_DEPLOYMENT_ID`:: The deployment ID to load policies from. Find this on the deployment page in Cerbos Hub.
+`CERBOS_HUB_CLIENT_ID`:: Client ID from the deployment's **Client credentials** tab.
+`CERBOS_HUB_CLIENT_SECRET`:: Client secret from the deployment's **Client credentials** tab.
+`CERBOS_HUB_PDP_ID`:: Optional. A name for this PDP instance, shown in the Cerbos Hub monitoring page. If not provided, a random value is used.
 
-Alternatively, you can define these values in the Cerbos configuration file as follows:
+=== Configuration file
+
+For production deployments, use a configuration file:
 
 [source,yaml]
 ----
 server:
-  httpListenAddr: ":3592" # The port the HTTP server will listen on
-  grpcListenAddr: ":3593" # The port the gRPC server will listen on
+  httpListenAddr: ":3592"
+  grpcListenAddr: ":3593"
 
 hub:
   credentials:
-    pdpID: "..." # Optional. Identifier for this Cerbos instance.
-    clientID: "..." # ClientID
-    clientSecret: "..." # ClientSecret
+    pdpID: "payments-service-1" # Optional. Identifier for this PDP instance.
+    clientID: "..."
+    clientSecret: "..."
 
 storage:
   driver: hub
   hub:
     remote:
-      deploymentID: latest # The deployment ID to load policies for
+      deploymentID: "..." # The deployment ID to load policies from
 ----
 
-Assuming you saved the configuration file as `.cerbos.yaml` in the current directory, you can start Cerbos as follows:
-
+Start the PDP with the configuration file:
 
 [source,shell]
 ----
 docker run --rm --name cerbos \
- -v $(pwd):/conf \
- -p 3592:3592 -p 3593:3593 \
- ghcr.io/cerbos/cerbos:latest server --config=/conf/.cerbos.yaml
+  -v $(pwd):/conf \
+  -p 3592:3592 -p 3593:3593 \
+  ghcr.io/cerbos/cerbos:latest server --config=/conf/.cerbos.yaml
 ----
 
-See xref:cerbos:configuration:index.adoc[] for more information about configuring Cerbos.
+See xref:cerbos:configuration:index.adoc[] for the full configuration reference.
+
+=== Obtaining credentials
+
+To generate client credentials:
+
+. Navigate to the deployment in Cerbos Hub
+. Select the **Client credentials** tab
+. Click **Generate a client credential**
+. Choose **Read only** for PDPs that only need to receive bundles
+. Save the client secret—it cannot be recovered after creation
+
+== Production deployment
+
+Cerbos runs anywhere containers run: Kubernetes, Docker Compose, Amazon ECS, systemd, or directly as a binary. The examples below focus on Kubernetes as the most common deployment target.
+
+For other platforms, see xref:cerbos:deployment:cloud-platforms.adoc[Cloud platform deployment] (AWS Marketplace, Fly.io) and xref:cerbos:deployment:systemd.adoc[systemd deployment].
+
+=== Kubernetes
+
+==== Helm
+
+Create a secret for the Hub credentials:
+
+[source,shell]
+----
+kubectl create secret generic cerbos-hub-credentials \
+  --from-literal=CERBOS_HUB_CLIENT_ID="..." \
+  --from-literal=CERBOS_HUB_CLIENT_SECRET="..." \
+  --from-literal=CERBOS_HUB_DEPLOYMENT_ID="..."
+----
+
+Create a values file (`hub-values.yaml`):
+
+[source,yaml]
+----
+cerbos:
+  config:
+    audit:
+      enabled: true
+      backend: hub
+      hub:
+        storagePath: /audit_logs
+
+envFrom:
+  - secretRef:
+      name: cerbos-hub-credentials
+
+volumes:
+  - name: cerbos-audit-logs
+    emptyDir: {}
+
+volumeMounts:
+  - name: cerbos-audit-logs
+    mountPath: /audit_logs
+----
+
+Deploy with Helm:
+
+[source,shell]
+----
+helm repo add cerbos https://download.cerbos.dev/helm-charts
+helm install cerbos cerbos/cerbos --values=hub-values.yaml
+----
+
+TIP: For AWS Marketplace (EKS/ECS), the Helm chart handles metering automatically. See xref:cerbos:deployment:cloud-platforms.adoc[Cloud platform deployment] for setup instructions.
+
+== Reliability
+
+Cerbos Hub is designed for high availability. However, if Cerbos Hub becomes temporarily unavailable:
+
+* **Running PDPs** continue serving requests using the last downloaded bundle while attempting to reconnect in the background
+* **New PDPs** can start with the last successfully built bundle, served from a separate high-availability service
+
+=== Local bundle caching
+
+For additional resilience, configure a cache directory to persist bundles to disk:
+
+[source,yaml]
+----
+storage:
+  driver: hub
+  hub:
+    remote:
+      deploymentID: "..."
+      cacheDir: /var/cerbos/hub # Directory to cache downloaded bundles
+----
+
+Mount a persistent volume at this path when running in containers or Kubernetes.
+
+=== Offline mode
+
+In disaster recovery scenarios, start the PDP with the cached bundle:
+
+[source,shell]
+----
+docker run --rm --name cerbos \
+  -p 3592:3592 -p 3593:3593 \
+  -e CERBOS_HUB_OFFLINE=true \
+  -v /var/cerbos/hub:/var/cerbos/hub \
+  ghcr.io/cerbos/cerbos:latest server --config=/conf/.cerbos.yaml
+----
+
+The PDP loads the cached bundle and serves requests without connecting to Cerbos Hub.
+
+=== Fallback to git
+
+As a last resort, switch the PDP to use the git storage driver and read policies directly from your policy repository:
+
+[source,yaml]
+----
+storage:
+  driver: git
+  git:
+    protocol: https
+    url: https://github.com/your-org/policies.git
+    branch: main
+    checkoutDir: /tmp/cerbos/policies
+    updatePollInterval: 60s
+----
+
+== Health checks
+
+Cerbos exposes health check endpoints for container orchestrators and load balancers.
+
+=== HTTP health endpoint
+
+[source]
+----
+GET /_cerbos/health
+----
+
+Returns HTTP 200 when the PDP is healthy and ready to serve requests.
+
+=== gRPC health
+
+Cerbos implements the standard gRPC health checking protocol on port 3593.
+
+=== Kubernetes probes
+
+Configure liveness and readiness probes:
+
+[source,yaml]
+----
+livenessProbe:
+  httpGet:
+    path: /_cerbos/health
+    port: 3592
+  initialDelaySeconds: 5
+  periodSeconds: 10
+
+readinessProbe:
+  httpGet:
+    path: /_cerbos/health
+    port: 3592
+  initialDelaySeconds: 5
+  periodSeconds: 10
+----
 
 == Monitoring
 
-The Decsion points page in Cerbos Hub provides a view of all the recently connected PDP instances of the workspace.
+=== Connected PDPs
 
-image:connected_pdps.png[alt="Connected instances",role="center-img"]
+The **Decision points** tab on each deployment page shows all recently connected PDP instances:
+
+* **PDP ID**: The identifier for the instance
+* **Build**: Which policy bundle version is active
+* **Sessions**: Number of active connections
+* **Cerbos version**: The PDP software version
+* **Last seen**: When the PDP last communicated with Cerbos Hub
+* **Audit logs**: Link to view audit logs from this PDP
+
+=== Prometheus metrics
+
+Cerbos exposes metrics at `/_cerbos/metrics` in Prometheus format.
+
+Monitor PDP connectivity using the `cerbos_dev_hub_connected` gauge:
+
+[horizontal]
+`1`:: PDP is connected to Cerbos Hub
+`0`:: PDP is disconnected (using cached bundle)
+
+Additional metrics for Hub connectivity:
+
+[horizontal]
+`cerbos_dev_store_bundle_updates_count`:: Number of bundle updates received from Cerbos Hub
+`cerbos_dev_store_bundle_op_latency`:: Time to perform bundle operations
+
+See xref:cerbos:configuration:observability.adoc[] for the full list of available metrics.
+
+== Related features
+
+[horizontal]
+xref:audit-log-collection.adoc[Audit log collection]:: Send authorization decision logs from PDPs to Cerbos Hub for analysis and compliance.
+xref:deployments.adoc[Deployments]:: Configure which policy stores contribute to a deployment and view build history.
+xref:policy-stores.adoc[Policy stores]:: Manage the policy repositories that feed into deployments.
+xref:cerbos:deployment:index.adoc[Cerbos deployment patterns]:: Detailed guides for service, sidecar, and DaemonSet deployment models.

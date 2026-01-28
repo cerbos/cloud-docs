@@ -1,10 +1,81 @@
 = Reliability
 
-When a PDP is connected to Cerbos Hub it establishes a two-way communication channel. This is used to request the initial policy bundle from Cerbos Hub and then subsequently receive push notifications about new bundle versions. Because there is no polling involved, all PDPs in your environment will converge on a single version of policies much more quickly.
+Cerbos Hub is designed for high availability. All PDPs continue to operate independently even when Cerbos Hub experiences disruptions.
 
-We take the reliability and availability of Cerbos Hub very seriously. However, if for whatever reason Cerbos Hub API becomes unavailable, the PDPs will continue to work with the last downloaded bundle while trying to re-establish the connection in the background. New PDPs will also be able to start with the last successfully built bundle even if the Cerbos Hub API is unavailable because we serve those through a separate service.
+== Push-based updates
 
-We recommend mounting a persistent storage disk to the Cerbos pod and pointing to it using the `storage.bundle.remote.cacheDir` configuration setting. This allows you to launch Cerbos with the `CERBOS_HUB_OFFLINE` environment variable set and the PDP will use the last cached bundle from the cache directory. In the worst-case scenario, you can switch your PDP to use the git storage driver and configure it to read the policies directly from the git repository that's connected to Cerbos Hub.
+When a PDP connects to Cerbos Hub, it establishes a two-way communication channel used to receive the initial policy bundle and subsequent update notifications. Because there is no polling, all PDPs converge on the same policy version within seconds of a change.
 
-You can monitor whether a PDP is connected to Cerbos Hub using the `cerbos_dev_hub_connected` gauge in Prometheus metrics.
+== Disconnection handling
 
+If Cerbos Hub becomes temporarily unavailable:
+
+[horizontal]
+Running PDPs:: Continue serving requests using the last downloaded bundle while attempting to reconnect in the background. Authorization decisions are unaffected.
+New PDPs:: Can start with the last successfully built bundle, served from a separate high-availability fallback service.
+
+== Local bundle caching
+
+For additional resilience, configure a cache directory to persist bundles to disk:
+
+[source,yaml]
+----
+storage:
+  driver: hub
+  hub:
+    remote:
+      deploymentID: "..."
+      cacheDir: /var/cerbos/hub # Directory to cache downloaded bundles
+----
+
+Mount a persistent volume at this path when running in containers or Kubernetes. Cached bundles allow PDPs to restart without network access to Cerbos Hub.
+
+== Offline mode
+
+In disaster recovery scenarios, start the PDP with only the cached bundle:
+
+[source,shell]
+----
+docker run --rm --name cerbos \
+  -p 3592:3592 -p 3593:3593 \
+  -e CERBOS_HUB_OFFLINE=true \
+  -v /var/cerbos/hub:/var/cerbos/hub \
+  ghcr.io/cerbos/cerbos:latest server --config=/conf/.cerbos.yaml
+----
+
+The PDP loads the cached bundle and serves requests without connecting to Cerbos Hub.
+
+== Fallback to git
+
+As a last resort, switch the PDP to read policies directly from your Git repository:
+
+[source,yaml]
+----
+storage:
+  driver: git
+  git:
+    protocol: https
+    url: https://github.com/your-org/policies.git
+    branch: main
+    checkoutDir: /tmp/cerbos/policies
+    updatePollInterval: 60s
+----
+
+This bypasses Cerbos Hub entirely, though you lose pre-compilation, testing, and centralized management.
+
+== Monitoring connectivity
+
+Monitor PDP connectivity using the `cerbos_dev_hub_connected` Prometheus metric:
+
+[horizontal]
+`1`:: PDP is connected to Cerbos Hub
+`0`:: PDP is disconnected (using cached bundle)
+
+Additional metrics for bundle operations:
+
+[horizontal]
+`cerbos_dev_store_bundle_updates_count`:: Number of bundle updates received from Cerbos Hub
+`cerbos_dev_store_bundle_op_latency`:: Time to perform bundle operations
+`cerbos_dev_store_bundle_fetch_errors_count`:: Count of errors during bundle downloads
+
+See xref:cerbos:configuration:observability.adoc[] for the full list of available metrics.

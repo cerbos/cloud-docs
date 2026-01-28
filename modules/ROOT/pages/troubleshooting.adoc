@@ -1,5 +1,139 @@
 = Troubleshooting
 
-== Builds aren't triggered when multiple tags are pushed to the repository
+== PDP connection issues
 
-GitHub has a link:https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#push[known limitation] where connected apps like Cerbos Hub won't receive notifications for repository changes if more than three tags are pushed simultaneously. To avoid encountering this issue, we suggest setting the limit on maximum number of references to be pushed at once to three. You can find information on how to do this in the link:https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/managing-repository-settings/managing-the-push-policy-for-your-repository#limiting-how-many-branches-and-tags-can-be-updated-in-a-single-push[GitHub documentation].
+=== PDP fails to connect to Cerbos Hub
+
+*Symptoms*: PDP logs show connection errors or timeouts when starting.
+
+*Causes and solutions*:
+
+[horizontal]
+Invalid credentials:: Verify the client ID and client secret are correct. Generate new credentials from the deployment's **Client credentials** tab if needed.
+Wrong deployment ID:: Confirm the deployment ID matches the deployment you want to connect to. Find the ID on the deployment detail page.
+Network restrictions:: Ensure outbound HTTPS (port 443) is allowed to Cerbos Hub endpoints. Check firewalls, security groups, and network policies.
+Expired credentials:: Client credentials do not expire, but they can be revoked. Check the credential status in Cerbos Hub.
+
+=== PDP shows as disconnected in Cerbos Hub
+
+*Symptoms*: The PDP appears in the Decision points tab but shows as disconnected or has a stale "Last seen" timestamp.
+
+*Causes and solutions*:
+
+[horizontal]
+Network interruption:: The PDP will automatically reconnect when network access is restored. Check for intermittent connectivity issues.
+PDP process crashed:: Verify the PDP container or process is running. Check logs for crash reasons.
+Load balancer timeout:: Some load balancers close idle connections. The PDP maintains a heartbeat, but aggressive timeouts may cause disconnections.
+
+== Policy compilation errors
+
+=== Build fails with compilation errors
+
+*Symptoms*: The deployment build fails and shows compilation errors in the build details.
+
+*Causes and solutions*:
+
+[horizontal]
+Invalid YAML syntax:: Check for indentation errors, missing colons, or invalid characters. Use a YAML linter locally before pushing.
+Invalid policy structure:: Ensure policies follow the xref:cerbos:policies:index.adoc[Cerbos policy schema]. Common issues include misspelled keys or missing required fields.
+Duplicate policy definitions:: Each resource/action combination must be unique within a scope. Check for conflicting policies across stores.
+Invalid CEL expressions:: Condition expressions must be valid CEL syntax. Test expressions in the playground before deploying.
+
+=== Tests fail during build
+
+*Symptoms*: Compilation succeeds but tests fail, blocking deployment.
+
+*Causes and solutions*:
+
+[horizontal]
+Policy behavior changed:: Review the test diff in the build details to understand what changed. Update tests if the new behavior is intentional.
+Missing test fixtures:: Ensure all principals, resources, and auxiliary data referenced in tests exist in the test fixtures.
+Incorrect expected outcomes:: Verify the expected actions and effects in your test cases match the policy logic.
+
+== Embedded PDP issues
+
+=== Bundle fetch fails in browser
+
+*Symptoms*: The ePDP client throws errors when fetching the policy bundle.
+
+*Causes and solutions*:
+
+[horizontal]
+CORS blocking requests:: Browser security prevents cross-origin requests. ePDP bundles are served with appropriate CORS headers, but ensure you're using the correct endpoint.
+Authentication required:: If the ePDP rule requires authentication, provide credentials when initializing the client. Check the rule's access control settings.
+IP not in allowlist:: If the rule has an IP allowlist, ensure the client's IP address is included. For browser clients, this is the end user's IP.
+Rule disabled:: Verify the ePDP rule is enabled in the deployment settings.
+Invalid rule ID:: Confirm the rule ID matches an existing rule in the deployment.
+
+=== Scope parameter required
+
+*Symptoms*: Bundle fetch fails with "scope parameter required" error.
+
+*Causes and solutions*:
+
+The ePDP rule has **Require scopes at fetch time** enabled. You must provide scope parameters when initializing the client:
+
+[source,typescript]
+----
+const cerbos = new Embedded({
+  policies: {
+    ruleId: "<RULE_ID>",
+    scopes: ["tenant-acme"],
+  },
+  wasm,
+});
+----
+
+=== Authorization returns unexpected results
+
+*Symptoms*: The ePDP allows or denies actions differently than expected.
+
+*Causes and solutions*:
+
+[horizontal]
+Filtered policies:: The ePDP bundle may not contain all policies. Check the rule's filtering settings (resources, actions, scopes, roles, versions) to ensure required policies are included.
+Stale bundle:: If policies were recently updated, the client may still have an old bundle. For long-running applications, enable automatic updates. For serverless, each invocation fetches the current bundle.
+Missing globals:: If policies reference global variables, ensure they are passed in the client configuration.
+Scope mismatch:: If using scopes, verify the request scope matches policies in the filtered bundle.
+
+== Audit log collection issues
+
+=== Audit logs not appearing in Cerbos Hub
+
+*Symptoms*: The PDP is connected but no audit logs appear in the Audit logs tab.
+
+*Causes and solutions*:
+
+[horizontal]
+Audit backend not configured:: Ensure `audit.backend` is set to `hub` in the PDP configuration.
+Audit disabled:: Verify `audit.enabled` is `true`.
+Storage path missing:: The `audit.hub.storagePath` must be set to a writable directory. Without this, logs cannot be buffered.
+Credentials lack write permission:: Audit log upload requires **Read & write** credentials. Read-only credentials cannot upload logs.
+
+=== Logs delayed or missing entries
+
+*Symptoms*: Audit logs appear with significant delay or some entries are missing.
+
+*Causes and solutions*:
+
+[horizontal]
+Network issues:: Logs are buffered locally and uploaded when connectivity is available. Check for intermittent network problems.
+Storage volume full:: If the local storage path runs out of space, new logs cannot be buffered. Monitor disk usage on the storage volume.
+PDP crashed before sync:: Logs are periodically synced to Cerbos Hub. If the PDP crashes between syncs, recent entries may be lost. Use a persistent volume to preserve buffered logs across restarts.
+
+== GitHub integration issues
+
+=== Builds aren't triggered when multiple tags are pushed
+
+GitHub has a link:https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#push[known limitation] where connected apps like Cerbos Hub won't receive notifications for repository changes if more than three tags are pushed simultaneously. To avoid this issue, limit the maximum number of references pushed at once to three. See the link:https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/managing-repository-settings/managing-the-push-policy-for-your-repository#limiting-how-many-branches-and-tags-can-be-updated-in-a-single-push[GitHub documentation] for configuration details.
+
+=== Repository changes not detected
+
+*Symptoms*: Pushing to the connected repository doesn't trigger a new build.
+
+*Causes and solutions*:
+
+[horizontal]
+Wrong branch:: Verify you're pushing to the branch configured in the policy store settings.
+Webhook disabled:: Check that the GitHub webhook for Cerbos Hub is active in your repository settings.
+No policy files changed:: Builds only trigger when policy files (`.yaml`, `.yml`) change. Changes to other files are ignored.

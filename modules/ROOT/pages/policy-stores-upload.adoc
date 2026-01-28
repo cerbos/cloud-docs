@@ -9,7 +9,7 @@ image:policy_store_upload.png[alt="Browser upload",role="center-img"]
 
 To upload policies using the browser, follow these steps:
 
-1. Go to the https://hub.cerbos.dev[Cerbos Hub] and log in with your Cerbos account.
+1. Go to https://hub.cerbos.cloud[Cerbos Hub] and sign in.
 2. Inside a workspace, create a new policy store by clicking on "Policy Stores" in the sidebar.
 3. In the Import tab, select "Browser upload" as the source for your policy store.
 4. Click on the "Upload files" button to select a ZIP file of your policies or drag and drop the ZIP file into the designated area.
