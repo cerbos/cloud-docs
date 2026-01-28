@@ -1,5 +1,25 @@
 = Release notes
 
+== 2026-01-28
+
+=== RBAC policy generator improvements
+
+The RBAC policy generator now displays role names more clearly by rotating the rule matrix headers, accommodating longer role names. Fixed a navigation issue in the wizard form that prevented users from going back to previous steps.
+
+=== Variable expression stability
+
+Fixed an issue where invalid variable expressions could cause unexpected errors. The system now handles malformed expressions gracefully, improving reliability when authoring policies.
+
+== 2026-01-27
+
+=== Embedded PDP deploy helper
+
+A new deployment helper modal guides you through deploying embedded PDPs. The helper dynamically shows scope filters and client credentials based on your rule requirements. Rules requiring authentication cannot run in-browser, so the helper clearly indicates when server-side deployment is necessary.
+
+=== Playground README improvements
+
+Enhanced the markdown viewer styling in the Playground. README content now updates in real-time when collaborators edit the file. Drag-and-drop file uploads now correctly handle markdown files.
+
 == 2026-01-26
 
 === New embedded PDP architecture
