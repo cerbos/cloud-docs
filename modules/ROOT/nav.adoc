@@ -39,6 +39,8 @@
 ** xref:user-management.adoc[User management]
 * xref:reliability.adoc[Reliability]
 * xref:on-premises.adoc[On-premises deployment]
+* Integrations
+** xref:integrations-aperture.adoc[Aperture by Tailscale]
 * xref:troubleshooting.adoc[Troubleshooting]
 * Legacy
 ** xref:legacy/concepts.adoc[Concepts]
