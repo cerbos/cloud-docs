@@ -118,7 +118,7 @@ extensions:
 Alternatively, all credentials can be passed as environment variables instead of embedding them in the configuration file:
 
 [horizontal]
-`TS_AUTHKEY`:: The Tailscale auth key with the appropriate tag assigned. Generate this from https://login.tailscale.com/admin/settings/keys[Tailscale admin settings].
+`TS_AUTHKEY`:: The Tailscale auth key that was generated above.
 `CERBOS_HUB_DEPLOYMENT_ID`:: The deployment ID to load policies from. Find this on the deployment page in Cerbos Hub.
 `CERBOS_HUB_CLIENT_ID`:: Client ID from the deployment's **Client credentials** tab.
 `CERBOS_HUB_CLIENT_SECRET`:: Client secret from the deployment's **Client credentials** tab.
