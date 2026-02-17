@@ -40,6 +40,7 @@
 * xref:reliability.adoc[Reliability]
 * xref:on-premises.adoc[On-premises deployment]
 * xref:troubleshooting.adoc[Troubleshooting]
+* xref:migration-legacy.adoc[Migrating from legacy workspaces]
 * Legacy
 ** xref:legacy/concepts.adoc[Concepts]
 ** xref:legacy/getting-started.adoc[Getting started]
