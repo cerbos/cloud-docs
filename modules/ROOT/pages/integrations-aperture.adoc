@@ -128,9 +128,6 @@ When using environment variables, the configuration file reduces to:
 
 [source,yaml]
 ----
-server:
-  tailscale:
-    serviceName: cerbos-tainaron
 
 pdp:
   inProcess:
