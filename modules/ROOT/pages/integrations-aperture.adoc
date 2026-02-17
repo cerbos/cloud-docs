@@ -1,6 +1,6 @@
 = Aperture by Tailscale
 
-Aperture is Tailscale's AI gateway. It sits between AI agents and LLM providers, routing requests through the tailnet with full visibility into agent activity. The Cerbos integration adds fine-grained, policy-driven authorization to every tool call that passes through Aperture.
+Aperture is Tailscale's AI gateway. It sits between AI agents and LLM providers, routing requests through the tailnet with visibility into agent activity. The Cerbos integration adds fine-grained, policy-driven authorization to every tool call that passes through Aperture.
 
 When an agent makes a tool call, Aperture intercepts the request before it reaches the LLM. It extracts the user identity, tool name, and tool parameters and forwards them to a Cerbos PDP running on the tailnet. Cerbos evaluates the request against authorization policies and returns an allow or deny decision. Aperture enforces that decision: permitted tool calls proceed, denied tool calls are blocked before execution.
 
@@ -17,7 +17,7 @@ Aperture:: AI gateway and enforcement point. Intercepts tool calls, forwards met
 Cerbos PDP:: Evaluates tool calls against authorization policies. Enriches requests with context from external systems (identity providers, HR platforms, on-call systems) before making a decision.
 Cerbos Hub:: Manages the policy lifecycle: authoring, version control, testing, distribution, and audit logging. Every decision is logged back to Hub as audit evidence.
 
-== What gets evaluated
+== What is evaluated
 
 Every tool call produces an authorization request containing:
 
@@ -35,6 +35,35 @@ The policy engine evaluates all inputs together. A decision reflects who or what
 
 == Setup
 
+=== Configure Tailscale ACLs
+
+Define a tag and service for the Cerbos container in your tailnet access controls:
+
+. Create a tag (e.g. `tag:tainaron-host`)
+. Create a service named `cerbos-tainaron` on port 443 with that tag
+. Add the following ACL grants:
++
+[source,json]
+----
+{
+    "tagOwners": {
+        "tag:tainaron-host": ["autogroup:member"]
+    },
+    "autoApprovers": {
+        "services": {
+            "svc:cerbos-tainaron": ["tag:tainaron-host"]
+        }
+    },
+    "grants": [{
+        "src": ["*"],
+        "dst": ["svc:cerbos-tainaron"],
+        "ip": ["*"]
+    }]
+}
+----
++
+. Generate a Tailscale auth key with the tag assigned. Ephemeral mode is recommended.
+
 === Connect Cerbos Hub from Aperture
 
 . In your Aperture instance, select the Cerbos integration. This redirects you to Cerbos Hub to create a workspace linked to your Aperture instance.
@@ -47,7 +76,7 @@ After the workspace is provisioned, the Cerbos Hub dashboard provides a configur
 . Navigate to the Aperture configuration page in your workspace
 . Click **Generate and download config file**
 . Open the downloaded `aperture.yaml` in a text editor
-. Replace `<paste-your-tailscale-auth-key-here>` with a Tailscale auth key generated from https://login.tailscale.com/admin/settings/keys[Tailscale admin settings]
+. Replace `<paste-your-tailscale-auth-key-here>` with the Tailscale auth key generated in the previous step
 
 The configuration file contains the Cerbos Hub credentials, PDP settings, and the Aperture extension configuration:
 
@@ -86,42 +115,42 @@ extensions:
         "/aperture": ["GET", "POST"]
 ----
 
-Alternatively, the Cerbos Hub credentials can be passed as environment variables instead of embedding them in the configuration file:
+Alternatively, all credentials can be passed as environment variables instead of embedding them in the configuration file:
 
 [horizontal]
+`TS_AUTHKEY`:: The Tailscale auth key with the appropriate tag assigned. Generate this from https://login.tailscale.com/admin/settings/keys[Tailscale admin settings].
 `CERBOS_HUB_DEPLOYMENT_ID`:: The deployment ID to load policies from. Find this on the deployment page in Cerbos Hub.
 `CERBOS_HUB_CLIENT_ID`:: Client ID from the deployment's **Client credentials** tab.
 `CERBOS_HUB_CLIENT_SECRET`:: Client secret from the deployment's **Client credentials** tab.
 `CERBOS_HUB_PDP_ID`:: Optional. A name for this PDP instance, shown in the Cerbos Hub monitoring page. If not provided, a random value is used.
 
-=== Configure Tailscale ACLs
+When using environment variables, the configuration file reduces to:
 
-Define a tag and service for the Cerbos container in your tailnet access controls:
+[source,yaml]
+----
+server:
+  tailscale:
+    serviceName: cerbos-tainaron
 
-. Create a tag (e.g. `tag:tainaron-host`)
-. Create a service named `cerbos-tainaron` on port 443 with that tag
-. Add the following ACL grants:
-+
-[source,json]
+pdp:
+  inProcess:
+    audit:
+      enabled: true
+      backend: "hub"
+      hub:
+        storagePath: /tmp/hub_auditlog
+
+    storage:
+      driver: "hub"
+
+extensions:
+  routeExtensions:
+    aperture:
+      extension:
+        extensionURL: /extensions/tailscale/aperture.star
+      routes:
+        "/aperture": ["GET", "POST"]
 ----
-{
-    "tagOwners": {
-        "tag:tainaron-host": ["autogroup:member"]
-    },
-    "autoApprovers": {
-        "services": {
-            "svc:cerbos-tainaron": ["tag:tainaron-host"]
-        }
-    },
-    "grants": [{
-        "src": ["*"],
-        "dst": ["svc:cerbos-tainaron"],
-        "ip": ["*"]
-    }]
-}
-----
-+
-. Generate a Tailscale auth key with the tag assigned. Ephemeral mode is recommended.
 
 === Run the Cerbos container
 
@@ -185,20 +214,20 @@ After starting the container, check the Cerbos Hub dashboard to confirm the PDP 
 
 [horizontal]
 Observe:: Start with a default allow-all policy. All tool calls are evaluated and logged, but nothing is blocked. Use the xref:audit-log-collection.adoc[audit data] to build an evidence base of what agents are doing.
-Author policies:: Write rules that reflect the organization's requirements. Start narrow: restrict a single tool or constrain a specific parameter. Expand coverage as confidence grows.
+Author policies:: Write rules that reflect the organization's requirements. Start narrow: restrict a single tool or constrain a specific parameter. Expand coverage incrementally.
 Enforce:: Push policies through Cerbos Hub. They take effect immediately across all connected PDPs. No agent modifications required.
 
 == Policy examples
 
 Cerbos policies are declarative and version-controlled. Each rule targets a set of actions (tool names), applies to specific roles, and specifies conditions under which the rule takes effect. Conditions can reference any attribute of the principal, the resource, or the request context.
 
-A single policy can express:
+A single policy can express requirements such as the following:
 
-* *Read-only tools are always permitted.* File reads, searches, and documentation lookups are allowed unconditionally for all authenticated users.
-* *CRM access is scoped by team and operation.* An agent can read account metadata from Salesforce via an MCP tool, but only for users in the sales org. Updating deal stages or exporting contact lists requires a more privileged role.
-* *Production database access is restricted.* An agent calling a database tool against a production connection string is denied unless the user is currently on call, verified in real time against PagerDuty. The same query against a staging environment is permitted for any engineer.
-* *HR and compensation data require explicit authorization.* Tools that access BambooHR, Workday, or any system containing employee PII are denied by default. Access is granted only to users in HR or People Ops, and only from managed devices.
-* *Different rules apply to different clients.* A tool call from a sanctioned coding agent (Claude Code) is permitted, while the same call from an unsanctioned client is denied. The user-agent is an input to the policy.
+. *Read-only tools are always permitted.* File reads, searches, and documentation lookups are allowed unconditionally for all authenticated users.
+. *CRM access is scoped by team and operation.* An agent can read account metadata from Salesforce via an MCP tool, but only for users in the sales org. Updating deal stages or exporting contact lists requires a more privileged role.
+. *Production database access is restricted.* An agent calling a database tool against a production connection string is denied unless the user is currently on call, verified in real time against PagerDuty. The same query against a staging environment is permitted for any engineer.
+. *HR and compensation data require explicit authorization.* Tools that access BambooHR, Workday, or any system containing employee PII are denied by default. Access is granted only to users in HR or People Ops, and only from managed devices.
+. *Different rules apply to different clients.* A tool call from a sanctioned coding agent (Claude Code) is permitted, while the same call from an unsanctioned client is denied. The user-agent is an input to the policy.
 
 These rules compose. A single tool call can be evaluated against multiple conditions simultaneously. The policy engine resolves the outcome deterministically.
 
