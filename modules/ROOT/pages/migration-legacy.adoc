@@ -22,8 +22,9 @@ Automatic build pipeline:: Every change to a policy store triggers compilation, 
 
 == Migration overview
 
-Migration involves four phases:
+Migration involves five phases:
 
+. <<create-workspace,Create a new workspace>> in Cerbos Hub
 . <<create-policy-store,Create a policy store>> and connect it to your Git repository
 . <<create-deployment,Create a deployment>> using that policy store
 . <<update-service-pdps,Update service PDP configuration>> to use the new credentials and deployment ID
@@ -66,13 +67,20 @@ Each phase can be completed independently. Legacy and current PDPs can run in pa
 | Same credentials as bundle distribution (no workspace secret)
 |===
 
+[[create-workspace]]
+== Phase 1: Create a new workspace
+
+Policy stores and deployments are only available in new workspaces. Your legacy workspace cannot be upgraded in place, so you need to create a new one.
+
+. Sign in to https://hub.cerbos.cloud[Cerbos Hub]
+. Create a new workspace
+
 [[create-policy-store]]
-== Phase 1: Create a policy store
+== Phase 2: Create a policy store
 
 A policy store replaces the workspace as the container for your policies. If your legacy workspace was connected to a GitHub repository, the policy store connects to the same repository.
 
-. Sign in to https://hub.cerbos.cloud[Cerbos Hub]
-. Navigate to **Policy stores** and click **New store**
+. In the new workspace, navigate to **Policy stores** and click **New store**
 . Enter a name for the store (e.g. the same name as your legacy workspace)
 . Select **GitHub repository** as the source and authorize access if prompted
 . Select the same repository your legacy workspace used
@@ -105,12 +113,12 @@ If your policies are in a subdirectory of the repository, specify the path when 
 If your policies are not in GitHub, other ingestion methods are available: CI/CD pipelines, Cerbos Hub SDKs, the `cerbosctl` CLI, or browser upload. See xref:policy-stores.adoc#_supported_ingestion_methods[Supported ingestion methods].
 
 [[create-deployment]]
-== Phase 2: Create a deployment
+== Phase 3: Create a deployment
 
 A deployment replaces the combination of workspace + deployment label. It packages policies from one or more policy stores into versioned bundles and distributes them to connected PDPs.
 
 . Navigate to **Deployments** and click **New deployment**
-. Select the policy store created in Phase 1
+. Select the policy store created in Phase 2
 . Click **Create**
 
 Cerbos Hub runs an initial build. When it completes, note the **deployment ID** from the deployment detail page.
@@ -125,7 +133,7 @@ Cerbos Hub runs an initial build. When it completes, note the **deployment ID** 
 These credentials replace the legacy workspace-scoped credentials and workspace secret.
 
 [[update-service-pdps]]
-== Phase 3: Update service PDP configuration
+== Phase 4: Update service PDP configuration
 
 The PDP configuration changes in two ways:
 
@@ -157,7 +165,7 @@ docker run --rm --name cerbos \
   ghcr.io/cerbos/cerbos:latest server
 ----
 
-Use the deployment ID and credentials from Phase 2.
+Use the deployment ID and credentials from Phase 3.
 
 === YAML configuration file
 
@@ -223,7 +231,7 @@ Legacy and current PDPs can run in parallel. To migrate a fleet incrementally:
 . Roll out to the remaining instances
 
 [[update-embedded-pdps]]
-== Phase 4: Update embedded PDP integration
+== Phase 5: Update embedded PDP integration
 
 This phase applies only if you use the embedded PDP (WebAssembly-based authorization in browsers, edge functions, or other JavaScript environments). If you only use service PDPs, skip to <<cleanup>>.
 
