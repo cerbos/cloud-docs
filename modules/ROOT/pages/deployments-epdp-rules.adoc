@@ -672,6 +672,58 @@ const cerbos = new Embedded({
 });
 ----
 
+==== Next.js (Turbopack)
+
+Next.js with Turbopack does not support direct `.wasm` imports. Copy the WASM binary to the `public/` directory and reference it by URL.
+
+Create a copy script at `scripts/copy-cerbos-wasm.mjs`:
+
+[source,javascript]
+----
+import { copyFile, mkdir } from "node:fs/promises";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const source = fileURLToPath(
+  import.meta.resolve("@cerbos/embedded-server/server.wasm"),
+);
+const destination = join(
+  process.cwd(),
+  "public",
+  "wasm",
+  "cerbos-epdp-server.wasm",
+);
+
+await mkdir(dirname(destination), { recursive: true });
+await copyFile(source, destination);
+----
+
+Add `postinstall` and `prebuild` hooks to `package.json` to run the script automatically:
+
+[source,json]
+----
+{
+  "scripts": {
+    "postinstall": "node scripts/copy-cerbos-wasm.mjs",
+    "prebuild": "node scripts/copy-cerbos-wasm.mjs"
+  }
+}
+----
+
+Then pass the public URL to the client:
+
+[source,typescript]
+----
+import { Embedded } from "@cerbos/embedded-client";
+
+const cerbos = new Embedded({
+  policies: { ruleId: "<RULE_ID>" },
+  wasm: "/wasm/cerbos-epdp-server.wasm",
+});
+----
+
+When `@cerbos/embedded-server` is upgraded, re-run `npm install` (or your package manager's install command) so the copied WASM binary matches the installed version.
+
 ==== Node.js
 
 Read the module from the filesystem:

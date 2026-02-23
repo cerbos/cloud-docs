@@ -356,6 +356,9 @@ The legacy SDK bundled the WebAssembly runtime internally. The current SDK requi
 | Rspack
 | `import wasmUrl from "@cerbos/embedded-server/server.wasm";`
 
+| Next.js (Turbopack)
+| Copy WASM to `public/` and pass the URL string (see <<epdp-wasm-loading>> below)
+
 | Node.js
 a| [source,typescript]
 ----
