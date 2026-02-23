@@ -641,6 +641,37 @@ const cerbos = new Embedded({
 
 Webpack configuration varies by version. Consult the Webpack documentation for WebAssembly handling.
 
+==== Rspack
+
+Configure Rspack to handle `.wasm` files as `asset/resource`:
+
+[source,typescript]
+----
+// rspack.config.ts
+export default defineConfig({
+  module: {
+    rules: [
+      {
+        test: /\.wasm$/,
+        type: "asset/resource",
+      },
+    ],
+  },
+});
+----
+
+Then import and use the WASM URL:
+
+[source,typescript]
+----
+import wasmUrl from "@cerbos/embedded-server/server.wasm";
+
+const cerbos = new Embedded({
+  policies: { ruleId: "<RULE_ID>" },
+  wasm: wasmUrl,
+});
+----
+
 ==== Node.js
 
 Read the module from the filesystem:

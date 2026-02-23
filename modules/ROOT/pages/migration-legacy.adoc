@@ -353,6 +353,9 @@ The legacy SDK bundled the WebAssembly runtime internally. The current SDK requi
 | Webpack
 | `import wasmUrl from "@cerbos/embedded-server/server.wasm";`
 
+| Rspack
+| `import wasmUrl from "@cerbos/embedded-server/server.wasm";`
+
 | Node.js
 a| [source,typescript]
 ----
