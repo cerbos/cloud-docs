@@ -42,6 +42,7 @@
 * Integrations
 ** xref:integrations-aperture.adoc[Aperture by Tailscale]
 * xref:troubleshooting.adoc[Troubleshooting]
+* xref:migration-legacy.adoc[Migrating from legacy workspaces]
 * Legacy
 ** xref:legacy/concepts.adoc[Concepts]
 ** xref:legacy/getting-started.adoc[Getting started]
