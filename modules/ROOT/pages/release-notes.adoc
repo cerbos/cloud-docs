@@ -10,7 +10,7 @@ The build detail page now polls automatically while a build is queued or in prog
 
 === Audit log timeline
 
-The xref:audit-log-collection.adoc[audit logs] page now includes an interactive timeline visualization showing decision activity over the last three months. Click individual bars to zoom into a time range, or drag to select a custom range. Bucket and tick intervals adjust dynamically based on the selected time range.
+The xref:audit-log-collection.adoc[audit logs] page now includes an interactive timeline visualization. When no time filter is applied, it defaults to the last three months; otherwise it reflects the active time range. Click individual bars to zoom into a time range, or drag to select a custom range. Bucket and tick intervals adjust dynamically based on the selected range.
 
 == 2026-02-24
 
