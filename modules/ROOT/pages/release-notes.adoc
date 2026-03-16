@@ -18,10 +18,6 @@ The xref:audit-log-collection.adoc[audit logs] page now includes an interactive 
 
 The xref:deployments-epdp-rules.adoc[embedded PDP] deploy modal now displays tailored code snippets for each bundler: Vite, Webpack, Rspack, Next.js (Turbopack), and Node.js. Each tab shows the correct WASM loading pattern for that environment.
 
-=== Store cloning
-
-xref:policy-stores.adoc[Stores] can now be created from an existing store, copying all policies into a new store. This supports workflows such as promoting policies between environments or starting from a template.
-
 == 2026-02-17
 
 === Tailscale integration
