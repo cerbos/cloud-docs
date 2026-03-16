@@ -1,5 +1,33 @@
 = Release notes
 
+== 2026-03-10
+
+=== Build page live updates
+
+The build detail page now polls automatically while a build is queued or in progress, keeping the status up to date without a manual refresh.
+
+== 2026-03-05
+
+=== Audit log timeline
+
+The xref:audit-log-collection.adoc[audit logs] page now includes an interactive timeline visualization. When no time filter is applied, it defaults to the last three months; otherwise it reflects the active time range. Click individual bars to zoom into a time range, or drag to select a custom range. Bucket and tick intervals adjust dynamically based on the selected range.
+
+== 2026-02-24
+
+=== Bundler-specific ePDP deploy snippets
+
+The xref:deployments-epdp-rules.adoc[embedded PDP] deploy modal now displays tailored code snippets for each bundler: Vite, Webpack, Rspack, Next.js (Turbopack), and Node.js. Each tab shows the correct WASM loading pattern for that environment.
+
+== 2026-02-17
+
+=== Tailscale integration
+
+Cerbos Hub now integrates with Tailscale Aperture. A dedicated landing page and onboarding flow guides you through linking your tailnet to a new workspace, configuring your xref:deployments.adoc[PDP deployment], and verifying the connection. Invited users can join Tailscale-linked workspaces directly, and the configuration remains accessible after initial setup for managing multiple deployments.
+
+=== Navigation and copy updates
+
+The workspace sidebar now labels the support link as "Documentation" for clarity, and a link to the pricing page has been added to the billing section.
+
 == 2026-01-28
 
 === RBAC policy generator improvements
