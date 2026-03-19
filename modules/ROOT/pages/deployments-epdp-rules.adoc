@@ -442,6 +442,8 @@ const canEditDoc1 = result.isAllowed({
 
 ==== planResources
 
+When listing resources — for example, showing a user all documents they can view — use `planResources` instead of calling `isAllowed` or `checkResource` for each item individually. The query planner returns a set of conditions that can be applied to filter resources efficiently, avoiding a round-trip per item.
+
 Generate a query plan for filtering resources:
 
 [source,typescript]
@@ -887,6 +889,8 @@ For browser applications, monitor bundle size as policies grow. Large bundles in
 === Platform support
 
 The JavaScript SDK supports browsers, Node.js, edge runtimes, and React Native. The WebAssembly module executes in any JavaScript host environment.
+
+NOTE: Some edge runtimes have restrictions on WebAssembly APIs. For example, Cloudflare Workers does not support `WebAssembly.instantiateStreaming`. In such environments, you may need to bundle the WASM binary directly into your application or use a platform-specific loading mechanism. Consult your runtime's documentation for WebAssembly support details.
 
 Native iOS and Android SDK support is planned. For other platforms (Go, Python, etc.), use xref:decision-points.adoc[service PDPs].
 
