@@ -23,7 +23,7 @@ Cerbos Hub supports several approaches for managing authorization across multipl
 
 === Scoped policies
 
-Use xref:cerbos:policies:scoped_policies.adoc[scoped policies] to define tenant-specific authorization rules within a single policy store. Each tenant is assigned a scope (e.g. `tenant-acme`, `tenant-globex`), and policies can override or extend base rules at any level in the scope hierarchy.
+Use xref:cerbos:policies:scoped_policies.adoc[scoped policies] to define tenant-specific authorization rules within a single policy store. Each tenant is assigned a scope (such as `tenant-acme`, `tenant-globex`), and policies can override or extend base rules at any level in the scope hierarchy.
 
 For service PDPs, the requesting application passes the tenant's scope in each authorization check. For embedded PDPs, xref:deployments-epdp-rules.adoc#_dynamic_scopes[dynamic scope filtering] delivers only the policies relevant to a specific tenant, reducing bundle size and preventing cross-tenant policy exposure.
 
@@ -35,9 +35,9 @@ For organizations that need stronger isolation between tenants, create a separat
 
 Changes to policies follow a git-based workflow:
 
-. A policy change is pushed to the connected git repository (or uploaded via the Hub API/SDKs)
+. A policy change is pushed to the connected git repository, or uploaded via the Hub API or SDKs
 . Cerbos Hub detects the change, validates policy syntax, and runs all tests
 . If tests pass, a new policy bundle is built and pushed to all connected PDPs within seconds
 . If tests fail, the build is blocked and the previous bundle remains active
 
-For dynamic policy management (e.g. operators changing tenant policies at runtime), use the Cerbos Hub SDKs or the xref:cerbos:cli:cerbosctl.adoc[`cerbosctl`] CLI to programmatically update policy stores without requiring direct git access.
+For dynamic policy management — such as operators changing tenant policies at runtime — use the Cerbos Hub SDKs or the xref:cerbos:cli:cerbosctl.adoc[`cerbosctl`] CLI to programmatically update policy stores without requiring direct git access.

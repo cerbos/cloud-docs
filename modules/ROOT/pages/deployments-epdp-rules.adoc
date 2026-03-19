@@ -35,9 +35,9 @@ Serverless functions incur cold start latency when loading external dependencies
 
 === Server-side applications (Next.js, Express, etc.)
 
-The embedded PDP is designed for client-side authorization — determining which UI elements to show or hide based on permissions. For server-side authorization (API routes, server actions, middleware), use a xref:decision-points.adoc[service PDP] with the https://www.npmjs.com/package/@cerbos/grpc[`@cerbos/grpc`] or https://www.npmjs.com/package/@cerbos/http[`@cerbos/http`] package instead.
+The embedded PDP is designed for client-side authorization, such as determining which UI elements to show or hide based on permissions. For server-side authorization — API routes, server actions, middleware — use a xref:decision-points.adoc[service PDP] with the https://www.npmjs.com/package/@cerbos/grpc[`@cerbos/grpc`] or https://www.npmjs.com/package/@cerbos/http[`@cerbos/http`] package instead.
 
-Service PDPs provide audit logging to Cerbos Hub and run in a trusted environment. Use the ePDP in the browser for presentational checks and a service PDP on the server for enforcement.
+Service PDPs run in a trusted environment and provide features not available in ePDPs, including audit logging to Cerbos Hub. Use the ePDP in the browser for presentational checks and a service PDP on the server for enforcement.
 
 == ePDP rules
 

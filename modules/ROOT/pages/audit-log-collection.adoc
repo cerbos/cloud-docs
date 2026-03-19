@@ -174,7 +174,7 @@ For Cerbos Hub cloud, audit logs are stored in Cerbos-managed infrastructure in 
 
 For xref:on-premises.adoc[on-premises deployments], audit logs are stored in a ClickHouse instance running in your own infrastructure. You control data residency, retention, and access.
 
-Audit log data can be integrated with SIEM and UEBA systems by configuring the secondary pipe output described above to forward log entries to your existing log aggregation infrastructure.
+Audit log data can be integrated with SIEM and UEBA systems by configuring the <<_enabling_collection,secondary pipe output>> to forward log entries to your existing log aggregation infrastructure.
 
 == Advanced configuration
 
