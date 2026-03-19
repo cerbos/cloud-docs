@@ -29,7 +29,7 @@ For service PDPs, the requesting application passes the tenant's scope in each a
 
 === Multiple policy stores
 
-For organizations that need stronger isolation between tenants, create a separate xref:policy-stores.adoc[policy store] per tenant or tenant group. Each store is independently versioned and can be managed by different teams. Stores are composed into a xref:deployments.adoc[deployment] at build time, so PDPs receive a single unified bundle.
+For organizations that need stronger isolation between tenants, create a separate xref:policy-stores.adoc[policy store] per tenant or tenant group. Each store is independently versioned and can be managed by different teams. Stores are combined in a xref:deployments.adoc[deployment], which builds a unified policy bundle and pushes it to all connected PDPs.
 
 === CI/CD pipeline
 
