@@ -4,6 +4,11 @@ Embedded policy decision points (ePDPs) execute authorization logic locally usin
 
 For server-side authorization using the open source Cerbos PDP, see xref:decision-points.adoc[Service PDPs].
 
+[IMPORTANT]
+====
+The WASM file from `@cerbos/embedded-server` contains only the policy evaluation engine — it does *not* contain your policies. Policies are fetched separately from Cerbos Hub at runtime by `@cerbos/embedded-client` and held in memory. You only need to update the WASM file when you upgrade the `@cerbos/embedded-server` package version. Policy updates happen automatically in the background (default: every 60 seconds) with no server restart required.
+====
+
 == When to use embedded PDPs
 
 ePDPs address scenarios where server-side authorization is impractical due to latency, connectivity, or architectural constraints.
@@ -27,6 +32,12 @@ React Native applications can use the JavaScript SDK today. Native iOS and Andro
 === Serverless functions
 
 Serverless functions incur cold start latency when loading external dependencies. An ePDP embedded in the function bundle eliminates the need for network calls to an authorization service during function execution.
+
+=== Server-side applications (Next.js, Express, etc.)
+
+The embedded PDP is designed for client-side authorization — determining which UI elements to show or hide based on permissions. For server-side authorization (API routes, server actions, middleware), use a xref:decision-points.adoc[service PDP] with the https://www.npmjs.com/package/@cerbos/grpc[`@cerbos/grpc`] or https://www.npmjs.com/package/@cerbos/http[`@cerbos/http`] package instead.
+
+Service PDPs provide audit logging to Cerbos Hub and run in a trusted environment. Use the ePDP in the browser for presentational checks and a service PDP on the server for enforcement.
 
 == ePDP rules
 
@@ -857,6 +868,10 @@ The WebAssembly runtime supports core Cerbos policy evaluation. Some features av
 * **Audit logging to external sinks**: Decision logs can be captured via the `onDecision` callback but are not automatically sent to Cerbos Hub or other destinations.
 * **Admin API**: The embedded runtime does not expose administrative endpoints.
 * **Runtime configuration changes**: Options like `globals` and `schemaEnforcement` are fixed at client initialization.
+
+=== Engine size
+
+The `@cerbos/embedded-server` WASM file is several megabytes. This is the policy evaluation engine and is a one-time download that can be cached by the browser. It does not grow as your policies change. For frameworks that require copying the file (such as Next.js), use the `postinstall` script approach described <<_nextjs_turbopack,above>> and add the copied WASM file to your `.gitignore` since the canonical copy is distributed via npm.
 
 === Bundle size
 

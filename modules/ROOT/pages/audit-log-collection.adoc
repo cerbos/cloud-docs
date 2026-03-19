@@ -168,6 +168,14 @@ TIP: Use the xref:cerbos:configuration:audit.adoc#local[`local` audit backend] a
 
 CAUTION: In order to avoid slowing down request processing and to avoid any data losses, raw log entries are stored locally on disk at the storage path. The masks are applied later by the background process that syncs the on-disk log entries to Cerbos Hub. To avoid storing authentication tokens and other sensitive request parameters locally, use the top-level `includeMetadataKeys` and `excludeMetadataKeys` settings. Refer to xref:cerbos:configuration:audit.adoc[Cerbos audit configuration] for more details.
 
+== Data storage
+
+For Cerbos Hub cloud, audit logs are stored in Cerbos-managed infrastructure in the Netherlands (GCP `europe-west6`). Logs are retained according to your plan's retention policy.
+
+For xref:on-premises.adoc[on-premises deployments], audit logs are stored in a ClickHouse instance running in your own infrastructure. You control data residency, retention, and access.
+
+Audit log data can be integrated with SIEM and UEBA systems by configuring the secondary pipe output described above to forward log entries to your existing log aggregation infrastructure.
+
 == Advanced configuration
 
 Advanced users can tune the local log retention period and other buffering settings. We generally do not recommend changing the default values unless absolutely necessary.

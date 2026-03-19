@@ -111,3 +111,16 @@ Instructions for starting up a local PDP can be found in the Implement tab under
 image:playground_connect_pdp.png[alt="Connect a PDP",role="center-img"]
 
 IMPORTANT: Note that while the Playground PDP connection is an excellent tool for rapid development and testing, it's not intended for production use. When you're ready to release your application to production environments, you should xref:getting-started.adoc[create a workspace] with a policy store and configure the PDPs to receive bundle updates via Cerbos Hub's fully managed CI/CD pipeline. It also allows you to take advantage of Cerbos Hub audit log collection to effortlessly store and analyze all the decisions made by your PDPs.
+
+== From playground to production
+
+The playground is a development and testing environment. Changes made in the playground are not automatically pushed to your policy store or git repository.
+
+To move policies from a playground to production:
+
+. Export policies from the playground using the **Export** option in the file toolbar. Each policy is exported as an individual file.
+. Commit and push the exported policy files to your connected xref:policy-stores.adoc[policy store] repository, preserving the directory structure expected by Cerbos (e.g. `resource_policies/`, `principal_policies/`, `derived_roles/`).
+. Cerbos Hub automatically detects the change, validates the policies, runs any tests, and produces a new policy bundle.
+. The bundle is pushed to all connected PDPs assigned to that xref:deployments.adoc[deployment].
+
+TIP: Use the playground's **Implement** tab to see the exact API request and response structure for your policies. This helps verify authorization behavior before exporting to production.

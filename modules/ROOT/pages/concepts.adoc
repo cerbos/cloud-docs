@@ -16,3 +16,28 @@ Policy playground:: A browser-based policy editor to quickly prototype, test, an
 Policy store:: A versioned, cloud-based storage container for Cerbos policies. A policy store can be either linked to a supported git provider for automatic mirroring or managed manually using the Cerbos Hub user interface, Cerbos Hub SDKs or the xref:cerbos:cli:cerbosctl.adoc[`cerbosctl`] utility. Multiple stores can be connected to a single deployment, making it easy to manage policies by teams or tenants or any other desired level of organization and combine them all at deployment time to distribute to PDPs.
 Workspace:: A Workspace encompasses a set of users, policy stores, deployments, and playgrounds to help organize your work by teams, departments, tenants, or any other desired form of separating responsibilities.
 ePDP rule:: A configuration within a deployment that defines how embedded PDP bundles are built and served. Each rule specifies policy filtering criteria (resources, actions, scopes, roles, versions), authentication requirements, and IP allowlists. A deployment can have multiple ePDP rules for different clients or use cases. See xref:deployments-epdp-rules.adoc[ePDP rules].
+
+== Multi-tenancy patterns
+
+Cerbos Hub supports several approaches for managing authorization across multiple tenants.
+
+=== Scoped policies
+
+Use xref:cerbos:policies:scoped_policies.adoc[scoped policies] to define tenant-specific authorization rules within a single policy store. Each tenant is assigned a scope (e.g. `tenant-acme`, `tenant-globex`), and policies can override or extend base rules at any level in the scope hierarchy.
+
+For service PDPs, the requesting application passes the tenant's scope in each authorization check. For embedded PDPs, xref:deployments-epdp-rules.adoc#_dynamic_scopes[dynamic scope filtering] delivers only the policies relevant to a specific tenant, reducing bundle size and preventing cross-tenant policy exposure.
+
+=== Multiple policy stores
+
+For organizations that need stronger isolation between tenants, create a separate xref:policy-stores.adoc[policy store] per tenant or tenant group. Each store is independently versioned and can be managed by different teams. Stores are composed into a xref:deployments.adoc[deployment] at build time, so PDPs receive a single unified bundle.
+
+=== CI/CD pipeline
+
+Changes to policies follow a git-based workflow:
+
+. A policy change is pushed to the connected git repository (or uploaded via the Hub API/SDKs)
+. Cerbos Hub detects the change, validates policy syntax, and runs all tests
+. If tests pass, a new policy bundle is built and pushed to all connected PDPs within seconds
+. If tests fail, the build is blocked and the previous bundle remains active
+
+For dynamic policy management (e.g. operators changing tenant policies at runtime), use the Cerbos Hub SDKs or the xref:cerbos:cli:cerbosctl.adoc[`cerbosctl`] CLI to programmatically update policy stores without requiring direct git access.
