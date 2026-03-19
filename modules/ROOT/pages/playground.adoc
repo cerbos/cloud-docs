@@ -117,7 +117,7 @@ IMPORTANT: Note that while the Playground PDP connection is an excellent tool fo
 Changes made in the playground are not automatically pushed to your policy store or git repository. To deploy playground policies to production, export them and commit to your connected store.
 
 . Export policies from the playground using the **Export** option in the file toolbar. Each policy is exported as an individual file.
-. Commit and push the exported policy files to your connected xref:policy-stores.adoc[policy store] repository, preserving the directory structure expected by Cerbos (`resource_policies/`, `principal_policies/`, `derived_roles/`).
+. Commit and push the exported policy files to your connected xref:policy-stores.adoc[policy store] repository. Organizing files into directories such as `resource_policies/`, `principal_policies/`, and `derived_roles/` is recommended but not required.
 . Cerbos Hub automatically detects the change, validates the policies, runs any tests, and produces a new policy bundle.
 . The bundle is pushed to all connected PDPs assigned to that xref:deployments.adoc[deployment].
 
