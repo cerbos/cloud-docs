@@ -9,6 +9,6 @@ ext:
     run:
       - command: "./fetch-synapse-docs.sh"
     scan:
-      dir: _synapse
+      dir: _synapse/docs
       clean: true
       into: modules/synapse/attachments
