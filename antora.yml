@@ -5,8 +5,10 @@ version: ~
 nav:
   - modules/ROOT/nav.adoc
 ext:
-  zip_contents_collector:
-    include:
-      - name: synapse
-        destination: content_catalog
-        module: synapse
+  collector:
+    run:
+      - command: "./fetch-synapse-docs.sh"
+    scan:
+      dir: _synapse
+      clean: true
+      into: modules/synapse/attachments
