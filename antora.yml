@@ -11,4 +11,6 @@ ext:
     scan:
       dir: _synapse/docs
       clean: true
-      into: synapse
+      into:
+        name: synapse
+        version: ~

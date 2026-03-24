@@ -54,4 +54,3 @@
 *** xref:legacy/decision-points-service.adoc[Service]
 *** xref:legacy/decision-points-embedded.adoc[Embedded]
 * xref:release-notes.adoc[Release notes]
-* xref:synapse:index.adoc[Synapse]
