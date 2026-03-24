@@ -11,4 +11,4 @@ ext:
     scan:
       dir: _synapse/docs
       clean: true
-      into: modules/synapse
+      into: synapse
