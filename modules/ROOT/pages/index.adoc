@@ -33,6 +33,12 @@ Embedded policy decision points:: Evaluate policies locally in browsers, edge fu
 Audit log aggregation:: With one line of configuration you can stream PDP decision logs to Cerbos Hub, filter sensitive fields locally, and retain searchable history without running a separate log stack.
 Organization usage dashboard:: The organization-level usage dashboard aggregates metrics from all your workspaces, providing a unified view of request volumes, policy distribution, and usage trends across your organization.
 
+== Cerbos Hub and open source Cerbos
+
+The https://github.com/cerbos/cerbos[open source Cerbos PDP] is a fully functional authorization engine that can run standalone, reading policies from a git repository, database, or local filesystem. No license or Hub account is required.
+
+Cerbos Hub is an optional control plane that adds managed CI/CD, fleet-wide push-based updates, collaborative policy editing, embedded PDP support, and centralized audit log collection on top of the open source PDP. Switching to Hub requires only a configuration change — the PDP binary is the same.
+
 == How it works
 
 Cerbos Hub is a cloud-hosted management control plane, while Cerbos instances and the data they process remain strictly inside your network perimeter. Switching to Cerbos Hub requires only a minor configuration change to your existing Cerbos deployment. After the switch, PDPs receive optimized policy bundles from Cerbos Hub instead of compiling policies locally.
