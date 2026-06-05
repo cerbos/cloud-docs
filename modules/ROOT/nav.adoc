@@ -36,6 +36,7 @@
 * xref:synapse.adoc[Synapse]
 * xref:audit-log-collection.adoc[Audit log collection]
 * xref:usage-dashboard.adoc[Usage dashboard]
+* xref:insights.adoc[Insights]
 * xref:administration.adoc[Administration]
 ** xref:user-management.adoc[User management]
 * xref:reliability.adoc[Reliability]

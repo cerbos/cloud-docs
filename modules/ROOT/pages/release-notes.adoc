@@ -1,5 +1,45 @@
 = Release notes
 
+== 2026-05-20
+
+[#_2026_05_20]
+
+=== Insights
+
+[#_insights]
+
+The new Insights page gives each workspace an at-a-glance view of the authorization decisions flowing through it. It charts allowed and denied decisions by hour and by day, tracks daily active principals, and ranks the most active principals, resource kinds, and resource-and-action pairs. Insights is built from the decision data your PDPs already send to Cerbos Hub, so there is nothing extra to configure, and it is available to workspace members with audit log access once xref:audit-log-collection.adoc[audit log collection] is enabled. See xref:insights.adoc[Insights] for the full breakdown.
+
+== 2026-05-11
+
+[#_2026_05_11]
+
+=== Improved keyboard navigation
+
+[#_improved_keyboard_navigation]
+
+Organization list items now show a visible focus outline when navigated with the keyboard, making it easier to track your position when moving through the list without a mouse.
+
+== 2026-04-30
+
+[#_2026_04_30]
+
+=== Cerbos policy skill in the playground
+
+[#_cerbos_policy_skill_in_the_playground]
+
+The xref:playground.adoc[playground] now highlights the <<_cerbos_policy_skill_for_coding_agents,Cerbos policy skill>>, the agent skill that helps coding agents write Cerbos authorization policies. A new promo box points you to it while you are authoring policies.
+
+== 2026-04-21
+
+[#_2026_04_21]
+
+=== Cerbos policy skill for coding agents
+
+[#_cerbos_policy_skill_for_coding_agents]
+
+The Cerbos policy skill is a new agent skill that generates complete authorization policies from plain-language descriptions. Describe your access requirements in everyday language and the skill produces schemas, derived roles, resource policies, and test suites in a single pass, then validates its own output and fixes any errors it finds. It works with Claude Code, Cursor, VS Code, Codex, and other coding agents, and follows least-privilege, deny-by-default patterns drawn from production deployments, which makes it especially useful for getting started without picking up bad habits. Install it with `npx skills add cerbos/skills --skill cerbos-policy`, or read more on the https://www.cerbos.dev/blog/agent-skill-for-writing-authorization-policies[Cerbos blog,window=_blank].
+
 == 2026-04-14
 
 [#_2026_04_14]
