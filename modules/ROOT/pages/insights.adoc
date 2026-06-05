@@ -1,0 +1,72 @@
+= Insights
+
+The Insights page turns the authorization decisions flowing through your workspace into a set of visualizations, giving you an at-a-glance picture of what Cerbos is doing in production. Where the xref:audit-log-collection.adoc[audit log] lets you inspect individual decisions, Insights aggregates those same decisions into charts and rankings so you can spot trends, surface anomalies, and understand which principals and resources are driving authorization traffic.
+
+The visualizations are built entirely from the decision data your PDPs already send to Cerbos Hub — there is nothing extra to configure. Once xref:audit-log-collection.adoc[audit log collection] is enabled and decisions start arriving, the Insights page populates automatically.
+
+[NOTE]
+====
+Insights is only available to workspace members who can view audit logs. The page draws on the same decision data as the audit log, so access follows the same rules: it is visible to users with the **Owner** or **Analyst** role (see xref:user-management.adoc[User management]), and only once xref:audit-log-collection.adoc[audit log collection] has been enabled for the workspace. Members without audit log access will not see the **Insights** tab in the workspace navigation.
+====
+
+image:insights_overview.png[alt="Insights overview",role="center-img"]
+
+All times on the page are shown in UTC.
+
+== Why it matters
+
+A table of raw audit logs answers the question "what happened in this specific request?". Insights answers the broader questions that matter when you are operating an authorization service:
+
+* **Is Cerbos working?** Live charts of allows and denies make it immediately obvious that decisions are flowing and policies are being enforced.
+* **What changed?** A sudden swing in the ratio of denies to allows can point to a stricter-than-intended policy change, a misconfigured client, or an application bug such as a typo in a resource or action name.
+* **Who and what is driving traffic?** Rankings of the busiest principals and resources help you understand adoption, plan for capacity, and notice unexpected usage patterns.
+
+This makes Insights useful both for day-to-day operational monitoring and for demonstrating, at a glance, that your authorization layer is healthy.
+
+== Decision activity charts
+
+=== Hourly decisions
+
+A stacked bar chart of allowed and denied decisions per hour over the **last 7 days**, with allows and denies shown as separate colours in each bar. The fine-grained, hourly view is best for spotting short-lived spikes and anomalies, for example a burst of denials following a deployment.
+
+Use the toggle in the top right of the chart to switch between **Allowed**, **Denied**, and a **Combined** view that shows both.
+
+image:insights_hourly_decisions.png[alt="Hourly decisions",role="center-img"]
+
+=== Daily decisions
+
+The same breakdown of allowed and denied decisions, aggregated per day over the **last 30 days**, with the same **Allowed** / **Denied** / **Combined** toggle. The daily granularity smooths out hourly noise and is better suited to spotting longer-term trends in authorization traffic.
+
+image:insights_daily_decisions.png[alt="Daily decisions",role="center-img"]
+
+=== Daily active principals
+
+A line chart of the number of distinct principals making authorization requests each day over the **last 30 days**. Track this to understand adoption, identify growth or seasonal patterns, and notice unexpected drops in usage.
+
+image:insights_active_principals.png[alt="Daily active principals",role="center-img"]
+
+== Activity rankings
+
+Three tables rank the busiest entities in your workspace over the **last 30 days**, each ordered by request count. Every row has a **View** link that opens the xref:audit-log-collection.adoc[audit log] filtered to that entity, so you can go straight from a ranking to the decisions behind it.
+
+=== Most active principals
+
+The top principals by request volume, showing the principal ID and its total request count. Useful for identifying your heaviest consumers and for catching a single principal generating an unexpected amount of traffic.
+
+image:insights_top_principals.png[alt="Most active principals",role="center-img"]
+
+=== Most active resource kinds
+
+The top resource kinds by request volume, showing the resource kind and its total request count. This reveals which parts of your application are most frequently subject to authorization checks.
+
+image:insights_top_resource_kinds.png[alt="Most active resource kinds",role="center-img"]
+
+=== Most active resource & action pairs
+
+The top resource-kind-and-action combinations by request volume, showing the resource kind, the action, and the total request count. This gives the most detailed view of what is actually being checked — for example, `document:view` versus `document:delete`.
+
+image:insights_top_resource_action_pairs.png[alt="Most active resource and action pairs",role="center-img"]
+
+== Drilling into the detail
+
+The activity tables link through to the xref:audit-log-collection.adoc[audit log] via the **View** link on each row, pre-filtered to match the principal, resource kind, or resource-and-action pair you selected. When a ranking surfaces something worth investigating, such as an unusually busy principal, you can jump straight from the aggregated view into the underlying decisions without rebuilding the filter by hand.
