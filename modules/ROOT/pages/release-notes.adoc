@@ -32,12 +32,6 @@ Fixed several audit log issues: the *Jump to latest* button now reliably reloads
 
 [#_2026_05_26]
 
-=== Guided Synapse deployment
-
-[#_guided_synapse_deployment]
-
-Deploying xref:synapse.adoc[Synapse] is now guided by a step-by-step modal that produces the configuration and commands for your chosen method — Docker, Docker Compose, Helm, or Kubernetes — including the licence key and credentials. The instructions are tailored to both managed Cerbos Hub and on-premises deployments.
-
 === Navigation reflects your permissions
 
 [#_navigation_reflects_your_permissions]
