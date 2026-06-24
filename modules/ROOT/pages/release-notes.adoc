@@ -1,5 +1,49 @@
 = Release notes
 
+== 2026-06-18
+
+[#_2026_06_18]
+
+=== Output errors in test results, the playground, and audit logs
+
+[#_output_errors_surfaced]
+
+Policy output errors now show up wherever you inspect a decision: in test results, in the playground's Explore tab, and in the audit log entry slideout. When an output expression fails to evaluate you see the error inline instead of an empty result, which makes output blocks much easier to debug.
+
+=== Insights and Usage access aligned with audit logs
+
+[#_insights_usage_access]
+
+Access to the xref:insights.adoc[Insights] and Usage pages now follows the same permissions as audit logs, so they are available to workspace Owners and Analysts. This keeps every view of your decision data governed by one consistent permission.
+
+=== Wider audit logs and Insights tables
+
+[#_wider_audit_logs_and_insights_tables]
+
+The audit logs page no longer caps its width, so tables can use the full width of large displays. Tables on the Insights page now scroll horizontally as well, so long action names are no longer truncated.
+
+=== Audit log fixes
+
+[#_audit_log_fixes]
+
+Fixed several audit log issues: the *Jump to latest* button now reliably reloads the most recent entries, scroll position is kept when paging back through earlier entries, and the table no longer ends up empty after a filter is added and then removed.
+
+== 2026-05-26
+
+[#_2026_05_26]
+
+=== Navigation reflects your permissions
+
+[#_navigation_reflects_your_permissions]
+
+Organization and workspace navigation now hides entries for areas you do not have access to, so the menus show only the pages you can actually open.
+
+=== Correct policy version in audit logs
+
+[#_correct_policy_version_in_audit_logs]
+
+Fixed the policy version shown on audit log entries, which was being read from the wrong field in the decision summaries data. Entries now display the correct policy version.
+
 == 2026-05-20
 
 [#_2026_05_20]
