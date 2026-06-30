@@ -70,7 +70,7 @@ Synapse connects to Cerbos Hub for policy distribution and audit logging. Hub pu
 
 == Distribution licence
 
-Synapse images and updates are served from the Cerbos distribution registry at `distribution.cerbos.cloud`. Each organization with Synapse access authenticates to the registry with a *distribution licence key*, which you manage from your organization settings in Cerbos Hub.
+Synapse images and updates are served from the Cerbos distribution registry. Each organization with Synapse access authenticates to the registry with a *distribution licence key*, which you manage from your organization settings in Cerbos Hub. Your specific registry endpoint is shown alongside the licence key in Hub; use that value in place of `<distribution-registry>` below.
 
 === Issuing and using a key
 
@@ -78,7 +78,7 @@ Generate a distribution licence key from the *Distribution licence* section of y
 
 [source,bash]
 ----
-docker login distribution.cerbos.cloud \
+docker login <distribution-registry> \
   --username=<your-organization-id> \
   --password=<distribution-licence-key>
 ----
