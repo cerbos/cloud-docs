@@ -30,6 +30,40 @@ Active from:: The timestamp when this build was activated and pushed to connecte
 Active to:: The timestamp when this build was replaced by a newer version, or a dash if it is the currently active build.
 Included policies:: The policy stores and specific versions that contributed to this build. This makes it easy to trace exactly which policies were in effect at any point in time.
 
+== Browsing policies
+
+The Policies tab shows the policies included in the deployment's current build. A *Source* / *Effect matrix* toggle at the top of the tab switches between two ways of viewing them.
+
+=== Source view
+
+The source view lists the policy files in the bundle and lets you open any file to read its contents exactly as it was compiled. Use the bundle selector to switch between builds when you need to inspect an earlier version.
+
+=== Effect matrix view
+
+The effect matrix presents a resource's permissions as a grid instead of as policy source. You choose the resource, policy version, and scope to view, and roles and actions are laid out on the axes, with each cell showing the effect that applies to that role-and-action combination in the compiled bundle:
+
+[unordered.stack]
+Allow:: The action is permitted for the role.
+Deny:: The action is denied for the role.
+Conditional:: The effect depends on a condition that is evaluated at request time against the principal and resource attributes.
+
+This gives you an at-a-glance view of a resource's effective permissions without reading through every policy file, which is useful for reviewing changes and explaining access to others.
+
+Cells also indicate where a wildcard rule widens a match. A rule written against `+*+` or a pattern such as `foo:*` can apply to more specific actions or roles, and the matrix flags the cells that are influenced by such a rule so the broader grant is visible rather than hidden. This is an indication of which rules _match_ a cell, not a full partial evaluation of the policy.
+
+https://docs.cerbos.dev/cerbos/latest/policies/derived_roles.html[Derived roles] and the custom roles defined by https://docs.cerbos.dev/cerbos/latest/policies/role_policies.html[role policies] each appear as their own rows rather than being folded into the roles they build on. A role policy narrows access rather than granting it, allowing an action only when it is permitted by both the role policy and a matching resource policy rule.
+
+To focus on part of a large matrix, filter by role or action, and select a cell to drill into the underlying rules — including any conditions — that produce its effect.
+
+==== Limitations
+
+The matrix highlights the rules that match each cell rather than fully evaluating the policy, so keep these limitations in mind when reading it:
+
+[unordered.stack]
+Scope:: Effects reflect the selected scope only. Because https://docs.cerbos.dev/cerbos/latest/policies/scoped_policies.html[scoped policies] can override the effects defined higher in the scope hierarchy, switch scopes to review each one in turn.
+Derived roles:: Derived role rules are shown only in their own cells. They are not reflected in the cells of the parent roles they extend.
+Custom roles:: Role policy rules are shown only in their own cells. They are not reflected in the other cells whose effects they restrict.
+
 == Build life cycle
 
 Whenever Cerbos Hub detects a change in any policy store connected to a deployment, it launches a new policy build.
