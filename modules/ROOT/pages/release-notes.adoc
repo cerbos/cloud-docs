@@ -1,5 +1,15 @@
 = Release notes
 
+== 2026-06-30
+
+[#_2026_06_30]
+
+=== Effect matrix view for deployment policies
+
+[#_effect_matrix_view]
+
+The Policies tab of a xref:deployments.adoc[deployment] now has a *Source* / *Effect matrix* toggle. The effect matrix lays out a resource's roles and actions as a grid and shows, at a glance, whether each role-and-action combination is allowed, denied, or conditional in the deployed bundle, so you can review effective permissions without reading through every policy file. Cells also flag where a wildcard rule (such as `*` or `foo:*`) widens the match, and you can filter the grid and drill into a cell to see the underlying rules.
+
 == 2026-06-18
 
 [#_2026_06_18]
