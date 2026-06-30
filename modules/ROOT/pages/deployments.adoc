@@ -40,7 +40,7 @@ The source view lists the policy files in the bundle and lets you open any file 
 
 === Effect matrix view
 
-The effect matrix presents a resource's permissions as a grid instead of as policy source. Roles and actions are laid out on the axes, and each cell shows the effect that applies to that role-and-action combination in the compiled bundle:
+The effect matrix presents a resource's permissions as a grid instead of as policy source. You choose the resource, policy version, and scope to view, and roles and actions are laid out on the axes, with each cell showing the effect that applies to that role-and-action combination in the compiled bundle:
 
 [unordered.stack]
 Allow:: The action is permitted for the role.
@@ -48,6 +48,8 @@ Deny:: The action is denied for the role.
 Conditional:: The effect depends on a condition that is evaluated at request time against the principal and resource attributes.
 
 This gives you an at-a-glance view of a resource's effective permissions without reading through every policy file, which is useful for reviewing changes and explaining access to others.
+
+NOTE: The effects shown apply only within the selected scope. Because https://docs.cerbos.dev/cerbos/latest/policies/scoped_policies.html[scoped policies] can override the effects defined higher up the scope hierarchy, switch the scope selector to the scope you intend to review before drawing conclusions from the grid.
 
 Cells also indicate where a wildcard rule widens a match. A rule written against `+*+` or a pattern such as `foo:*` can apply to more specific actions or roles, and the matrix flags the cells that are influenced by such a rule so the broader grant is visible rather than hidden. This is an indication of which rules _match_ a cell, not a full partial evaluation of the policy.
 
