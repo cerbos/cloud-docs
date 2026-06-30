@@ -55,6 +55,8 @@ Cells also indicate where a wildcard rule widens a match. A rule written against
 
 https://docs.cerbos.dev/cerbos/latest/policies/derived_roles.html[Derived roles] appear as their own rows in the matrix rather than being folded into the base roles they extend. The effect shown for a base role reflects only the rules written against that role directly; it does not include any rules that apply through a derived role built on top of it. To see what a derived role grants, read its own row.
 
+Custom roles defined by https://docs.cerbos.dev/cerbos/latest/policies/role_policies.html[role policies] are also shown as their own rows. A role policy narrows rather than grants access: an action is allowed for the role only if it is permitted by both the role policy and a matching resource policy rule, and any action the role policy does not list is denied. Because of this, a role policy's row reflects the restrictions it applies, and is not combined with the resource policy rows for the roles it builds on.
+
 To focus on part of a large matrix, filter by role or action, and select a cell to drill into the underlying rules — including any conditions — that produce its effect.
 
 == Build life cycle
