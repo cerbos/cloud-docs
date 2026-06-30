@@ -10,6 +10,12 @@
 
 The Policies tab of a xref:deployments.adoc[deployment] now has a *Source* / *Effect matrix* toggle. The effect matrix lays out a resource's roles and actions as a grid and shows, at a glance, whether each role-and-action combination is allowed, denied, or conditional in the deployed bundle, so you can review effective permissions without reading through every policy file. Cells also flag where a wildcard rule (such as `*` or `foo:*`) widens the match, and you can filter the grid and drill into a cell to see the underlying rules.
 
+=== Distribution licence keys for Cerbos Synapse
+
+[#_distribution_licence_keys]
+
+Organizations with xref:synapse.adoc[Cerbos Synapse] access can now manage their distribution licence key from organization settings. A licence key authenticates your Synapse instances with the Cerbos distribution registry (`distribution.cerbos.cloud`) so they can pull updates, used as the password for `docker login`. You can generate a key, rotate it with a configurable grace period (up to 12 hours) during which the previous key keeps working, and revoke it immediately. Synapse is enabled per organization; https://cerbos.dev/contact[contact the Cerbos team] for access.
+
 == 2026-06-18
 
 [#_2026_06_18]
