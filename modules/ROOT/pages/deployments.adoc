@@ -53,6 +53,8 @@ NOTE: The effects shown apply only within the selected scope. Because https://do
 
 Cells also indicate where a wildcard rule widens a match. A rule written against `+*+` or a pattern such as `foo:*` can apply to more specific actions or roles, and the matrix flags the cells that are influenced by such a rule so the broader grant is visible rather than hidden. This is an indication of which rules _match_ a cell, not a full partial evaluation of the policy.
 
+https://docs.cerbos.dev/cerbos/latest/policies/derived_roles.html[Derived roles] appear as their own rows in the matrix rather than being folded into the base roles they extend. The effect shown for a base role reflects only the rules written against that role directly; it does not include any rules that apply through a derived role built on top of it. To see what a derived role grants, read its own row.
+
 To focus on part of a large matrix, filter by role or action, and select a cell to drill into the underlying rules — including any conditions — that produce its effect.
 
 == Build life cycle
