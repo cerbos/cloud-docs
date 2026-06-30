@@ -68,6 +68,31 @@ Data sources can connect to graph databases (Neo4j, Amazon Neptune) to resolve r
 
 Synapse connects to Cerbos Hub for policy distribution and audit logging. Hub pushes policy bundles to the in-process PDP, and decision logs stream back to Hub for audit and observability. The same deployment, policy store, and monitoring workflows used for standalone PDPs apply to Synapse instances.
 
+== Distribution licence
+
+Synapse images and updates are served from the Cerbos distribution registry at `distribution.cerbos.cloud`. Each organization with Synapse access authenticates to the registry with a *distribution licence key*, which you manage from your organization settings in Cerbos Hub.
+
+=== Issuing and using a key
+
+Generate a distribution licence key from the *Distribution licence* section of your organization settings. The key is used as the password when authenticating to the registry — the username is your organization ID:
+
+[source,bash]
+----
+docker login distribution.cerbos.cloud \
+  --username=<your-organization-id> \
+  --password=<distribution-licence-key>
+----
+
+Treat the key like a secret. Anyone who needs to pull Synapse images — your CI pipeline, container runtime, or local environment — uses it to authenticate. A key may be issued with or without an expiry; if it has an expiry, the registry stops accepting it after that time.
+
+=== Rotating a key
+
+Rotating issues a new key while keeping the current one valid for a configurable grace period (up to 12 hours), so you can roll the new key out to your Synapse instances before the old one stops working. Set the grace period to zero to revoke the previous key immediately. Already-running instances are unaffected during the grace period; only new registry pulls require the new key once the old one is revoked.
+
+=== Revoking a key
+
+Revoking invalidates the current key immediately and cannot be undone. Running Synapse instances keep working, but any new registry pull — for example pulling an updated image — fails until a new key is issued and configured. Revoke a key if you believe it has been exposed, then generate a replacement.
+
 == Availability
 
-Cerbos Synapse is available as part of the Cerbos platform. https://cerbos.dev/contact[Contact the Cerbos team] for access and deployment guidance.
+Cerbos Synapse is available as part of the Cerbos platform, and is enabled per organization. https://cerbos.dev/contact[Contact the Cerbos team] for access and deployment guidance.
