@@ -1,5 +1,21 @@
 = Release notes
 
+== 2026-07-14
+
+[#_2026_07_14]
+
+=== Effect matrix view is more robust
+
+[#_effect_matrix_view_robustness]
+
+The *Effect matrix* view on the Policies tab of a xref:deployments.adoc[deployment] now renders reliably in more cases. It no longer errors out when it receives unexpected data from the backend, and it skips rule rows that have no effect, so the grid is cleaner and easier to scan for large policy sets.
+
+=== Store file validation matches the PDP
+
+[#_store_file_validation_matches_pdp]
+
+Policy files in a store are now validated with the same parser as the Cerbos PDP. The validation errors you see in Cerbos Hub match exactly what the PDP would report, so there are no surprises between what Hub accepts and what the PDP loads at runtime.
+
 == 2026-07-13
 
 [#_2026_07_13]
