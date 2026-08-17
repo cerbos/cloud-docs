@@ -1,5 +1,15 @@
 = Release notes
 
+== 2026-08-12
+
+[#_2026_08_12]
+
+=== Policy links in audit log entries now open the right file
+
+[#_audit_log_policy_links]
+
+Clicking a policy name in an xref:audit-log-collection.adoc#_deep_linking_to_policies[audit log entry] takes you straight to that file again. The link opens the xref:deployments.adoc#_browsing_policies[Policies] tab of the deployment that made the decision, with the correct build loaded and the policy file already selected, and the deployment link in the same panel behaves the same way. Previously these links could resolve to the wrong address and fail to open anything, so tracing a decision back to the policy behind it meant finding the file by hand.
+
 == 2026-08-11
 
 === Export audit logs from Cerbos Hub
