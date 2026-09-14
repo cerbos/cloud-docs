@@ -34,7 +34,7 @@ The console can now be displayed in a light or a dark theme. Open the account me
 
 [#_upload_invalid_policies]
 
-When an archive uploaded to a xref:policy-stores-upload.adoc[policy store] contains files that are not valid policies, the upload dialog now lists each affected file with its error. Nothing is uploaded and the policies already in the store are left unchanged. Fix the listed files, select *Back* and upload the archive again.
+When an archive uploaded to a xref:policy-stores-upload.adoc#_upload_results[policy store] contains files that are not valid policies, the upload dialog now lists each affected file with its error. Nothing is uploaded and the policies already in the store are left unchanged. Fix the listed files, select *Back* and upload the archive again.
 
 == 2026-08-25
 

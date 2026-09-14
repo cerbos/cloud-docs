@@ -22,13 +22,17 @@ Settings:: Configure deployment options including which policy stores contribute
 
 == Deployed versions
 
-The Builds tab displays the history of policy bundles that have been deployed. Each row in the table shows:
+The Builds tab lists builds in two tables. *Upcoming versions* shows builds that are newer than the live version and have not replaced it yet, with the status and start time of each build. While the deployment is <<_freezing_and_rolling_back,frozen>>, these builds are not deployed.
+
+*Deployed versions* shows the history of policy bundles that have been deployed. Each row in the table shows:
 
 [unordered.stack]
-Build reference:: A unique identifier for the build. Click to view detailed information about the build including test results and bundle contents.
+Build reference:: A unique identifier for the build. Select it to view detailed information about the build, including test results and bundle contents.
 Active from:: The timestamp when this build was activated and pushed to connected PDPs.
 Active to:: The timestamp when this build was replaced by a newer version, or a dash if it is the currently active build.
-Included policies:: The policy stores and specific versions that contributed to this build. This makes it easy to trace exactly which policies were in effect at any point in time.
+Sources:: The number of policy stores that contributed to this build.
+
+Expand a row in either table to list the policy stores that contributed to the build and the version of each one. Each store name links to the Policies tab of that store at the same version, so you can trace exactly which policies were in effect at any point in time.
 
 == Freezing and rolling back
 

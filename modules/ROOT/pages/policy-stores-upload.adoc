@@ -10,10 +10,19 @@ image:policy_store_upload.png[alt="Browser upload",role="center-img"]
 To upload policies using the browser, follow these steps:
 
 1. Go to https://hub.cerbos.cloud[Cerbos Hub] and sign in.
-2. Inside a workspace, create a new policy store by clicking on "Policy Stores" in the sidebar.
-3. In the Import tab, select "Browser upload" as the source for your policy store.
-4. Click on the "Upload files" button to select a ZIP file of your policies or drag and drop the ZIP file into the designated area.
-5. Once the file is uploaded, the policies will be processed and added to the policy store.
-6. You can then view and manage the uploaded policies in the policy store Policies tab.
+2. Inside a workspace, select *Policy stores* in the sidebar and open a policy store. To create a new store, select *Add a new policy store*.
+3. Select *Import* in the policy store sidebar, then select *Upload* under *Upload via browser*.
+4. Optionally, enter a *Version message* that describes the change.
+5. Select a ZIP file of your policies, or drag and drop it into the *Zipped policies* area, then select *Upload*.
+6. When the upload succeeds, the Policies tab of the store opens at the new store version.
 
 NOTE: Uploading policies via the browser does a full replace of the existing policies in the store. If you want to append or update specific policies, consider using a Git repository or CI/CD pipeline instead.
+
+== Upload results
+
+The upload dialog reports files in the archive that cannot be stored. The xref:policy-stores-file-rules.adoc[file rules and limits] define which files are accepted and the maximum archive size.
+
+[unordered.stack]
+Ignored files:: Files that the file rules do not accept, such as files with an unsupported extension or a hidden path, are skipped and listed in the dialog. The remaining files are uploaded. Select *Continue* to open the Policies tab at the new store version.
+No policies found:: Every file in the archive was skipped. The skipped files are listed and nothing is uploaded.
+Invalid policies:: One or more files are not valid policies, schemas, or test files. Each file is listed with its error, nothing is uploaded, and the policies already in the store are unchanged. Fix the listed files, select *Back* and upload the archive again.
