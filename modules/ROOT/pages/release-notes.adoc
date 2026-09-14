@@ -1,5 +1,39 @@
 = Release notes
 
+== 2026-09-11
+
+=== Chat with the Cerbos team from the Feedback button
+
+[#_feedback_button_chat]
+
+The *Feedback* button at the bottom of the sidebar now opens a chat with the Cerbos team, on both organization and workspace pages. Select the button again to close the chat. The floating chat launcher no longer appears in the corner of the page.
+
+=== Referral program link in the account menu
+
+[#_referral_program_link]
+
+The account menu at the top right of the console now has a *Referral program* entry. It opens the https://www.cerbos.dev/referral-programme[Cerbos referral program] page in a new tab, which explains how to earn a reward for referring a team that becomes a paying Cerbos customer.
+
+=== Scrolling in the playground side panel
+
+[#_playground_side_panel_scrolling]
+
+The *Explore*, *Implement* and *Settings* tabs of a xref:playground.adoc[playground] now scroll when their content is taller than the panel. Content below the visible area of a tab, such as a long list of action results, is no longer out of reach.
+
+== 2026-09-10
+
+=== Policy store versions linked from deployment builds
+
+[#_build_sources_links]
+
+The *Upcoming versions* and *Deployed versions* tables on the xref:deployments.adoc#_deployed_versions[Builds tab] of a deployment now have a *Sources* column that shows how many policy stores contributed to each build. Expand a row to list those stores and the version that each one contributed. Each store name links to the Policies tab of that store at the same version, so you can inspect the exact policy files that went into the build. To open the details of a build, select its build reference.
+
+=== Fixes to creation dialogs and sidebar switchers
+
+[#_dialog_and_sidebar_fixes]
+
+The dialogs for creating a policy store, a deployment or a playground, and for inviting a member to an organization, now show the validation errors returned when the form is submitted. Previously these errors were not displayed, so a rejected submission gave no indication of what to correct. The store and deployment switchers in the sidebar also show the new name as soon as a policy store or deployment is renamed.
+
 == 2026-09-08
 
 === A refreshed look for the Cerbos Hub console
@@ -13,6 +47,12 @@ The Cerbos Hub console has been restyled throughout. Colours, typography and spa
 [#_console_theme_preference]
 
 The console can now be displayed in a light or a dark theme. Open the account menu at the top right of any page and choose *Light theme*, *Dark theme*, or *System theme*, which follows the setting of your operating system. The preference is stored in your browser, so it does not carry over to other browsers or devices, and it does not affect other members of your organization.
+
+=== Errors listed for invalid policies in uploaded archives
+
+[#_upload_invalid_policies]
+
+When an archive uploaded to a xref:policy-stores-upload.adoc[policy store] contains files that are not valid policies, the upload dialog now lists each affected file with its error. Nothing is uploaded and the policies already in the store are left unchanged. Fix the listed files, select *Back* and upload the archive again.
 
 == 2026-08-25
 
