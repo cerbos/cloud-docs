@@ -41,7 +41,7 @@ Deployments package policies from one or more policy stores into versioned bundl
 
 == Generate client credentials
 
-Navigate to **Settings** → **Client credentials** and click **Generate a client credential**, giving it a name and select **Read & Write** so that policies can be pulled down and Audit Logs pushed back. Copy both the Client ID and Client secret. The secret is shown only once.
+Open the deployment created above and select the **Client credentials** tab. Click **Generate a client credential**, enter a name, and select **Read & Write** to allow policy downloads and audit log uploads. Copy both the client ID and client secret. The secret is shown only once.
 
 == Configure and run a Cerbos PDP
 
