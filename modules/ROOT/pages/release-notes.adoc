@@ -1,5 +1,21 @@
 = Release notes
 
+== 2026-09-11
+
+=== Scrolling in the playground side panel
+
+[#_playground_side_panel_scrolling]
+
+The *Explore*, *Implement* and *Settings* tabs of a xref:playground.adoc[playground] now scroll when their content is taller than the panel. Content below the visible area of a tab, such as a long list of action results, is no longer out of reach.
+
+== 2026-09-10
+
+=== Policy store versions linked from deployment builds
+
+[#_build_sources_links]
+
+The *Upcoming versions* and *Deployed versions* tables on the xref:deployments.adoc#_deployed_versions[Builds tab] of a deployment now have a *Sources* column that shows how many policy stores contributed to each build. Expand a row to list those stores and the version that each one contributed. Each store name links to the Policies tab of that store at the same version, so you can inspect the exact policy files that went into the build. To open the details of a build, select its build reference.
+
 == 2026-09-08
 
 === A refreshed look for the Cerbos Hub console
@@ -13,6 +29,12 @@ The Cerbos Hub console has been restyled throughout. Colours, typography and spa
 [#_console_theme_preference]
 
 The console can now be displayed in a light or a dark theme. Open the account menu at the top right of any page and choose *Light theme*, *Dark theme*, or *System theme*, which follows the setting of your operating system. The preference is stored in your browser, so it does not carry over to other browsers or devices, and it does not affect other members of your organization.
+
+=== Errors listed for invalid policies in uploaded archives
+
+[#_upload_invalid_policies]
+
+When an archive uploaded to a xref:policy-stores-upload.adoc#_upload_results[policy store] contains files that are not valid policies, the upload dialog now lists each affected file with its error. Nothing is uploaded and the policies already in the store are left unchanged. Fix the listed files, select *Back* and upload the archive again.
 
 == 2026-08-25
 
