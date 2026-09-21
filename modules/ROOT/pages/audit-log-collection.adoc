@@ -7,7 +7,7 @@ For embedded PDPs, decision logs can be captured locally using the SDK's `onDeci
 
 == Enabling collection
 
-To get started, you need to obtain a set of client credentials. Navigate to the **Settings** → **Client credentials** tab of the deployment, click on **Generate a client credential** and generate a **Read & write** credential. Make sure to save the client secret in a safe place as it cannot be recovered.
+Open the deployment and select the **Client credentials** tab. Click **Generate a client credential** and generate a **Read & write** credential. Save the client secret in a safe place as it cannot be recovered.
 
 The client credentials can be provided to the PDP using environment variables or the configuration file. The environment variables to set are:
 
@@ -182,6 +182,8 @@ You can define masks to filter out sensitive or personally identifiable informat
 
 Masks are defined using a subset of JSONPath syntax.
 
+Use case-sensitive protobuf JSON field names, such as `forwardedFor`, for message fields. Map keys, such as principal attributes, must match the keys in the logged data. Paths that do not match a field are silently ignored.
+
 [source,yaml]
 ----
 hub:
@@ -207,7 +209,7 @@ audit:
       # Fields to mask from the peer information
       peer:
         - address
-        - forwarded_for
+        - forwardedFor
       # Fields to mask from the PlanResources requests.
       planResources:
         - input.principal.attr.nestedMap.foo
