@@ -1,5 +1,19 @@
 = Release notes
 
+== 2026-09-21
+
+=== Test suites that fail to load shown in build details
+
+[#_build_test_suite_load_failures]
+
+The *Test* stage on the xref:deployments.adoc#_compile_and_test_stages[build details] page now lists test suites that could not be loaded. Each entry shows the test suite file and the error that stopped it from loading. Previously, such a suite was omitted from the results, so a broken test file could go unnoticed.
+
+=== Read-only view of a store's GitHub configuration
+
+[#_github_configuration_read_only]
+
+Workspace members without the xref:user-management.adoc#_workspace_roles[Manage policy stores] permission can now view how a store is connected to GitHub. On the xref:policy-stores-git-github.adoc#_using_the_github_integration[GitHub connection] tab of the store, select *View configuration* to see the repository, the branch or tag, and whether the whole repository or a subdirectory is synced. Owners and Developers still see *Update configuration* and can change these settings. If your permission is removed while you edit the configuration, saving shows an error that states you can no longer update it.
+
 == 2026-09-11
 
 === Scrolling in the playground side panel
