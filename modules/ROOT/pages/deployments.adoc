@@ -140,7 +140,7 @@ The top of the page displays key metrics at a glance:
 Expandable sections show the results of each build stage:
 
 * **Compile**: Shows whether policy compilation succeeded. Expand to see any compilation errors or warnings.
-* **Test**: Shows whether all policy tests passed. Expand to see detailed test results, including any failures with full output for debugging.
+* **Test**: Shows whether all policy tests passed. Expand to see detailed test results, including any failures with full output for debugging. A test suite that fails to load is listed with its file and the load error.
 
 === Bundle file explorer
 
