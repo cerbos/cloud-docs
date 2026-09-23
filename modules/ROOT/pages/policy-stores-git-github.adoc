@@ -63,4 +63,6 @@ Once the GitHub integration is set up, you can monitor and manage your policies 
 
 image:policy_store_github_connection.png[alt="GitHub connection status",role="center-img"]
 
-To reconfigure the GitHub integration, you can click on the "Update configuration" button in the GitHub connection tab. This allows you to change the repository, branch, or directory settings.
+To reconfigure the GitHub integration, select *Update configuration* on the GitHub connection tab. You can change the repository, branch, or directory settings.
+
+Workspace members without the xref:user-management.adoc#_workspace_roles[Manage policy stores] permission see *View configuration* instead. It shows the repository, the branch or tag, and whether the whole repository or a subdirectory is synced, but does not allow changes.
