@@ -37,7 +37,7 @@ Deployments package policies from one or more policy stores into versioned bundl
 
 . Open **Deployments** then click **New deployment**.
 . Select the store you just created.
-. Click **Create**. Hub starts the initial build. When it finishes, note the deployment ID shown on the detail page. You will need this ID to configure the PDP.
+. Click **Create**. Hub starts the initial build. When it finishes, copy the deployment ID from the header of the deployment page. You will need this ID to configure the PDP.
 
 == Generate client credentials
 
@@ -105,6 +105,7 @@ Add the Hub audit backend to stream decision logs to Cerbos Hub:
 audit:
   backend: hub
   hub:
+    workspaceID: "..." # Workspace ID to send audit logs to. Requires PDP v0.56 or later.
     storagePath: "/var/cerbos/audit-buffer" # Local buffer used when the network is unavailable
 ----
 

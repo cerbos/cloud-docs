@@ -175,7 +175,8 @@ Create a secret for the Hub credentials:
 kubectl create secret generic cerbos-hub-credentials \
   --from-literal=CERBOS_HUB_CLIENT_ID="..." \
   --from-literal=CERBOS_HUB_CLIENT_SECRET="..." \
-  --from-literal=CERBOS_HUB_DEPLOYMENT_ID="..."
+  --from-literal=CERBOS_HUB_DEPLOYMENT_ID="..." \
+  --from-literal=CERBOS_HUB_WORKSPACE_ID="..."
 ----
 
 Create a values file (`hub-values.yaml`):

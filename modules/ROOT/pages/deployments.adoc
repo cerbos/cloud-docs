@@ -124,7 +124,7 @@ See xref:troubleshooting.adoc[Troubleshooting] for guidance on resolving these c
 
 == Build details
 
-Click on any build reference to view detailed information about that specific build.
+Click on any build reference to view detailed information about that specific build. To experiment with the policies in the build, click **Open in playground**. See xref:playground.adoc#_create_from_a_build[Create from a build].
 
 === Build summary
 
