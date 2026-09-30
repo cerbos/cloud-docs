@@ -189,7 +189,7 @@ cerbos:
       enabled: true
       backend: hub
       hub:
-        storagePath: /audit_logs
+        storagePath: /audit_logs # The workspace ID is read from CERBOS_HUB_WORKSPACE_ID in the secret.
 
 envFrom:
   - secretRef:

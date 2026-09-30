@@ -66,6 +66,7 @@ audit:
   enabled: true
   backend: hub
   hub:
+    workspaceID: "..." # Workspace ID to send audit logs to. Requires PDP v0.56 or later.
     storagePath: "..." # Local storage path for buffering the audit logs.
     pipeOutput: # Secondary output configuration
       enabled: true
@@ -203,6 +204,7 @@ audit:
   enabled: true
   backend: hub
   hub:
+    workspaceID: "..." # Workspace ID to send audit logs to. Requires PDP v0.56 or later.
     storagePath: "..." # Local storage path for buffering the audit logs.
     mask:
       # Fields to mask from CheckResources requests
@@ -244,6 +246,7 @@ audit:
   enabled: true
   backend: hub
   hub:
+    workspaceID: "..." # Workspace ID to send audit logs to. Requires PDP v0.56 or later.
     storagePath: "..." # Local storage path for buffering the audit logs.
     retentionPeriod: 168h # How long to keep buffered records on disk.
     advanced:
