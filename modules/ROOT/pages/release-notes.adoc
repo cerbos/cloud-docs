@@ -1,5 +1,29 @@
 = Release notes
 
+== 2026-09-30
+
+=== Workspace ID in PDP configuration examples
+
+[#_pdp_config_workspace_id]
+
+The configuration examples shown when you connect a policy decision point to a xref:deployments.adoc[deployment] now set `audit.hub.workspaceID` to the ID of the current workspace. This tells the PDP which workspace to send its xref:audit-log-collection.adoc[audit logs] to. The setting is supported by Cerbos PDP v0.56 and later. If you run PDP v0.55 or earlier, remove the line from the copied configuration.
+
+== 2026-09-25
+
+=== Create a playground from a deployment or a build
+
+[#_playground_from_deployment_or_build]
+
+You can now start a xref:playground.adoc#_creating_a_playground[playground] from the policies of a deployment or of a specific build. When creating a playground, the new *Start from a deployment* option copies the current policies from every policy store connected to the deployment you select. On the xref:deployments.adoc#_build_details[build details] page, select *Open in playground* to create a playground from the policies that went into that build. Changes made in the playground do not affect the deployment or its policy stores.
+
+== 2026-09-24
+
+=== Store and deployment IDs shown in page headers
+
+[#_store_deployment_ids_in_headers]
+
+The header of each policy store and deployment page now shows the store ID or deployment ID, with a button to copy it. You no longer need to look up these IDs elsewhere when configuring a PDP, the Cerbos Hub CLI, or client credentials.
+
 == 2026-09-21
 
 === Test suites that fail to load shown in build details
