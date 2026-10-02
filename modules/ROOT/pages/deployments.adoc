@@ -124,7 +124,7 @@ See xref:troubleshooting.adoc[Troubleshooting] for guidance on resolving these c
 
 == Build details
 
-Click on any build reference to view detailed information about that specific build.
+Click on any build reference to view detailed information about that specific build. To experiment with the policies in the build, click **Open in playground**. See xref:playground.adoc#_create_from_a_build[Create from a build].
 
 === Build summary
 
@@ -140,7 +140,7 @@ The top of the page displays key metrics at a glance:
 Expandable sections show the results of each build stage:
 
 * **Compile**: Shows whether policy compilation succeeded. Expand to see any compilation errors or warnings.
-* **Test**: Shows whether all policy tests passed. Expand to see detailed test results, including any failures with full output for debugging.
+* **Test**: Shows whether all policy tests passed. Expand to see detailed test results, including any failures with full output for debugging. A test suite that fails to load is listed with its file and the load error.
 
 === Bundle file explorer
 

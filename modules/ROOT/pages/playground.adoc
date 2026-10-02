@@ -22,6 +22,8 @@ When creating a new playground, you have a number of options:
 * Generate a starter RBAC policy by answering a few questions about your user roles, resources and actions
 * Start with an example template set of policies covering common use cases
 * Create from an existing policy store to experiment with production policies in a safe environment
+* Create from a deployment to copy the policies of every policy store connected to it
+* Create from a build to copy the policies that went into that build
 
 === Create from a policy store
 
@@ -32,6 +34,16 @@ You can create a playground directly from an existing policy store, making it ea
 * Training team members using actual policies as examples
 
 To create a playground from a store, navigate to the policy store and click **Create playground**. The playground is pre-populated with all policies and tests from the store.
+
+=== Create from a deployment
+
+Select **Start from a deployment** when creating a playground, then choose a deployment. The playground is populated with the current version of each policy store connected to the deployment. The list includes only deployments that have at least one connected store.
+
+=== Create from a build
+
+Open the xref:deployments.adoc#_build_details[build details] page and click **Open in playground**. The playground is populated with the policy store versions that went into the build, so you can investigate the exact policies that the build contains.
+
+Changes made in a playground do not affect the source store, deployment, or build.
 
 After creating a playground, click on the **Video tutorial** button on the top right corner of the screen to learn the basics.
 

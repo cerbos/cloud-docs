@@ -109,6 +109,7 @@ Audit backend not configured:: Ensure `audit.backend` is set to `hub` in the PDP
 Audit disabled:: Verify `audit.enabled` is `true`.
 Storage path missing:: The `audit.hub.storagePath` must be set to a writable directory. Without this, logs cannot be buffered.
 Credentials lack write permission:: Audit log upload requires **Read & write** credentials. Read-only credentials cannot upload logs.
+Target does not match credentials:: The workspace set in `audit.hub.workspaceID`, or the deployment set in `CERBOS_HUB_DEPLOYMENT_ID`, must belong to the same workspace as the client credential. Cerbos Hub rejects audit logs sent to any other target.
 
 === Logs delayed or missing entries
 
