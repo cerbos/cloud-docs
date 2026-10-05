@@ -139,7 +139,7 @@ You can filter the logs by a particular PDP and a time range.
 
 Decision and access logs can be exported from Cerbos Hub as files, for long-term archiving or for analysis in your own tooling. Exports are encrypted before they leave Cerbos Hub, so only you can read them.
 
-NOTE: Exporting requires the `Owner` role in the workspace or the organization. See xref:user-management.adoc[User management] for the full permissions matrix. Exports are not available for xref:on-premises.adoc[on-premises deployments], where the audit log data already resides in your own infrastructure.
+NOTE: Exporting requires the `Owner` or `Analyst` role in the workspace or the organization. See xref:user-management.adoc[User management] for the full permissions matrix. Exports are not available for xref:on-premises.adoc[on-premises deployments], where the audit log data already resides in your own infrastructure.
 
 === Starting an export
 
