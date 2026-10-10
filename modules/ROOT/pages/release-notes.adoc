@@ -1,5 +1,13 @@
 = Release notes
 
+== 2026-10-01
+
+=== Analysts can export audit logs
+
+[#_analyst_audit_log_export]
+
+Users with the `Analyst` role in a workspace or organization can now xref:audit-log-collection.adoc#_exporting_logs[export audit logs], in addition to viewing them. Previously, only Owners could start an export. Analysts can start an export from the *Decision logs* or *Access logs* tab and download it from the *Exports* tab.
+
 == 2026-09-30
 
 === Workspace ID in PDP configuration examples
