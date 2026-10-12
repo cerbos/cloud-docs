@@ -22,12 +22,6 @@ When you xref:playground.adoc#_creating_a_playground[create a playground] from a
 
 Users with the `Analyst` role in a workspace or organization can now xref:audit-log-collection.adoc#_exporting_logs[export audit logs], in addition to viewing them. Previously, only Owners could start an export. Analysts can start an export from the *Decision logs* or *Access logs* tab and download it from the *Exports* tab.
 
-=== Deleted deployments hidden when creating a playground
-
-[#_playground_deleted_deployments_hidden]
-
-The list of deployments shown when you choose *Start from a deployment* to xref:playground.adoc#_creating_a_playground[create a playground] no longer includes deployments that have been deleted.
-
 == 2026-09-30
 
 === Workspace ID in PDP configuration examples
