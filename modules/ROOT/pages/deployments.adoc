@@ -44,6 +44,8 @@ Both actions require the `Owner` or `Developer` role in the workspace. See xref:
 
 Open the deployment's Settings tab and choose *Freeze deployment*. The version that is currently live stays live, and policy changes pushed to the linked stores are no longer deployed to connected PDPs while the deployment is frozen.
 
+Changes to the contributing stores are still compiled and tested while the deployment is frozen. Each resulting build is listed under *Upcoming versions* on the Builds tab, where you can review its test results before you unfreeze the deployment.
+
 A frozen deployment is labelled *Frozen* in the workspace deployment list and on the deployment page itself.
 
 Choose *Unfreeze deployment* on the same tab to resume. The latest version of your policies is built and deployed to connected PDPs, replacing whatever was live, including a version that was pinned by a rollback.
