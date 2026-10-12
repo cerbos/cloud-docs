@@ -1,5 +1,19 @@
 = Release notes
 
+== 2026-10-08
+
+=== Policies keep building while a deployment is frozen
+
+[#_builds_continue_while_frozen]
+
+Policy changes pushed to the stores that contribute to a xref:deployments.adoc#_freezing_a_deployment[frozen deployment] are now compiled and tested. The resulting builds appear under *Upcoming versions* on the deployment's *Builds* tab, so you can check test results for each change while the live version stays in place. Previously, no builds ran while a deployment was frozen, and changes were only compiled after you unfroze it. Upcoming versions are still not deployed to connected PDPs until you unfreeze the deployment.
+
+=== Workspace name in playground titles
+
+[#_playground_title_workspace_name]
+
+When you xref:playground.adoc#_creating_a_playground[create a playground] from a policy store, a deployment or a build, its default title now includes the name of the workspace it came from. Playgrounds created from stores or deployments that share a name in different workspaces are now distinguishable.
+
 == 2026-10-01
 
 === Analysts can export audit logs
@@ -7,6 +21,12 @@
 [#_analyst_audit_log_export]
 
 Users with the `Analyst` role in a workspace or organization can now xref:audit-log-collection.adoc#_exporting_logs[export audit logs], in addition to viewing them. Previously, only Owners could start an export. Analysts can start an export from the *Decision logs* or *Access logs* tab and download it from the *Exports* tab.
+
+=== Deleted deployments hidden when creating a playground
+
+[#_playground_deleted_deployments_hidden]
+
+The list of deployments shown when you choose *Start from a deployment* to xref:playground.adoc#_creating_a_playground[create a playground] no longer includes deployments that have been deleted.
 
 == 2026-09-30
 
