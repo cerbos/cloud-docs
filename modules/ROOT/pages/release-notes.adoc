@@ -1,5 +1,15 @@
 = Release notes
 
+== 2026-10-16
+
+[#_2026_10_16]
+
+=== Clearer errors when uploading policies in the browser
+
+[#_store_upload_errors]
+
+When you xref:getting-started.adoc#_upload_policies_via_browser[upload a ZIP file] to a policy store, Cerbos Hub now tells you if the uploaded policies are identical to the latest version of the store, so you know that no new store version was created. Uploading a file that is not a valid ZIP archive now shows a message asking for a valid ZIP file. Both errors appear next to the file field in the upload dialog, so you can fix the upload without leaving the page.
+
 == 2026-10-08
 
 === Policies keep building while a deployment is frozen
